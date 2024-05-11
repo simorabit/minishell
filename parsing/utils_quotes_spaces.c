@@ -17,7 +17,7 @@ int quotes(char *line, char q)
 }
 int handel_quotes(char *line)
 {
-    if (quotes(line, '\'') % 2 == 0 && quotes(line, '\"') % 2 == 0)
+    if (quotes(line, SingQuote) % 2 == 0 && quotes(line, DoubleQuote) % 2 == 0)
         return 1;
     return 0;
 }

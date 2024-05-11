@@ -9,6 +9,7 @@ void tokenizer(char **res, t_lexer **lexer)
     while (res[i])
     {
         node = ft_lstnew(i);
+        // if(check_quotes())
         if(!ft_strcmp(res[i], ">>"))
             node->token = redirect_app;
         else if(!ft_strcmp(res[i], "|"))

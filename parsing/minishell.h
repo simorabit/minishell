@@ -8,6 +8,8 @@
 #define SyntaxError "Syntax Error\n"
 #define InputError "Please Enter Valid Argument\n"
 #define ErrorInAllocation "Error In Allocation"
+#define SingQuote '\'' 
+#define DoubleQuote '\"' 
 
 typedef enum s_token
 {
@@ -25,9 +27,9 @@ typedef enum s_token
 
 typedef struct s_lexer
 {
-	char    	*str;
-	t_token        token;
-	int		i;
+	char			*str;
+	t_token			token;
+	int				i;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }	t_lexer;
@@ -78,3 +80,9 @@ int quotes(char *line, char q);
 
 //syntax error
 void syntax_error(t_lexer **lexer);
+
+// utils_split
+int is_withspaces(char c);
+char *get_from_quotes(char *s, char **arr, char ind, char quotes);
+char *ft_word(char *s, char **arr, int ind);
+void wait_till_end(char const **s, int flag);
