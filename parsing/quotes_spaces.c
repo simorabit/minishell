@@ -23,9 +23,9 @@ void redir_founded(char *line, char *new_value, int *i, int *j)
 {
     new_value[*j] = ' ';
     new_value[*j + 1] = line[*i];
-    if (line[*i + 1] == '<')
+    if (line[*i] == '<' && line[*i + 1] == '<')
         set_redir(new_value, j, i, '<');
-    else if (line[*i + 1] == '>')
+    else if (line[*i] == '>' && line[*i + 1] == '>')
         set_redir(new_value, j, i, '>');
     else
     {

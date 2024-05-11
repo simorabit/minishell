@@ -17,6 +17,8 @@ typedef enum s_token
     redirect_out,
     heredoc,
     redirect_app,// >>
+	doubleQuotes,
+	singleQuotes,
 	env_var 
 }t_token;
 
@@ -27,6 +29,7 @@ typedef struct s_lexer
 	t_token        token;
 	int		i;
 	struct s_lexer	*next;
+	struct s_lexer	*prev;
 }	t_lexer;
 
 typedef struct s_simple_cmds
@@ -60,7 +63,7 @@ void tokenizer(char **res, t_lexer **lexer);
 size_t	ft_strlen(const char *s);
 int     ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s);
 
 //utils_free
 void	free_list(char **list);
@@ -72,3 +75,6 @@ void set_redir(char *s, int *j, int *i, char c);
 int is_redir_has_found(char c);
 int handel_quotes(char *line);
 int quotes(char *line, char q);
+
+//syntax error
+void syntax_error(t_lexer **lexer);

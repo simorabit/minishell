@@ -6,13 +6,17 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/09 19:30:00 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:33:14 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count_words(char *s, char c)
+int is_withspaces(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
+static int	count_words(char *s)
 {
 	int	counter;
 	int	i;
@@ -21,19 +25,19 @@ static int	count_words(char *s, char c)
 	counter = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && is_withspaces(s[i]))
 			i++;
-		if (s[i] && s[i] != c)
+		if (s[i] && !is_withspaces(s[i]))
 		{
 			counter++;
-			while (s[i] && s[i] != c)
+			while (s[i] && !is_withspaces(s[i]))
 				i++;
 		}
 	}
 	return (counter);
 }
 
-static char	*ft_word(char *s, char c, char **arr, int ind)
+static char	*ft_word(char *s, char **arr, int ind)
 {
 	int		i;
 	char	*output;
@@ -41,7 +45,7 @@ static char	*ft_word(char *s, char c, char **arr, int ind)
 
 	i = 0;
 	j = 0;
-	while (s[i] && s[i] != c)
+	while (s[i] && !is_withspaces(s[i]))
 		i++;
 	output = (char *)malloc(sizeof(char) * (i + 1));
 	if (!output)
@@ -51,7 +55,7 @@ static char	*ft_word(char *s, char c, char **arr, int ind)
 		return (NULL);
 	}
 	i = 0;
-	while (s[i] && s[i] != c)
+	while (s[i] && !is_withspaces(s[i]))
 	{
 		output[i] = s[i];
 		i++;
@@ -60,7 +64,7 @@ static char	*ft_word(char *s, char c, char **arr, int ind)
 	return (output);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s)
 {
 	char	**array;
 	int		j;
@@ -68,47 +72,24 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)malloc((count_words((char *)s, c) + 1) * sizeof(char *));
+	array = (char **)malloc((count_words((char *)s) + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
 	while (*s)
 	{
-		while (*s && *s == c)
+		while (*s && is_withspaces(*s))
 			s++;
-		if (*s && *s != c)
+		if (*s && !is_withspaces(*s))
 		{
-			array[j] = ft_word((char *)s, c, array, j);
+			array[j] = ft_word((char *)s, array, j);
 			if (array[j] == NULL)
 				return (free(array), NULL);
 			j++;
 		}
-		while (*s && *s != c)
+		while (*s && !is_withspaces(*s))
 			s++;
 	}
 	array[j] = 0;
 	return (array);
 }
 
-void	ft_putstr_fd(char *str, int fd)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(fd, &str[i], 1);
-		i++;
-	}
-}
-
-void	free_cmd(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i])
-	{
-		free(cmds[i++]);
-	}
-	free(cmds);
-}

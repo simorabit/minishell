@@ -3,7 +3,7 @@ FLAGS = -Wall -Wextra -Werror
 LIBS = -lreadline
 
 SRC = main.c lexer_list.c parser.c utils_string.c ft_split.c \
-	tokenizer.c utils_free.c quotes_spaces.c utils_quotes_spaces.c
+	tokenizer.c utils_free.c quotes_spaces.c utils_quotes_spaces.c syntax_error.c
 OBJ = $(SRC:.c=.o)
 
 TARGET = minishell

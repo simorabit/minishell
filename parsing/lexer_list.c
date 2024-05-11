@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/10 11:15:46 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:19:46 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_lexer	*ft_lstnew(int content)
 		return (NULL);
 	lexer->i = content;
 	lexer->next = NULL;
+	lexer->prev = NULL;
 	return (lexer);
 }
 
@@ -57,9 +58,9 @@ void	ft_lstadd_back(t_lexer **lexer, t_lexer *new)
 		return ;
 	if (*lexer)
 	{
-
 		last = ft_lstlast(*lexer);
 		last->next = new;
+		new->prev = last;
 	}
 	else
 		*lexer = new;

@@ -6,12 +6,24 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/10 15:43:16 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:31:02 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+void print_lexer(t_lexer *lexer)
+{
+    while (lexer)
+    {
+        printf("<< name : %s >>",lexer->str);
+        if(lexer->prev)
+            printf(" << prev : %s >>",lexer->prev->str);
+        if(lexer->next)
+            printf(" << next : %s >>",lexer->next->str);
+        printf(" << token : %d >> \n",lexer->token);
+        lexer = lexer->next;
+    }
+}
 void    handel_input(char *line)
 {
     t_lexer *lexer;
@@ -21,13 +33,15 @@ void    handel_input(char *line)
     if (!handel_quotes(line))
         error_msg(SyntaxError);
     line = add_spaces(line);
-    res = ft_split(line, ' ');
+    res = ft_split(line);
     if(!res)
     {
         free_list(res);
         allocation_error(line);
     }
     tokenizer(res, &lexer);
+    // print_lexer(lexer);
+    syntax_error(&lexer);
 }
 
 void parsing()

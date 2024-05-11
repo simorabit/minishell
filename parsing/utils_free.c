@@ -9,7 +9,7 @@ void allocation_error(char *s)
 void error_msg(char *s)
 {
     printf("%s", s);
-    exit(0);
+    // exit(0);
 }
 void free_list(char **list)
 {
