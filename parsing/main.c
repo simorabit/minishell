@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/11 12:31:02 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:11:04 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    handel_input(char *line)
         allocation_error(line);
     }
     tokenizer(res, &lexer);
-    // print_lexer(lexer);
+    print_lexer(lexer);
     syntax_error(&lexer);
 }
 
