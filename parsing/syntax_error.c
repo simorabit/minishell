@@ -1,5 +1,6 @@
 #include "minishell.h"
-
+// <|a << <a
+//TODO - handel this << <
 int is_redirs(t_lexer *lexer)
 {
     return (lexer->token >= 2 && lexer->token <= 5);
@@ -13,7 +14,7 @@ int syn_err_checker(t_lexer **lexer)
     {
         if(is_redirs(tmp))
         {
-            if(!tmp->next)
+            if(!tmp->next || is_redirs(tmp->next))
                 return 0;
         }
         else if(tmp->token == mpipe)
@@ -25,8 +26,12 @@ int syn_err_checker(t_lexer **lexer)
     }
     return 1;
 }
-void syntax_error(t_lexer **lexer)
+int syntax_error(t_lexer **lexer)
 {
     if(!syn_err_checker(lexer))
+    {
         error_msg(SyntaxError);
+        return 0;
+    }
+    return 1;
 }

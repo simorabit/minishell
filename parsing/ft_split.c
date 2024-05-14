@@ -6,12 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/11 18:25:58 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:37:05 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int is_withspaces(char c)
 {
@@ -44,29 +43,38 @@ static int count_words(char *s)
 	}
 	return (counter);
 }
-
-static int allocate_element(char const **s, char **array, int j)
+int is_space_after_quote(char *s, char quotes)
 {
-	if (**s == SingQuote)
+	int i;
+
+	i = 0;
+	while (s[i])
 	{
-		array[j] = get_from_quotes((char *)(*s + 1), array, j, SingQuote);
-		return 1;
+		if (s[i] == quotes && (s[i + 1] && !is_withspaces(s[i + 1])))
+			return 1;
+		i++;
 	}
-	else if (**s == DoubleQuote)
-	{
-		array[j] = get_from_quotes((char *)(*s + 1), array, j, DoubleQuote);
-		return 2;
-	}
-	else
-		array[j] = ft_word((char *)*s, array, j);
 	return 0;
 }
 
-char **ft_split(char const *s)
+static char *allocate_element(char **s, char **array, int j)
+{
+	int i;
+
+	i = 0;
+	if (**s == SingQuote)
+		return ft_word((char *)(*s), array, j, SingQuote);
+	else if (**s == DoubleQuote)
+		return ft_word((char *)(*s), array, j, DoubleQuote);
+	else
+		return ft_word((char *)*s, array, j, DoubleQuote);
+	return NULL;
+}
+
+char **ft_split(char *s)
 {
 	char **array;
 	int j;
-	int fquotes;
 
 	j = 0;
 	if (!s)
@@ -76,16 +84,16 @@ char **ft_split(char const *s)
 		return (NULL);
 	while (*s)
 	{
-		fquotes = 0;
 		while (*s && is_withspaces(*s))
 			s++;
 		if (*s && !is_withspaces(*s))
 		{
-			fquotes = allocate_element(&s, array, j);
-			if (array[j++] == NULL)
+			array[j] = allocate_element(&s, array, j);
+			if (array[j] == NULL)
 				return (free(array), NULL);
+			j++;
 		}
-		wait_till_end(&s, fquotes);
+		wait_till_end(&s);
 	}
 	array[j] = 0;
 	return (array);

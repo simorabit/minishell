@@ -33,6 +33,12 @@ void redir_founded(char *line, char *new_value, int *i, int *j)
         (*j) += 2;
     }
 }
+int no_quotes(char *line, int i)
+{
+    if(i != 0 && (line[i - 1] == SingQuote || line[i - 1] == DoubleQuote))
+        return 0;
+    return 1;
+}
 void *add_spaces(char *line)
 {
     int i;
@@ -48,7 +54,7 @@ void *add_spaces(char *line)
         allocation_error(line);
     while (++i < len)
     {
-        if (is_redir_has_found(line[i]))
+        if (is_redir_has_found(line[i]) && no_quotes(line, i))
             redir_founded(line, new_value, &i, &j);
         else
             new_value[j] = line[i];

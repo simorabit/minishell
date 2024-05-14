@@ -19,17 +19,21 @@ typedef enum s_token
     redirect_out,
     heredoc,
     redirect_app,// >>
-	doubleQuotes,
-	singleQuotes,
 	env_var 
 }t_token;
 
+typedef enum wquotes
+{
+	doubleQuotes,
+	singleQuotes,
+}t_wquotes;
 
 typedef struct s_lexer
 {
 	char			*str;
 	t_token			token;
 	int				i;
+	t_wquotes		wquotes;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }	t_lexer;
@@ -65,7 +69,7 @@ void tokenizer(char **res, t_lexer **lexer);
 size_t	ft_strlen(const char *s);
 int     ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_split(char const *s);
+char	**ft_split(char *s);
 
 //utils_free
 void	free_list(char **list);
@@ -79,10 +83,11 @@ int handel_quotes(char *line);
 int quotes(char *line, char q);
 
 //syntax error
-void syntax_error(t_lexer **lexer);
-
+int syntax_error(t_lexer **lexer);
 // utils_split
 int is_withspaces(char c);
-char *get_from_quotes(char *s, char **arr, char ind, char quotes);
-char *ft_word(char *s, char **arr, int ind);
-void wait_till_end(char const **s, int flag);
+char *ft_word(char *s, char **arr, char ind, char quotes);
+void wait_till_end(char **s);
+
+//expanding
+void handel_expanding(char **res);
