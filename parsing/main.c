@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/14 16:14:27 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/16 12:49:48 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_lexer(t_lexer *lexer)
 	while (lexer)
 	{
 		printf("<< name : %s >>", lexer->str);
-        if (lexer->prev)
+		if (lexer->prev)
 			printf(" << prev : %s >>", lexer->prev->str);
 		if (lexer->next)
 			printf(" << next : %s >>", lexer->next->str);
@@ -26,51 +26,48 @@ void	print_lexer(t_lexer *lexer)
 	}
 }
 
-void    handel_input(char *line)
+void	handel_input(char *line)
 {
 	t_lexer	*lexer;
 	char	**res;
 
-    lexer = NULL;
-    if (!handel_quotes(line))
-        error_msg(SyntaxError);
-    line = add_spaces(line);
-    res = ft_split(line);
-    if (!res)
-    {
-        free_list(res);
-        allocation_error(line);
-    }
-    handel_expanding(res);
-    exit(0);
-    tokenizer(res, &lexer);
-    if (!syntax_error(&lexer))
-        return ;
-    
-    print_lexer(lexer);
+	lexer = NULL;
+	if (!handel_quotes(line))
+		error_msg(SYNTAX_ERROR);
+	line = add_spaces(line);
+	res = ft_split(line);
+	if (!res)
+	{
+		free_list(res);
+		allocation_error(line);
+	}
+	tokenizer(res, &lexer);
+	if(!handel_expanding(&lexer) || !syntax_error(&lexer))
+		return ;
+	print_lexer(lexer);
 }
 
-void    parsing()
+void	parsing(void)
 {
-    char    *line;
+	char	*line;
 
-    while (1)
-    {
-        line = readline("minishell> ");
-        if (!line)
-            break;
-        if (*line)
-            add_history(line);
-        handel_input(line);
-        // free(line);
-    }
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (!line)
+			break ;
+		if (*line)
+			add_history(line);
+		handel_input(line);
+		// free(line);
+	}
 }
 
-int main()
+int	main(void)
 {
     // if(arc == 1)
     //     (printf(InputError), exit(0));
-    parsing();
+	parsing();
     //syntax error
     // parser(&lexer);
 }

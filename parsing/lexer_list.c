@@ -6,10 +6,9 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/11 18:05:17 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:21:35 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -64,4 +63,29 @@ void	ft_lstadd_back(t_lexer **lexer, t_lexer *new)
 	}
 	else
 		*lexer = new;
+}
+void ft_lst_remove(t_lexer **lexer, int index)
+{
+	t_lexer *tmp;
+	t_lexer *tmp2;
+	
+	tmp = *lexer;
+	if (!lexer)
+		return ;
+	while (tmp)
+	{
+		if (tmp->i == index)
+		{
+			if(tmp->prev)
+				tmp->prev->next = tmp->next;
+			if(tmp->next)
+				tmp->next->prev = tmp->prev;
+			tmp2 = tmp->next;
+			if(tmp->i == 0 && ft_lstsize(*lexer) >= 1)
+				*lexer = tmp->next;
+			free(tmp);
+			break;
+		}
+		tmp = tmp->next;
+	}
 }

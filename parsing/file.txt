@@ -1,0 +1,101 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    file.txt                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#              #
+#    Updated: 2024/05/17 11:06:13 by mal-mora         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "minishell.h"
+
+int	is_real_char(char c)
+{
+	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
+
+char	*allocate_for_expand(char *str, int dollar_id)
+{
+	int		i;
+	int		len;
+	char	*new_s;
+
+	len = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			while (is_real_char(str[++i]))
+				len++;
+		}
+		i++;
+	}
+	new_s = malloc(len + 1);
+	if (!new_s)
+		return (NULL);
+	i = 0;
+	while (i < len)
+		new_s[i++] = str[dollar_id++];
+	new_s[i] = '\0';
+	return (new_s);
+}
+
+char	*expand_str(t_lexer *lexer, int dol_pos)
+{
+	int		i;
+	char	*new_s;
+	char	*result;
+	char	*befor_dollar;
+
+	if (lexer->str[0] != '$')
+		befor_dollar = ft_substr(lexer->str, 0, dol_pos);
+	else
+		befor_dollar = "";
+	i = 0;
+	new_s = allocate_for_expand(lexer->str, dol_pos + 1);
+	if (!new_s)
+		return (NULL);
+	if(befor_dollar && !getenv(new_s))
+		return befor_dollar;
+	
+	result = ft_strjoin(befor_dollar, getenv(new_s));
+	result = ft_strjoin(result, lexer->str + (ft_strlen(new_s) + \
+				ft_strlen(befor_dollar) + 1));
+	free(new_s);
+	return (result);
+}
+// char *before_expand(char *str)
+// {
+// 	int i;
+// 	char *res;
+// 	int pos;
+	
+// 	i = 0;
+// 	while(str[i] && (pos = str_chr(str, '$') != -1))
+// 	{
+// 		str = expand_str(str + pos, pos);
+// 		res = ft_strjoin(res, str);
+// 	}
+// }
+void	*handel_expanding(t_lexer **lexer)
+{
+	t_lexer	*tmp;
+	int		pos;
+	
+	tmp = *lexer;
+	while (tmp)
+	{
+		pos = str_chr(tmp->str, '$');
+		tmp->str = expand_str(tmp, pos);
+		if(tmp->str == NULL)
+			return NULL;
+		if(*tmp->str == '\0')
+			ft_lst_remove(lexer, tmp->i);
+		tmp = tmp->next;
+	}
+	return *lexer;
+}

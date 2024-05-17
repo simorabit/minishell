@@ -6,20 +6,21 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/14 12:37:05 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:56:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_withspaces(char c)
+int	is_withspaces(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
-static int count_words(char *s)
+
+static int	count_words(char *s)
 {
-	int counter;
-	int i;
+	int	counter;
+	int	i;
 
 	i = 0;
 	counter = 0;
@@ -27,10 +28,10 @@ static int count_words(char *s)
 	{
 		while (s[i] && is_withspaces(s[i]))
 			i++;
-		if (s[i] && s[i++] == DoubleQuote)
+		if (s[i] && s[i++] == DOUBLE_QUOTE)
 		{
 			counter++;
-			while (s[i] && s[i] != DoubleQuote)
+			while (s[i] && s[i] != DOUBLE_QUOTE)
 				i++;
 			i++;
 		}
@@ -43,38 +44,39 @@ static int count_words(char *s)
 	}
 	return (counter);
 }
-int is_space_after_quote(char *s, char quotes)
+
+int	is_space_after_quote(char *s, char quotes)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
 	{
 		if (s[i] == quotes && (s[i + 1] && !is_withspaces(s[i + 1])))
-			return 1;
+			return (1);
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-static char *allocate_element(char **s, char **array, int j)
+static char	*allocate_element(char **s, char **array, int j)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (**s == SingQuote)
-		return ft_word((char *)(*s), array, j, SingQuote);
-	else if (**s == DoubleQuote)
-		return ft_word((char *)(*s), array, j, DoubleQuote);
+	if (**s == SINGLE_QUOTE)
+		return (ft_word((char *)(*s), array, j, SINGLE_QUOTE));
+	else if (**s == DOUBLE_QUOTE)
+		return (ft_word((char *)(*s), array, j, DOUBLE_QUOTE));
 	else
-		return ft_word((char *)*s, array, j, DoubleQuote);
-	return NULL;
+		return (ft_word((char *)*s, array, j, DOUBLE_QUOTE));
+	return (NULL);
 }
 
-char **ft_split(char *s)
+char	**ft_split(char *s)
 {
-	char **array;
-	int j;
+	char	**array;
+	int		j;
 
 	j = 0;
 	if (!s)

@@ -1,48 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_split.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/15 19:13:15 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/05/16 10:57:50 by mal-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void wait_for_quotes(char **s, char quotes)
+static void	wait_for_quotes(char **s, char quotes)
 {
-	int qCount;
+	int	q_count;
 
-	qCount = 0;
+	q_count = 0;
 	(*s)++;
 	while (**s)
 	{
-		if (is_withspaces((**s)) && qCount)
-			break;
+		if (is_withspaces((**s)) && q_count)
+			break ;
 		if (**s == quotes)
-			qCount++;
+			q_count++;
 		(*s)++;
 	}
 }
-int get_len(char *s, char quotes)
+
+int	get_len(char *s, char quotes)
 {
-	int i;
-	int findq;
-	
+	int	i;
+	int	findq;
+
 	findq = 0;
 	i = 0;
-	if(s[i] != quotes)
+	if (s[i] != quotes)
 	{
 		while (s[i] && !is_withspaces(s[i]))
 			i++;
-		return i;
+		return (i);
 	}
 	i++;
 	while (s[i] && !(is_withspaces(s[i]) && findq))
 	{
-		if(s[i] == quotes)
+		if (s[i] == quotes)
 			findq = 1;
 		i++;
 	}
-	return i;
+	return (i);
 }
-char *ft_word(char *s, char **arr, char ind, char quotes)
+
+char	*ft_word(char *s, char **arr, char ind, char quotes)
 {
-	int i;
-	char *output;
-	int j;
-	int len;
+	int		i;
+	char	*output;
+	int		j;
+	int		len;
 
 	i = 0;
 	j = 0;
@@ -62,12 +76,13 @@ char *ft_word(char *s, char **arr, char ind, char quotes)
 	output[i] = '\0';
 	return (output);
 }
-void wait_till_end(char **s)
+
+void	wait_till_end(char **s)
 {
-	if(**s == SingQuote)
-		wait_for_quotes(s, SingQuote);
-	else if(**s == DoubleQuote)
-		wait_for_quotes(s, DoubleQuote);
+	if (**s == SINGLE_QUOTE)
+		wait_for_quotes(s, SINGLE_QUOTE);
+	else if (**s == DOUBLE_QUOTE)
+		wait_for_quotes(s, DOUBLE_QUOTE);
 	else
 		while (**s && !is_withspaces(**s))
 			(*s)++;
