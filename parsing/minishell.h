@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:45:40 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/17 10:33:27 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:27:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);
 char	**or_split(char const *s, char c);
+char *handel_expand_dq(char *s, int *pos);
+char *allocate_for_expand(char *str, int *pos);
 #endif
