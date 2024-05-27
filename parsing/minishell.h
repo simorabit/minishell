@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:45:40 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/26 18:27:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:00:06 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*ft_word(char *s, char **arr, char ind, char quotes);
 void	wait_till_end(char **s);
 
 //expanding
-void	*handel_expanding(t_lexer **lexer);
+void handel_expanding(t_lexer **lexer);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);

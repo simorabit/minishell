@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/27 11:42:16 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:23:42 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char *expand_str(char *s)
 	return result;
 }
 
-void *handel_expanding(t_lexer **lexer)
+void handel_expanding(t_lexer **lexer)
 {
 	t_lexer *tmp;
 
@@ -127,13 +127,12 @@ void *handel_expanding(t_lexer **lexer)
 	while (tmp)
 	{
 		if (str_chr(tmp->str, '$') == -1)
+			tmp = tmp->next;
+		if (!tmp)
 			break;
 		tmp->str = expand_str(tmp->str);
-		if (tmp->str == NULL)
-			return NULL;
 		if (*tmp->str == '\0')
 			ft_lst_remove(lexer, tmp->i);
 		tmp = tmp->next;
 	}
-	return *lexer;
 }
