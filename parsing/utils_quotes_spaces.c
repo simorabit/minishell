@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/16 10:57:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:53:06 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	handel_quotes(char *line)
 {
 	if (quotes(line, SINGLE_QUOTE) % 2 == 0 && quotes(line, DOUBLE_QUOTE) % 2 == 0)
 		return (1);
+	error_msg(SYNTAX_ERROR);
 	return (0);
 }
 

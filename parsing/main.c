@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/27 12:23:05 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:51:47 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handel_input(char *line)
 
 	lexer = NULL;
 	if (!handel_quotes(line))
-		error_msg(SYNTAX_ERROR);
+		return;
 	line = add_spaces(line);
 	res = ft_split(line);
 	if (!res)
@@ -42,7 +42,7 @@ void	handel_input(char *line)
 		allocation_error(line);
 	}
 	tokenizer(res, &lexer);
-	if (syntax_error(&lexer))
+	if (!syntax_error(&lexer))
 		return ;
 	handel_expanding(&lexer);
 	print_lexer(lexer);
