@@ -1,10 +1,13 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror 
+# -g -fsanitize=address
 LIBS = -lreadline
 
-SRC = main.c lexer_list.c parser.c utils_string.c ft_split.c \
+SRC = main.c lexer_list.c utils_string.c ft_split.c \
 	tokenizer.c utils_free.c quotes_spaces.c utils_quotes_spaces.c syntax_error.c \
-	utils_split.c expanding.c libft_func.c or_split.c quotes_expanding.c
+	utils_split.c expanding/quotes_expanding.c libft_func.c or_split.c expanding/expanding.c expanding/utils.c \
+	remove_quotes.c parser/parser.c parser/utils.c parser/parser_funct.c
+
 OBJ = $(SRC:.c=.o)
 
 TARGET = minishell

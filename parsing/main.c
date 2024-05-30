@@ -6,12 +6,28 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/27 12:51:47 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:06:08 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//TODO - remove it at end
+void	print_cmd(t_simple_cmds *lexer)
+{
+	t_simple_cmds *cmds;
+	int i = 0;
+	cmds = lexer;
+	while (cmds)
+	{
+		while (cmds->str[i])
+		{
+			printf("cmd[%d] %s\n",i, cmds->str[i]);
+			i++;
+		}
+		print_lexer(cmds->redirections);
+		cmds = cmds->next;
+		printf("##########################\n");
+	}
+}
 void	print_lexer(t_lexer *lexer)
 {
 	while (lexer)
@@ -30,8 +46,10 @@ void	handel_input(char *line)
 {
 	t_lexer	*lexer;
 	char	**res;
-
+	t_simple_cmds *cmds;
+	
 	lexer = NULL;
+	cmds = NULL;
 	if (!handel_quotes(line))
 		return;
 	line = add_spaces(line);
@@ -45,8 +63,15 @@ void	handel_input(char *line)
 	if (!syntax_error(&lexer))
 		return ;
 	handel_expanding(&lexer);
+	remove_quotes(&lexer);
+	// parser(&lexer, &cmds);
 	print_lexer(lexer);
 }
+//'"'$USER'"'
+//'"'"'$USER'"'"'
+//$5sss
+//$'USER'
+//single quotes cases
 
 void	parsing(void)
 {

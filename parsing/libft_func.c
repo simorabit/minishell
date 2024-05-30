@@ -17,7 +17,25 @@ char	*ft_strdup(const char *s1)
 	new_value[i] = '\0';
 	return (new_value);
 }
+char *ft_strncpy(char *s, int len)
+{
+	char *new_s;
+	int i;
 
+	i = 0;
+	if(!s)
+		return NULL;
+	new_s = malloc(len + 1);
+	if (!new_s)
+		return (NULL);
+	while (i < len)
+	{
+		new_s[i] = s[i];
+		i++;
+	}
+	new_s[i] = '\0';
+	return new_s;
+}
 int	str_chr(char *s, char c)
 {
 	int	i;

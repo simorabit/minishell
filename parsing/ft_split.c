@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/16 10:56:31 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/05/28 10:38:27 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static int	count_words(char *s)
 	{
 		while (s[i] && is_withspaces(s[i]))
 			i++;
-		if (s[i] && s[i++] == DOUBLE_QUOTE)
+		if (s[i] && s[i] == DOUBLE_QUOTE)
 		{
 			counter++;
-			while (s[i] && s[i] != DOUBLE_QUOTE)
+			while (s[i] && !(s[i] == DOUBLE_QUOTE && is_withspaces(s[i + 1])))
 				i++;
 			i++;
 		}
