@@ -6,12 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/30 18:00:05 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/02 12:26:07 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 char *alloc_exp(char *str, int *pos)
 {
@@ -20,9 +19,9 @@ char *alloc_exp(char *str, int *pos)
 	char *new_s;
 	char *res;
 	char *reset;
-
 	len_env = 0;
 	i = 0;
+
 	while (is_real_char(str[i++]))
 		len_env++;
 	new_s = ft_strncpy(str, len_env);
@@ -35,53 +34,95 @@ char *alloc_exp(char *str, int *pos)
 	res = ft_strjoin(getenv(new_s), reset);
 	return (res);
 }
-
-char *first_check(char *s, int *i, int *flag)
+char *expand_str(char *s)
 {
-	char *res;
-	
-	if (s[*i] == DOUBLE_QUOTE)
-		res = handel_expand_dq(s + (++(*i)), i);
-	else if (s[*i] == SINGLE_QUOTE)
-	{
-		res = handel_singleq(s + (++(*i)), i);
-		*flag = 1;	
-	}
-	else if (s[*i] == '$')
-		res = alloc_exp(s + (++(*i)), i);
-	else
-		return NULL;
-	return res;
-}
-char	*expand_str(char *s)
-{
-	int		i;
-	char	*result = NULL;
-	char	*befor_dollar;
-	int		counter;
-	int		flag;
+	int i;
+	char *result = NULL;
+	char *befor_dollar;
+	int counter;
+	int flag;
 
 	counter = 0;
 	i = 0;
 	flag = 0;
-	while (s[i] && !end_of_proccessing(s[i]))
+	while (s[i] && s[i] != '$')
 		i++;
 	befor_dollar = ft_substr(s, 0, i);
 	while (s[i])
 	{
+		//$USER'fgd"
 		if (!counter)
-			result = ft_strjoin(befor_dollar, first_check(s, &i, &flag));
+			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i));
 		else
-			result = ft_strjoin(result, first_check(s, &i, &flag));
-		if (flag)
-			result = if_single_q(s, &i, result);
-		(free(befor_dollar));
-		// if(result[0] == DOUBLE_QUOTE && s[0] == SINGLE_QUOTE)
-		// 	return expand_str(result);
-		// printf("%s %d", result , i);
-		// exit(0);
+			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
+		//$USER'fgd"
+		if(s[i] != '$')
+		{
+			int k = i;
+			while (s[i] && s[i] != DOUBLE_QUOTE)
+				i++;
+			result = ft_strjoin(result, ft_substr(s, k, i - k + 1));
+		}
 		counter++;
+		
 	}
+	return (result);
+}
+
+char *expand_str2(char *s)
+{
+	int i;
+	int j;
+	char *result = NULL;
+	j = 0;
+	i = 0;
+	int k = 0;
+	while (s[i])
+	{
+		j = 0;
+		k = 0;
+		if (s[i] == DOUBLE_QUOTE)
+		{
+			k = ++i;
+			while (s[i])
+			{
+				if (s[i] == DOUBLE_QUOTE)
+				{
+					char *res = ft_substr(s, k, j);
+					result = ft_strjoin(result, res);
+					if (str_chr(res, '$') != -1)
+						result = expand_str(result);
+					break;
+				}
+				j++;
+				i++;
+			}
+		}
+		else if(s[i] == SINGLE_QUOTE)
+		{
+			
+			k = ++i;
+			while (s[i])
+			{
+				if (s[i] == SINGLE_QUOTE)
+				{
+					result = ft_strjoin(result, ft_substr(s, k, j));
+					break;
+				}
+				j++;
+				i++;
+			}
+		}
+		else if(s[i] == '$')
+		{
+			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
+			i--;
+		}
+		else
+			result = ft_strjoin(result, ft_substr(&s[i], 0, 1));
+		i++;
+	}
+	
 	return (result);
 }
 
@@ -97,9 +138,10 @@ void handel_expanding(t_lexer **lexer)
 			tmp = tmp->next;
 			continue;
 		}
-		tmp->str = expand_str(tmp->str);
+		tmp->expanded = 1;
+		tmp->str = expand_str2(tmp->str);
 		if (*tmp->str == '\0')
 			ft_lst_remove(lexer, tmp->i);
-		tmp = tmp->next; 
+		tmp = tmp->next;
 	}
 }

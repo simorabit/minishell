@@ -58,7 +58,7 @@ void remove_quotes(t_lexer **lexer)
 	tmp = *lexer;
 	while (tmp)
 	{
-		if (has_quotes(tmp->str))
+		if (has_quotes(tmp->str) && !tmp->expanded)
 			tmp->str = remove_each_one(tmp->str);
 		tmp = tmp->next;
 	}

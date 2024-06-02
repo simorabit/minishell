@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/30 16:06:08 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/01 21:35:06 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ void	handel_input(char *line)
 	// parser(&lexer, &cmds);
 	print_lexer(lexer);
 }
-//'"'$USER'"'
-//'"'"'$USER'"'"'
-//$5sss
-//$'USER'
-//single quotes cases
 
 void	parsing(void)
 {

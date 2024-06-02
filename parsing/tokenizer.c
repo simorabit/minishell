@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:19:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/15 19:21:44 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/01 21:34:42 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	tokenizer(char **res, t_lexer **lexer)
 		else
 			node->token = word;
 		node->str = res[i];
+		node->expanded = 0;
 		ft_lstadd_back(lexer, node);
 		i++;
 	}

@@ -55,6 +55,17 @@ char *handel_expand_dq(char *s, int *pos)
 
 	coun = 0;
 	i = 0;
+	// while (s[i] && s[i] != '$')
+	// {
+	// 	if (s[i] == SINGLE_QUOTE)
+	// 		coun++;
+	// 	i++;
+	// }
+
+	// if (coun == 2)
+	// 	return ft_strdup(s);
+	i = 0;
+	coun = 0;
 	len = get_len_before_q(s, pos);
 	while (s[++len] && s[len] != DOUBLE_QUOTE)
 		(*pos)++;

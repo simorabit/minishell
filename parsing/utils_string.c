@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:25:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/27 15:58:04 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:18:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_strjoin(char  *s1, char  *s2)
 	if(!s1 && !s2)
 		return NULL;
 	if (!s1)
-		return (NULL);
+		return (s2);
 	if(!s2)
 		return (s1);
 	s1_len = ft_strlen(s1);

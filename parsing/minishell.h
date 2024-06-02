@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:45:40 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/30 18:01:59 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/02 13:03:07 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_lexer
 	char			*str;
 	t_token			token;
 	int				i;
+	int				expanded;
 	t_wquotes		wquotes;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
@@ -54,14 +55,24 @@ typedef struct s_lexer
 
 typedef struct s_simple_cmds
 {
-	char					**str;
-	// int                     (*builtin)(t_tools *, struct s_simple_cmds *);
-	int						num_redirections;
-	char					*hd_file_name;
-	t_lexer					*redirections;
-	struct s_simple_cmds	*next;
-	struct s_simple_cmds	*prev;
-}	t_simple_cmds;
+    char    *cmd;
+    char    **args;
+    char    **in_file;
+    char    **out_file;
+    char    **aout_file;
+    char    **heredoc;
+} t_simple_cmds; 
+
+// typedef struct s_simple_cmds
+// {
+// 	char					**str;
+// 	// int                     (*builtin)(t_tools *, struct s_simple_cmds *);
+// 	int						num_redirections;
+// 	char					*hd_file_name;
+// 	t_lexer					*redirections;
+// 	struct s_simple_cmds	*next;
+// 	struct s_simple_cmds	*prev;
+// }	t_simple_cmds;
 
 //libift func
 char *ft_strncpy(char *s, int len);
