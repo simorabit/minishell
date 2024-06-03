@@ -6,25 +6,48 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/01 21:35:06 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:56:30 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	print_cmd(t_simple_cmds *lexer)
+void	print_cmd(t_simple_cmds **cmds)
 {
-	t_simple_cmds *cmds;
 	int i = 0;
-	cmds = lexer;
-	while (cmds)
+	while (cmds && cmds[i])
 	{
-		while (cmds->str[i])
+		printf("cmd : %s\n",cmds[i]->cmd);
+		int j = 0;
+		while (cmds[i]->args && cmds[i]->args[j])
 		{
-			printf("cmd[%d] %s\n",i, cmds->str[i]);
-			i++;
+			printf("args %s\n", cmds[i]->args[j]);
+			j++;
 		}
-		print_lexer(cmds->redirections);
-		cmds = cmds->next;
+		j = 0;
+		while (cmds[i]->in_file && cmds[i]->in_file[j])
+		{
+			printf("in_file %s\n", cmds[i]->in_file[j]);
+			j++;
+		}
+		j = 0;
+		while (cmds[i]->out_file && cmds[i]->out_file[j])
+		{
+			printf("out_file %s\n", cmds[i]->out_file[j]);
+			j++;
+		}
+		j = 0;
+		while (cmds[i]->aout_file && cmds[i]->aout_file[j])
+		{
+			printf("aout_file %s\n", cmds[i]->aout_file[j]);
+			j++;
+		}
+		j = 0;
+		while (cmds[i]->heredoc && cmds[i]->heredoc[j])
+		{
+			printf("heredoc %s\n", cmds[i]->heredoc[j]);
+			j++;
+		}
+		i++;
 		printf("##########################\n");
 	}
 }
@@ -53,6 +76,8 @@ void	handel_input(char *line)
 	if (!handel_quotes(line))
 		return;
 	line = add_spaces(line);
+	if(!line)
+		return ;
 	res = ft_split(line);
 	if (!res)
 	{
@@ -64,8 +89,8 @@ void	handel_input(char *line)
 		return ;
 	handel_expanding(&lexer);
 	remove_quotes(&lexer);
-	// parser(&lexer, &cmds);
-	print_lexer(lexer);
+	cmds = parser(&lexer, &cmds);
+	// print_cmd(&cmds);
 }
 
 void	parsing(void)

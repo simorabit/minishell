@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:45:40 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/02 13:03:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:56:01 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ void	wait_till_end(char **s);
 
 //parser
 int				get_numof_pipes(t_lexer *lexer);
-void			parser(t_lexer **lexer, t_simple_cmds **cmds);
+// void 			*parser(t_lexer **lexer);
+void *parser(t_lexer **lexer, t_simple_cmds **cmds);
 t_simple_cmds	*ft_lstnew_cmd();
 t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmd);
 int				ft_lstsize_cmd(t_simple_cmds *lst);
 void			ft_lstadd_back_cmd(t_simple_cmds **cmd, t_simple_cmds *new);
-void	print_cmd(t_simple_cmds *lexer);
 int	ft_lstsize_new(t_lexer *lst);
 
 //expanding
@@ -146,6 +146,6 @@ int		end_of_proccessing(char c);
 int		is_real_char(char c);
 char	*handel_singleq(char *s, int *pos);
 void	*if_single_q(char *s, int *i, char *result);
-char *first_check(char *s, int *i, int *flag);
-
+// char *first_check(char *s, int *i, int *flag);
+void	print_cmd(t_simple_cmds **cmds);
 #endif

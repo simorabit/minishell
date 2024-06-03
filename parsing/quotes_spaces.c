@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/16 10:57:05 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:46:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,25 @@ void	*add_spaces(char *line)
 	int		i;
 	int		j;
 	int		len;
+	int		count_re;
 	char	*new_value;
 
-	i = -1;
+	i = 0;
 	j = 0;
+	count_re = count_redir(line);
+	if(count_re == 0)
+		return line;
 	len = ft_strlen(line) + 1 + count_redir(line);
 	new_value = (char *)malloc(len * sizeof(char));
 	if (!new_value)
 		allocation_error(line);
-	while (++i < len)
+	while (j < len - 1)
 	{
 		if (is_redir_has_found(line[i]) && no_quotes(line, i))
 			redir_founded(line, new_value, &i, &j);
 		else
 			new_value[j] = line[i];
+		i++;
 		j++;
 	}
 	new_value[j] = '\0';

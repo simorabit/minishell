@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/02 12:26:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/02 20:56:46 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ char *expand_str(char *s)
 	befor_dollar = ft_substr(s, 0, i);
 	while (s[i])
 	{
-		//$USER'fgd"
 		if (!counter)
 			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i));
 		else
 			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
-		//$USER'fgd"
 		if(s[i] != '$')
 		{
 			int k = i;
@@ -64,7 +62,6 @@ char *expand_str(char *s)
 			result = ft_strjoin(result, ft_substr(s, k, i - k + 1));
 		}
 		counter++;
-		
 	}
 	return (result);
 }
@@ -73,10 +70,13 @@ char *expand_str2(char *s)
 {
 	int i;
 	int j;
-	char *result = NULL;
+	char *result;
+	int k = 0;
+	char *res;
+	
 	j = 0;
 	i = 0;
-	int k = 0;
+	result = NULL;
 	while (s[i])
 	{
 		j = 0;
@@ -88,7 +88,7 @@ char *expand_str2(char *s)
 			{
 				if (s[i] == DOUBLE_QUOTE)
 				{
-					char *res = ft_substr(s, k, j);
+					res = ft_substr(s, k, j);
 					result = ft_strjoin(result, res);
 					if (str_chr(res, '$') != -1)
 						result = expand_str(result);
@@ -122,7 +122,6 @@ char *expand_str2(char *s)
 			result = ft_strjoin(result, ft_substr(&s[i], 0, 1));
 		i++;
 	}
-	
 	return (result);
 }
 
