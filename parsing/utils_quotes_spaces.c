@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/27 12:53:06 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:26:30 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	is_redir_has_found(char c)
 
 void	set_redir(char *s, int *j, int *i, char c)
 {
-	s[*j + 2] = c;
-	s[*j + 3] = ' ';
+	(*j)++;
+	s[*j] = c;
 	(*i)++;
-	(*j) += 3;
 }

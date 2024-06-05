@@ -6,22 +6,30 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/28 10:38:27 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:10:44 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_withspaces(char c)
+int is_withspaces(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
-
-static int	count_words(char *s)
+int is_quotes(char c)
 {
-	int	counter;
-	int	i;
+	return (c == DOUBLE_QUOTE || c == SINGLE_QUOTE);
+}
 
+static int count_words(char *s)
+{
+	int counter;
+	int i;
+	int q;
+	int flag;
+	
+	flag = -1;
+	q = 0;
 	i = 0;
 	counter = 0;
 	while (s[i])
@@ -31,23 +39,66 @@ static int	count_words(char *s)
 		if (s[i] && s[i] == DOUBLE_QUOTE)
 		{
 			counter++;
+			i++;
+			q = 1;
 			while (s[i] && !(s[i] == DOUBLE_QUOTE && is_withspaces(s[i + 1])))
+			{
+				if(s[i] == DOUBLE_QUOTE)
+					q++;
+				if(q % 2 == 0 && is_withspaces(s[i]))
+					break;
 				i++;
+			}
+			i++;
+		}
+		else if (s[i] && s[i] == SINGLE_QUOTE)
+		{
+			counter++;
+			i++;
+			q = 1;
+			while (s[i] && !(s[i] == SINGLE_QUOTE && is_withspaces(s[i + 1])))
+			{
+				if(s[i] == SINGLE_QUOTE)
+					q++;
+				if(q % 2 == 0 && is_withspaces(s[i]))
+					break;
+				i++;
+			}
 			i++;
 		}
 		else if (s[i] && !is_withspaces(s[i]))
 		{
 			counter++;
-			while (s[i] && !is_withspaces(s[i]))
+			while (s[i])
+			{
+				if (flag == -1 && s[i] == DOUBLE_QUOTE)
+				{
+					q++;
+					flag = 0;
+				}
+				if (flag == 0 && s[i] == DOUBLE_QUOTE)
+					q++;
+				else if (flag == -1 && s[i] == SINGLE_QUOTE)
+				{
+					q++;
+					flag = 1;
+				}
+				if (flag == 1 && s[i] == SINGLE_QUOTE)
+					q++;
+				if (is_withspaces(s[i]) && !q)
+					break;
+				if (is_withspaces(s[i]) && q % 2 != 0)
+					break;
 				i++;
+			}
 		}
 	}
 	return (counter);
 }
 
-int	is_space_after_quote(char *s, char quotes)
+int is_space_after_quote(char *s, char quotes)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i])
@@ -59,9 +110,9 @@ int	is_space_after_quote(char *s, char quotes)
 	return (0);
 }
 
-static char	*allocate_element(char **s, char **array, int j)
+static char *allocate_element(char **s, char **array, int j)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (**s == SINGLE_QUOTE)
@@ -73,10 +124,10 @@ static char	*allocate_element(char **s, char **array, int j)
 	return (NULL);
 }
 
-char	**ft_split(char *s)
+char **ft_split(char *s)
 {
-	char	**array;
-	int		j;
+	char **array;
+	int j;
 
 	j = 0;
 	if (!s)

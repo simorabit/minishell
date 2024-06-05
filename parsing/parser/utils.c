@@ -1,6 +1,17 @@
 #include "../minishell.h"
 
-int get_numof_pipes(t_lexer *lexer)
+void init_arrays(t_simple_cmds *cmds)
+{
+    if (cmds)
+    {
+        cmds->args = NULL;
+        cmds->in_file = NULL;
+        cmds->out_file = NULL;
+        // cmds->heredoc = NULL;
+        cmds->aout_file = NULL;
+    }
+}
+int get_lcmd(t_lexer *lexer)
 {
     t_lexer *tmp;
     int counter;

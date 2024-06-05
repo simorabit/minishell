@@ -6,57 +6,83 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:13:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/16 10:57:50 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:12:27 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	wait_for_quotes(char **s, char quotes)
+static void wait_for_quotes(char **s, char quotes)
 {
-	int	q_count;
-
-	q_count = 0;
 	(*s)++;
-	while (**s)
+	int q;
+
+	q = 1;
+	while (**s && !(**s == quotes && is_withspaces(*(*s + 1))))
 	{
-		if (is_withspaces((**s)) && q_count)
-			break ;
 		if (**s == quotes)
-			q_count++;
+			q++;
+		if (q % 2 == 0 && is_withspaces(**s))
+			break;
 		(*s)++;
 	}
+	(*s)++;
 }
 
-int	get_len(char *s, char quotes)
+int get_len(char *s, char quotes)
 {
-	int	i;
-	int	findq;
+	int i;
+	int q;
+	int flag;
 
-	findq = 0;
+	flag = -1;
+	q = 0;
 	i = 0;
-	if (s[i] != quotes)
+	if (*s == quotes)
 	{
-		while (s[i] && !is_withspaces(s[i]))
+		i = 1;
+		q = 1;
+		while (s[i] && !(s[i] == quotes && is_withspaces(s[i + 1])))
+		{
+			if (s[i] == quotes)
+				q++;
+			if (q % 2 == 0 && is_withspaces(s[i]))
+				break;
 			i++;
-		return (i);
+		}
 	}
-	i++;
-	while (s[i] && !(is_withspaces(s[i]) && findq))
+	else
 	{
-		if (s[i] == quotes)
-			findq = 1;
-		i++;
+		while (s[i])
+		{
+			if (flag == -1 && s[i] == DOUBLE_QUOTE)
+			{
+				q++;
+				flag = 0;
+			}
+			if (flag == 0 && s[i] == DOUBLE_QUOTE)
+				q++;
+			else if (flag == -1 && s[i] == SINGLE_QUOTE)
+			{
+				q++;
+				flag = 1;
+			}
+			if (flag == 1 && s[i] == SINGLE_QUOTE)
+				q++;
+			if ((is_withspaces(s[i]) && !q) || (is_withspaces(s[i]) && q % 2 != 0))
+				break;
+			i++;
+		}
 	}
 	return (i);
 }
 
-char	*ft_word(char *s, char **arr, char ind, char quotes)
+char *ft_word(char *s, char **arr, char ind, char quotes)
 {
-	int		i;
-	char	*output;
-	int		j;
-	int		len;
+	int i;
+	char *output;
+	int j;
+	int len;
 
 	i = 0;
 	j = 0;
@@ -77,13 +103,40 @@ char	*ft_word(char *s, char **arr, char ind, char quotes)
 	return (output);
 }
 
-void	wait_till_end(char **s)
+void wait_till_end(char **s)
 {
+	int q;
+	int flag;
+
+	flag = -1;
+	q = 0;
 	if (**s == SINGLE_QUOTE)
 		wait_for_quotes(s, SINGLE_QUOTE);
 	else if (**s == DOUBLE_QUOTE)
 		wait_for_quotes(s, DOUBLE_QUOTE);
 	else
-		while (**s && !is_withspaces(**s))
+	{
+		while (**s)
+		{
+			if (flag == -1 && **s == DOUBLE_QUOTE)
+			{
+				q++;
+				flag = 0;
+			}
+			if (flag == 0 && **s == DOUBLE_QUOTE)
+				q++;
+			else if (flag == -1 && **s == SINGLE_QUOTE)
+			{
+				q++;
+				flag = 1;
+			}
+			if (flag == 1 && **s == SINGLE_QUOTE)
+				q++;
+			if (is_withspaces(**s) && !q)
+				break;
+			if (is_withspaces(**s) && q % 2 != 0)
+				break;
 			(*s)++;
+		}
+	}
 }

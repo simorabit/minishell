@@ -9,11 +9,13 @@ int has_quotes(char *s)
 	{
 		if (s[i] == DOUBLE_QUOTE)
 			return 1;
+		else if (s[i] == SINGLE_QUOTE)
+			return 2;
 		i++;
 	}
 	return 0;
 }
-int get_mlen(char *s)
+int get_mlen(char *s, char q)
 {
     int i;
     int len;
@@ -22,13 +24,13 @@ int get_mlen(char *s)
     i = 0;
     while (s[i])
 	{
-		if (s[i] != DOUBLE_QUOTE)
+		if (s[i] != q)
 			len++;
 		i++;
 	}
     return len;
 }
-void *remove_each_one(char *s)
+void *remove_each_one(char *s, char q)
 {
 	int len;
 	int i;
@@ -37,14 +39,14 @@ void *remove_each_one(char *s)
 
 	j = 0;
 	i = 0;
-	len = get_mlen(s);
+	len = get_mlen(s, q);
 	new_s = malloc(len + 1);
 	if(!new_s)
 		return NULL;
 	i = 0;
 	while(s[i] && j < len)
     {
-        if(s[i]!= DOUBLE_QUOTE)
+        if(s[i]!= q)
 			new_s[j++] = s[i];
         i++;
     }
@@ -58,8 +60,10 @@ void remove_quotes(t_lexer **lexer)
 	tmp = *lexer;
 	while (tmp)
 	{
-		if (has_quotes(tmp->str) && !tmp->expanded)
-			tmp->str = remove_each_one(tmp->str);
+		if (has_quotes(tmp->str) == 1 && !tmp->expanded)
+			tmp->str = remove_each_one(tmp->str, DOUBLE_QUOTE);
+		else if (has_quotes(tmp->str) == 2 && !tmp->expanded)
+			tmp->str = remove_each_one(tmp->str, SINGLE_QUOTE);
 		tmp = tmp->next;
 	}
 }

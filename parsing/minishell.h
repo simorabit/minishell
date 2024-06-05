@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:45:40 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:01 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:31:22 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,12 @@ typedef struct s_simple_cmds
 {
     char    *cmd;
     char    **args;
-    char    **in_file;
+    char   	**in_file;
     char    **out_file;
-    char    **aout_file;
-    char    **heredoc;
+    char	**aout_file;
+    int		heredoc;	
+	struct s_simple_cmds *next;
 } t_simple_cmds; 
-
-// typedef struct s_simple_cmds
-// {
-// 	char					**str;
-// 	// int                     (*builtin)(t_tools *, struct s_simple_cmds *);
-// 	int						num_redirections;
-// 	char					*hd_file_name;
-// 	t_lexer					*redirections;
-// 	struct s_simple_cmds	*next;
-// 	struct s_simple_cmds	*prev;
-// }	t_simple_cmds;
 
 //libift func
 char *ft_strncpy(char *s, int len);
@@ -86,7 +76,6 @@ void ft_lst_remove(t_lexer **lexer, int index);
 
 //main
 int		handel_quotes(char *line);
-void	print_lexer(t_lexer *lexer);
 
 //remove quotes
 void remove_quotes(t_lexer **lexer);
@@ -96,6 +85,7 @@ void	*add_spaces(char *line);
 
 //tokenizer
 void	tokenizer(char **res, t_lexer **lexer);
+
 
 //utils_string
 size_t	ft_strlen(const char *s);
@@ -122,30 +112,41 @@ int	is_redirs(t_lexer *lexer);
 int		is_withspaces(char c);
 char	*ft_word(char *s, char **arr, char ind, char quotes);
 void	wait_till_end(char **s);
+int	is_quotes(char c);
 
 //parser
-int				get_numof_pipes(t_lexer *lexer);
-// void 			*parser(t_lexer **lexer);
-void *parser(t_lexer **lexer, t_simple_cmds **cmds);
+
 t_simple_cmds	*ft_lstnew_cmd();
-t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmd);
-int				ft_lstsize_cmd(t_simple_cmds *lst);
-void			ft_lstadd_back_cmd(t_simple_cmds **cmd, t_simple_cmds *new);
-int	ft_lstsize_new(t_lexer *lst);
+int	ft_lstsize_cmd(t_simple_cmds *lst);
+void	ft_lstadd_back_cmd(t_simple_cmds **cmds, t_simple_cmds *new);
+t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds);
+
+int		get_lcmd(t_lexer *lexer);
+void	*save_in_files(t_lexer **lexer, t_simple_cmds *cmds);
+void 	*save_out_files(t_lexer **lexer, t_simple_cmds *cmds);
+void 	*save_app_files(t_lexer **lexer, t_simple_cmds *cmds);
+void 	*save_heredoc(t_lexer **lexer, t_simple_cmds *cmds);
+void 	init_arrays(t_simple_cmds *cmds);
+void 	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len);
+int		ft_lstsize_new(t_lexer *lst);
 
 //expanding
 void	handel_expanding(t_lexer **lexer);
+char 	*expand_str(char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);
-char	**or_split(char const *s, char c);
-char	*handel_expand_dq(char *s, int *pos);
+char 	*handel_double_q(char *result, char *s, int *i, int *j);
+char 	*handel_singleq(char *result, char *s, int *i, int *j);
 char	*alloc_exp(char *str, int *pos);
 int		get_len_ep(char *s);
 int		end_of_proccessing(char c);
 int		is_real_char(char c);
-char	*handel_singleq(char *s, int *pos);
-void	*if_single_q(char *s, int *i, char *result);
-// char *first_check(char *s, int *i, int *flag);
+char *expand_str2(char *s);
+
+//debugging
 void	print_cmd(t_simple_cmds **cmds);
+void 	printf_str(char *s);
+void 	printf_int(int d);
+void	print_lexer(t_lexer *lexer);
 #endif

@@ -6,13 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:24:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/27 12:49:46 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:30:37 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// <|a << <a
-//TODO - handel this << <
 
 int	is_redirs(t_lexer *lexer)
 {
