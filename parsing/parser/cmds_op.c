@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds)
 {

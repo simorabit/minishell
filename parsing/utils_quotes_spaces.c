@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/04 16:26:30 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:47:59 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	quotes(char *line, char q)
 {
@@ -45,6 +45,7 @@ int	is_redir_has_found(char c)
 
 void	set_redir(char *s, int *j, int *i, char c)
 {
+	s[*j] = c;
 	(*j)++;
 	s[*j] = c;
 	(*i)++;

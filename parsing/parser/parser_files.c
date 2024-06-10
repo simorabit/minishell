@@ -1,104 +1,74 @@
-#include "../minishell.h"
-
-void *save_app_files(t_lexer **lexer, t_simple_cmds *cmds)
+#include "../../minishell.h"
+int handel_heredoc(char *del)
 {
-    t_lexer *tmp;
-    int len;
-    int i;
-
-    i = 0;
-    len = 0;
-    tmp = (*lexer)->next;
-    while (tmp && (tmp->token == word || tmp->token == redirect_app))
+    int fd_in;
+    char *line;
+    char *limiter;
+    
+    fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
+    if (fd_in == -1)
+        (perror("Error in open file"));
+    else
     {
-        if (tmp->token == word)
-            len++;
-        tmp = tmp->next;
+        line = get_next_line(0);
+        limiter = ft_strjoin(del, "\n");
+        if(!limiter)
+            return -2;
+        while (ft_strncmp(line, limiter, ft_strlen(limiter)))
+        {
+            ft_putstr_fd(line, fd_in);
+            free(line);
+            line = get_next_line(0);
+            if (!line)
+                break;
+        }
     }
-    cmds->aout_file = malloc((len + 1) * sizeof(char *));
-    if (!cmds->aout_file)
-        return NULL;
+    return fd_in;
+}
+int save_heredoc(t_lexer **lexer)
+{
+    int len;
+    char *del;
+    int fd;
+
+    len = 0;
     (*lexer) = (*lexer)->next;
-    while (i < len)
+    while ((*lexer) && ((*lexer)->token == delimiter || (*lexer)->token == heredoc))
     {
-        if ((*lexer)->token == word)
-            cmds->aout_file[i++] = ft_strdup((*lexer)->str);
+        if ((*lexer)->token == delimiter && ((*lexer)->next == NULL ||
+                    (*lexer)->next->token == mpipe))
+            del = ft_strdup((*lexer)->str);
         (*lexer) = (*lexer)->next;
     }
-    cmds->aout_file[i] = NULL;
-    return cmds;
+    fd = handel_heredoc(del);
+    return (fd);
 }
-void *save_heredoc(t_lexer **lexer, t_simple_cmds *cmds)
+int open_files(t_lexer **lexer, t_token token)
 {
-    t_lexer *tmp;
-    int     len;
-    char    *del;
-
-    len = 0;
-    tmp = (*lexer)->next;
-    while (tmp && (tmp->token == word || tmp->token == heredoc))
-    {
-        if (tmp->token == word && (tmp->next == NULL || 
-                tmp->next->token == mpipe))
-            del = ft_strdup(tmp->str);
-        tmp = tmp->next;
-    }
-    // need to complite tomorrow
-    return cmds;
-}
-void *save_out_files(t_lexer **lexer, t_simple_cmds *cmds)
-{
-    t_lexer *tmp;
     int len;
-    int i;
+    char *mfile;
+    int fd;
 
-    i = 0;
     len = 0;
-    tmp = (*lexer)->next;
-    while (tmp && (tmp->token == word || tmp->token == redirect_out))
-    {
-        if (tmp->token == word)
-            len++;
-        tmp = tmp->next;
-    }
-    cmds->out_file = malloc((len + 1) * sizeof(char *));
-    if (!cmds->out_file)
-        return NULL;
     (*lexer) = (*lexer)->next;
-    while (i < len)
+    while ((*lexer) && ((*lexer)->token == file || (*lexer)->token == token))
     {
-        if((*lexer)->token == word)
-            cmds->out_file[i++] = ft_strdup((*lexer)->str);
+        if ((*lexer)->token == file && ((*lexer)->next == NULL || 
+                (*lexer)->next->token != token))
+            mfile = ft_strdup((*lexer)->str);
         (*lexer) = (*lexer)->next;
     }
-    cmds->out_file[i] = NULL;
-    return cmds;
-}
-void *save_in_files(t_lexer **lexer, t_simple_cmds *cmds)
-{
-    t_lexer *tmp;
-    int len;
-    int i;
-
-    i = 0;
-    len = 0;
-    tmp = (*lexer)->next;
-    while (tmp && (tmp->token == word || tmp->token == redirect_in))
-    {
-        if (tmp->token == word)
-            len++;
-        tmp = tmp->next;
-    }
-    cmds->in_file = malloc((len + 1) * sizeof(char *));
-    if (!cmds->in_file)
-        return NULL;
-    (*lexer) = (*lexer)->next;
-    while (i < len)
-    {
-        if((*lexer)->token == word)
-            cmds->in_file[i++] = ft_strdup((*lexer)->str);
-        (*lexer) = (*lexer)->next;
-    }
-    cmds->in_file[i] = NULL;
-    return cmds;
+    if(mfile && !*mfile)
+        return (error_msg("ambiguous redirect"), -1);
+    if (token == redirect_out)
+        fd = open(mfile, O_RDONLY , 0644);
+    else if (token == redirect_in)
+        fd = open(mfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    else 
+        fd = open(mfile, O_CREAT | O_RDWR | O_APPEND, 0644);
+    if (fd == -1 && token == redirect_out)
+        (error_msg("No such file or directory"));
+    else
+        (error_msg("Error in open file"));
+    return fd;
 }

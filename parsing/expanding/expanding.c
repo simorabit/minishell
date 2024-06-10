@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/05 23:21:56 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:49:09 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char *alloc_exp(char *str, int *pos)
 {
@@ -31,9 +31,13 @@ char *alloc_exp(char *str, int *pos)
 	while (!end_of_proccessing(str[i++]))
 		(*pos)++;
 	reset = ft_substr(str, len_env, get_len_ep(str) - len_env);
+	if(!*reset)
+		reset = NULL;
 	res = ft_strjoin(getenv(new_s), reset);
+	free(reset);
 	return (res);
 }
+
 void *find_dollar(char *result, char *s, int *i)
 {
 	int k;
@@ -46,6 +50,7 @@ void *find_dollar(char *result, char *s, int *i)
 	result = ft_strjoin(result, ft_substr(s, k, (*i) - k + 1));
 	return result;
 }
+
 char *expand_str(char *s)
 {
 	int i;
@@ -65,7 +70,7 @@ char *expand_str(char *s)
 			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i));
 		else if(s[i] == '$' && counter)
 			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
-		if (s[i] != '$')
+		if (s[i] && s[i] != '$')
 			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
 		if (!result) 
 				return NULL;
@@ -107,19 +112,27 @@ char *expand_str2(char *s)
 void handel_expanding(t_lexer **lexer)
 {
 	t_lexer *tmp;
+	int i;
 
 	tmp = *lexer;
 	while (tmp)
 	{
-		if (str_chr(tmp->str, '$') == -1)
+		if (str_chr(tmp->str, '$') == -1 || tmp->token == delimiter)
 		{
 			tmp = tmp->next;
 			continue;
 		}
 		tmp->expanded = 1;
 		tmp->str = expand_str2(tmp->str);
-		if (*tmp->str == '\0')
-			ft_lst_remove(lexer, tmp->i);
-		tmp = tmp->next;
+		if(tmp->token != word)
+			tmp->str = "";
+		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))
+		{
+			i = tmp->i;
+			tmp = tmp->next;
+			ft_lst_remove(lexer, i);
+		}
+		else
+			tmp = tmp->next;
 	}
 }

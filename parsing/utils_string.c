@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:25:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/01 17:18:31 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:48:06 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -42,7 +42,7 @@ char	*ft_strjoin(char  *s1, char  *s2)
 	size_t	s2_len;
 	char	*result;
 	char	*ptr;
-
+	
 	if(!s1 && !s2)
 		return NULL;
 	if (!s1)

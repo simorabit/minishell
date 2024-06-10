@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void *save_args(t_lexer **lexer, t_simple_cmds *cmds)
 {
@@ -24,30 +24,46 @@ void *save_args(t_lexer **lexer, t_simple_cmds *cmds)
         i++;
     }
     cmds->args[i] = NULL;
-    return NULL;
+    return lexer;
 }
 
-void handel_files(t_lexer **tmp, t_simple_cmds *cmds)
+int handel_files(t_lexer **tmp, t_simple_cmds *cmds)
 {
+    int res;
+
+    res = 0;
     if (*tmp && (*tmp)->token == redirect_in)
-        save_in_files(tmp, cmds);
+        cmds->in_file = open_files(tmp, redirect_in);
     else if (*tmp && (*tmp)->token == redirect_out)
-        save_out_files(tmp, cmds);
+        cmds->out_file = open_files(tmp, redirect_out);
     else if (*tmp && (*tmp)->token == heredoc)
-        save_heredoc(tmp, cmds);
+    {
+        res = save_heredoc(tmp);
+        if(res == -2)
+            return -1;
+        cmds->heredoc = res;
+    }
     else if (*tmp && (*tmp)->token == redirect_app)
-        save_app_files(tmp, cmds);
+        cmds->aout_file = open_files(tmp, redirect_app);
+    return res;
 }
 
-void handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
+void *handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
 {
+     
     if (*j == 0 && (*tmp)->token == word)
     {
         cmds->cmd = ft_strdup((*tmp)->str);
+        if (!cmds->cmd)
+            return NULL;
         (*tmp) = (*tmp)->next;
     }
     else if ((*tmp)->token == word)
-        save_args(tmp, cmds);
+    {
+        if (save_args(tmp, cmds) == NULL)
+            return NULL;
+    }
+    return cmds;
 }
 t_simple_cmds *get_node_parse(t_lexer **tmp)
 {
@@ -59,10 +75,10 @@ t_simple_cmds *get_node_parse(t_lexer **tmp)
     init_arrays(node);
     while (*tmp && (*tmp)->token != mpipe)
     {
-        handel_cmd(tmp, node, &j);
-        if (*tmp && (*tmp)->token == redirect_in)
-            save_in_files(tmp, node);
-        handel_files(tmp, node);
+        if(!handel_cmd(tmp, node, &j))
+            return (NULL);
+        if(handel_files(tmp, node) == -1)
+            return NULL;
         if (*tmp && (*tmp)->token == mpipe)
         {
             *tmp = (*tmp)->next;
@@ -86,58 +102,12 @@ void *parser(t_lexer **lexer, t_simple_cmds **cmds, int len)
     while (tmp && i <= len)
     {
         node = get_node_parse(&tmp);
+        if(!node)
+            return NULL;
         ft_lstadd_back_cmd(cmds, node);
         i++;
     }
     return *cmds;
 }
 
-// void *parser(t_lexer **lexer)
-// {
-//     int i;
-//     int j;
-//     int n_pipe;
-//     t_lexer *tmp;
-//     t_simple_cmds **cmds;
-//     tmp = *lexer;
-//     i = 0;
-//     n_pipe = get_numof_pipes(*lexer);
-//     cmds = malloc((n_pipe + 2) * sizeof(t_simple_cmds *)); // Ensure enough space for cmds array
-//     if (!cmds)
-//         return NULL;
-//     while (tmp && i <= n_pipe)
-//     {
-//         j = 0;
-//         cmds[i] = malloc(sizeof(t_simple_cmds)); // Allocate memory for each t_simple_cmds struct
-//         if (!cmds[i])
-//             return NULL;
-//         init_arrays(cmds[i]); // Initialize each cmds element
-//         while (tmp && tmp->token != mpipe)
-//         {
-//             if (j == 0 && tmp->token == word)
-//             {
-//                 (*cmds)[i].cmd = ft_strdup(tmp->str);
-//                 tmp = tmp->next;
-//             }
-//             else if (tmp->token == word)
-//                 save_args(&tmp, cmds[i]);
-//             else if (tmp->token == redirect_in)
-//                 save_in_files(&tmp, cmds[i]);
-//             else if (tmp->token == redirect_out)
-//                 save_out_files(&tmp, cmds[i]);
-//             else if (tmp->token == heredoc)
-//                 save_heredoc(&tmp, cmds[i]);
-//             else if (tmp->token == redirect_app)
-//                 save_app_files(&tmp, cmds[i]);
-//             if (tmp && tmp->token == mpipe)
-//             {
-//                 tmp = tmp->next;
-//                 break;
-//             }
-//             j++;
-//         }
-//         i++;
-//     }
-//     cmds[i] = NULL;
-//     return cmds;
-// }
+

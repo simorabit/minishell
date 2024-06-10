@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:59:50 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/16 10:56:44 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:47:43 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	allocation_error(char *s)
 {
@@ -21,7 +21,7 @@ void	allocation_error(char *s)
 
 void	error_msg(char *s)
 {
-	printf("%s", s);
+	printf("%s\n", s);
     // exit(0);
 }
 
@@ -38,4 +38,15 @@ void	free_list(char **list)
 		i++;
 	}
 	free(list);
+}
+void	free_lexer(t_lexer *lexer)
+{
+	t_lexer	*tmp;
+
+	while (lexer)
+	{
+		tmp = lexer;
+		lexer = lexer->next;
+		free(tmp);
+	}
 }

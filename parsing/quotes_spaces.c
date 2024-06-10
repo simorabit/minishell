@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/05 21:38:54 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:46:41 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	no_quotes(char *line, int i)
 {
@@ -29,11 +29,11 @@ int	count_redir(char *line)
 	{
 		if (is_redir_has_found(line[i]))
 		{
-			if(i != 0 && !is_withspaces(line[i - 1]) && !no_quotes(line, i - 1))
+			if(i != 0 && !is_withspaces(line[i - 1]))
 				counter++;
 			if (is_redir_has_found(line[i + 1]))
 				i++;
-			if(line[i + 1] && !is_withspaces(line[i + 1]) && !no_quotes(line, i + 1))
+			if(line[i + 1] && !is_withspaces(line[i + 1]))
 				counter++;
 		}
 		i++;
@@ -43,22 +43,29 @@ int	count_redir(char *line)
 
 void	redir_founded(char *line, char *new_value, int *i, int *j)
 {
-	if (*i != 0 && !is_withspaces(line[*i - 1]) && !no_quotes(line, *i - 1))
+	int need_space;
+	
+	need_space = 0;
+	if (*i != 0 && !is_withspaces(line[*i - 1]))
 	{
 		new_value[*j] = ' ';
 		new_value[*j + 1] = line[*i];
 		(*j)++;
+		need_space = 1;
 	}
 	if (line[*i] == '<' && line[*i + 1] == '<')
 		set_redir(new_value, j, i, line[*i]);
 	else if (line[*i] == '>' && line[*i + 1] == '>')
 		set_redir(new_value, j, i, line[*i]);
-	if (line[*i + 1] && !is_withspaces(line[*i + 1]) && !no_quotes(line, *i + 1))
+	if (line[*i + 1] && !is_withspaces(line[*i + 1]))
 	{
 		new_value[*j] = line[*i];
 		(*j)++;
 		new_value[*j] = ' ';
+		need_space = 1;
 	}
+	if(!need_space)
+		new_value[*j] = line[*i];
 }
 
 
@@ -80,14 +87,12 @@ void	*add_spaces(char *line)
 	new_value = malloc(len * sizeof(char));
 	if (!new_value)
 		allocation_error(line);
-	while (j < len)
+	while (j < len - 1)
 	{
 		if (is_redir_has_found(line[i]))
 			redir_founded(line, new_value, &i, &j);
 		else
-		{
 			new_value[j] = line[i];
-		}
 		i++;
 		j++;
 	}

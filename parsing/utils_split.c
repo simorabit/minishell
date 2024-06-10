@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:13:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/05 22:12:27 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:47:55 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void wait_for_quotes(char **s, char quotes)
 {
@@ -103,6 +103,37 @@ char *ft_word(char *s, char **arr, char ind, char quotes)
 	return (output);
 }
 
+void wait_if_char(char **s)
+{
+	int q;
+	int flag;
+
+	flag = -1;
+	q = 0;
+	while (**s)
+	{
+		if (flag == -1 && **s == DOUBLE_QUOTE)
+		{
+			q++;
+			flag = 0;
+		}
+		if (flag == 0 && **s == DOUBLE_QUOTE)
+			q++;
+		else if (flag == -1 && **s == SINGLE_QUOTE)
+		{
+			q++;
+			flag = 1;
+		}
+		if (flag == 1 && **s == SINGLE_QUOTE)
+			q++;
+		if (is_withspaces(**s) && !q)
+			break;
+		if (is_withspaces(**s) && q % 2 != 0)
+			break;
+		(*s)++;
+	}
+}
+
 void wait_till_end(char **s)
 {
 	int q;
@@ -115,28 +146,5 @@ void wait_till_end(char **s)
 	else if (**s == DOUBLE_QUOTE)
 		wait_for_quotes(s, DOUBLE_QUOTE);
 	else
-	{
-		while (**s)
-		{
-			if (flag == -1 && **s == DOUBLE_QUOTE)
-			{
-				q++;
-				flag = 0;
-			}
-			if (flag == 0 && **s == DOUBLE_QUOTE)
-				q++;
-			else if (flag == -1 && **s == SINGLE_QUOTE)
-			{
-				q++;
-				flag = 1;
-			}
-			if (flag == 1 && **s == SINGLE_QUOTE)
-				q++;
-			if (is_withspaces(**s) && !q)
-				break;
-			if (is_withspaces(**s) && q % 2 != 0)
-				break;
-			(*s)++;
-		}
-	}
+		wait_if_char(s);
 }

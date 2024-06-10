@@ -1,4 +1,17 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes_expanding.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 21:08:16 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/06/10 16:49:19 by mal-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../minishell.h"
+
 char *handel_singleq(char *result, char *s, int *i, int *j)
 {
 	int k;
@@ -16,6 +29,7 @@ char *handel_singleq(char *result, char *s, int *i, int *j)
 	}
 	return result;
 }
+
 char *handel_double_q(char *result, char *s, int *i, int *j)
 {
 	int k;
@@ -24,15 +38,15 @@ char *handel_double_q(char *result, char *s, int *i, int *j)
 	k = ++(*i);
 	while (s[*i])
 	{
-
 		if (s[*i] == DOUBLE_QUOTE)
 		{
 			res = ft_substr(s, k, *j);
 			if(!res)
 				return NULL;
-			result = ft_strjoin(result, res);
 			if (str_chr(res, '$') != -1)
-				result = expand_str(res);
+				result = ft_strjoin(result, expand_str(res));
+			else
+				result = ft_strjoin(result, res);
 			break;
 		}
 		(*j)++;

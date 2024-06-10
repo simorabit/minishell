@@ -1,14 +1,15 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void init_arrays(t_simple_cmds *cmds)
 {
     if (cmds)
     {
         cmds->args = NULL;
-        cmds->in_file = NULL;
-        cmds->out_file = NULL;
-        // cmds->heredoc = NULL;
-        cmds->aout_file = NULL;
+        cmds->cmmd = NULL;
+        cmds->in_file = -2;
+        cmds->out_file = -2;
+        cmds->heredoc = -2;
+        cmds->aout_file = -2;
     }
 }
 int get_lcmd(t_lexer *lexer)

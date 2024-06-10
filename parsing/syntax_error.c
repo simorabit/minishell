@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:24:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/04 12:30:37 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:47:38 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	is_redirs(t_lexer *lexer)
 {

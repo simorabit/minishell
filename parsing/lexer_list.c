@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/05/29 20:04:06 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:47:21 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_lexer	*ft_lstlast(t_lexer *lexer)
 {

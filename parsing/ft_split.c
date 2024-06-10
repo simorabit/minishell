@@ -6,11 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/05 22:10:44 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:46:58 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int is_withspaces(char c)
 {
@@ -20,15 +20,61 @@ int is_quotes(char c)
 {
 	return (c == DOUBLE_QUOTE || c == SINGLE_QUOTE);
 }
+void count_if_quote(char *s, char qoute, int *i, int *counter)
+{
+	int q;
+
+	(*counter)++;
+	(*i)++;
+	q = 1;
+	while (s[*i] && !(s[*i] == qoute && is_withspaces(s[*i + 1])))
+	{
+		if (s[*i] == qoute)
+			q++;
+		if (q % 2 == 0 && is_withspaces(s[*i]))
+			break;
+		(*i)++;
+	}
+	(*i)++;
+}
+
+void count_if_char(char *s, int *i)
+{
+	int flag;
+	int q;
+
+	q = 0;
+	flag = -1;
+	while (s[*i])
+	{
+		if (flag == -1 && s[*i] == DOUBLE_QUOTE)
+		{
+			q++;
+			flag = 0;
+		}
+		if (flag == 0 && s[*i] == DOUBLE_QUOTE)
+			q++;
+		else if (flag == -1 && s[*i] == SINGLE_QUOTE)
+		{
+			q++;
+			flag = 1;
+		}
+		if (flag == 1 && s[*i] == SINGLE_QUOTE)
+			q++;
+		if (is_withspaces(s[*i]) && !q)
+			break;
+		if (is_withspaces(s[*i]) && q % 2 != 0)
+			break;
+		(*i)++;
+	}
+}
 
 static int count_words(char *s)
 {
 	int counter;
 	int i;
 	int q;
-	int flag;
 	
-	flag = -1;
 	q = 0;
 	i = 0;
 	counter = 0;
@@ -37,60 +83,13 @@ static int count_words(char *s)
 		while (s[i] && is_withspaces(s[i]))
 			i++;
 		if (s[i] && s[i] == DOUBLE_QUOTE)
-		{
-			counter++;
-			i++;
-			q = 1;
-			while (s[i] && !(s[i] == DOUBLE_QUOTE && is_withspaces(s[i + 1])))
-			{
-				if(s[i] == DOUBLE_QUOTE)
-					q++;
-				if(q % 2 == 0 && is_withspaces(s[i]))
-					break;
-				i++;
-			}
-			i++;
-		}
+			count_if_quote(s, DOUBLE_QUOTE, &i, &counter);
 		else if (s[i] && s[i] == SINGLE_QUOTE)
-		{
-			counter++;
-			i++;
-			q = 1;
-			while (s[i] && !(s[i] == SINGLE_QUOTE && is_withspaces(s[i + 1])))
-			{
-				if(s[i] == SINGLE_QUOTE)
-					q++;
-				if(q % 2 == 0 && is_withspaces(s[i]))
-					break;
-				i++;
-			}
-			i++;
-		}
+			count_if_quote(s, SINGLE_QUOTE, &i, &counter);
 		else if (s[i] && !is_withspaces(s[i]))
 		{
 			counter++;
-			while (s[i])
-			{
-				if (flag == -1 && s[i] == DOUBLE_QUOTE)
-				{
-					q++;
-					flag = 0;
-				}
-				if (flag == 0 && s[i] == DOUBLE_QUOTE)
-					q++;
-				else if (flag == -1 && s[i] == SINGLE_QUOTE)
-				{
-					q++;
-					flag = 1;
-				}
-				if (flag == 1 && s[i] == SINGLE_QUOTE)
-					q++;
-				if (is_withspaces(s[i]) && !q)
-					break;
-				if (is_withspaces(s[i]) && q % 2 != 0)
-					break;
-				i++;
-			}
+			count_if_char(s, &i);
 		}
 	}
 	return (counter);

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -41,6 +41,8 @@ int	str_chr(char *s, char c)
 	int	i;
 
 	i = 0;
+	if(s == NULL)
+		return -1;
 	while (s[i])
 	{
 		if (s[i] == c)
@@ -48,4 +50,26 @@ int	str_chr(char *s, char c)
 		i++;
 	}
 	return (-1);
+}
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+{
+	unsigned int	i;
+
+	i = 0;
+	while ((n > i) && (s1[i] == s2[i]) && (s1[i] != '\0'))
+		i++;
+	if (n == i)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+void	ft_putstr_fd(char *str, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(fd, &str[i], 1);
+		i++;
+	}
 }

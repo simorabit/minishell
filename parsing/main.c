@@ -6,11 +6,12 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/05 23:24:00 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:44:18 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
+
 void printf_int(int d)
 {
 	printf("debug >> %d\n", d);
@@ -21,109 +22,94 @@ void printf_str(char *s)
 	printf("debug >> %s\n", s);
 	exit(0);
 }
-void	print_cmd(t_simple_cmds **cmds)
+void print_cmd(t_simple_cmds **cmds)
 {
 	while (cmds && *cmds)
 	{
-		printf("cmd : %s\n",(*cmds)->cmd);
+		printf("cmd       : %s\n", (*cmds)->cmd);
 		int j = 0;
 		while ((*cmds)->args && (*cmds)->args[j])
 		{
-			printf("args %s\n", (*cmds)->args[j]);
+			printf("args      : %s\n", (*cmds)->args[j]);
 			j++;
 		}
-		j = 0;
-		while ((*cmds)->in_file && (*cmds)->in_file[j])
-		{
-			printf("in_file %s\n", (*cmds)->in_file[j]);
-			j++;
-		}
-		j = 0;
-		while ((*cmds)->out_file && (*cmds)->out_file[j])
-		{
-			printf("out_file %s\n", (*cmds)->out_file[j]);
-			j++;
-		}
-		j = 0;
-		while ((*cmds)->aout_file && (*cmds)->aout_file[j])
-		{
-			printf("aout_file %s\n", (*cmds)->aout_file[j]);
-			j++;
-		}
-		// j = 0;
-		// while (cmds[i]->heredoc && cmds[i]->heredoc[j])
-		// {
-		// 	printf("heredoc %s\n", cmds[i]->heredoc[j]);
-		// 	j++;
-		// }
+		printf("heredoc   : %d\n", (*cmds)->heredoc);
+		printf("out_file  : %d\n", (*cmds)->out_file);
+		printf("in_file   : %d\n", (*cmds)->in_file);
+		printf("aout_file : %d\n", (*cmds)->aout_file);
 		*cmds = (*cmds)->next;
 		printf("##########################\n");
 	}
 }
-void	print_lexer(t_lexer *lexer)
+void print_lexer(t_lexer *lexer)
 {
 	while (lexer)
 	{
-		printf("<< name : %s >>", lexer->str);
+		printf("name : %s >>", lexer->str);
 		if (lexer->prev)
 			printf(" << prev : %s >>", lexer->prev->str);
 		if (lexer->next)
 			printf(" << next : %s >>", lexer->next->str);
-		printf(" << token : %d >> \n", lexer->token);
+		printf(" token : %d >> \n", lexer->token);
 		lexer = lexer->next;
 	}
 }
 
-void	handel_input(char *line)
+void handel_input(char *line, char **env)
 {
-	t_lexer	*lexer;
-	char	**res;
+	t_lexer *lexer;
+	char **res;
 	t_simple_cmds *cmds;
+	t_env		*env_list;
 	
 	lexer = NULL;
 	cmds = NULL;
 	if (!handel_quotes(line))
 		return;
 	line = add_spaces(line);
-	if(!line)
-		return ;
+	if (!line)
+		return;
 	res = ft_split(line);
 	if (!res)
-	{
-		free_list(res);
-		allocation_error(line);
-	}
+		return;
 	tokenizer(res, &lexer);
 	if (!syntax_error(&lexer))
-		return ;
+		return;
 	handel_expanding(&lexer);
-	// print_lexer(lexer);
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
-	print_cmd(&cmds);
+	free_lexer(lexer);
+	initialize_files(cmds);
+	if (line && *line)
+		add_history(line);
+	env_list = get_env(env);
+	multiple_cmd(env_list, cmds);
+	// print_cmd(&cmds);
 }
 
-void	parsing(void)
+void parsing(char **env)
 {
-	char	*line;
+	char *line;
 
 	while (1)
 	{
 		line = readline("minishell> ");
 		if (!line)
-			break ;
+			break;
 		if (*line)
 			add_history(line);
-		handel_input(line);
-		// free(line);
+		handel_input(line, env);
+		free(line); // be aware of this
 	}
 }
 
-int	main(void)
+int main(int arc, char *arv[], char **env)
 {
-    // if(arc == 1)
-    //     (printf(InputError), exit(0));
-	parsing();
-    //syntax error
-    // parser(&lexer);
+	(void)arv;
+	
+	if (arc != 1)
+	    (printf("InputError"), exit(0));
+	parsing(env);
+	// syntax error
+	//  parser(&lexer);
 }
