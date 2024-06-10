@@ -20,6 +20,8 @@ void	parent(char *nood, char **env)
 }
 void	initialize_files(t_simple_cmds	*list)
 {
+	if (list == NULL)
+		return ;
 	if (list->in_file == -2)
 		list->in_file = 0;
 	if (list->out_file == -2)

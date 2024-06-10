@@ -1,7 +1,7 @@
 #include "../../minishell.h"
 
 
-void	echo(char **cmd)
+void	echo(char **cmd, t_simple_cmds *cmds)
 {
 	int		i;
 	int		v;
@@ -14,7 +14,7 @@ void	echo(char **cmd)
 		ft_putstr_fd("\n", 1);
 		return ;
 	}
-	if (!ft_strncmp(cmd[i], "-n", 2))
+	if (!ft_strncmp(cmd[i], "-n", 2) && ft_strlen_1(cmds->args) > 1)
 	{
 		i++;
 		v++;

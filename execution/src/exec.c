@@ -14,7 +14,7 @@ void	multiple_cmd(t_env *env_list, t_simple_cmds *list)
 	// while (list)
 	// {
 	// 	change_list(list);
-	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->content.cmmd[0], list->content.cmmd[1], list->content.infile, list->content.outfile);
+	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
 	// 	list = list->next;
 	// }
 	// exit (0);
@@ -60,7 +60,7 @@ void	multiple_cmd(t_env *env_list, t_simple_cmds *list)
 			//printf ("kkk\n");
 			// while (1)
 			// 	;
-			classification_cmd(env_list, list->cmmd);
+			classification_cmd(env_list, list->cmmd, list);
 		}
 		if (pid < 0)
 		{

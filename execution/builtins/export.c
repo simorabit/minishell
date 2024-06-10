@@ -318,7 +318,7 @@ void	export_exe(char **cmd, t_env *list_env)
 		return ;
 	while (cmd[i])
 	{
-		if (check_for_plus_and_eq(cmd[i], 0))
+		if (check_for_plus_and_eq(cmd[i], 0) && one_plus_and_one_eq(cmd[i]))
 		{
 			add_variable(&list_env, cmd[i]);
 		}
