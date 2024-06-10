@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/06/10 17:59:38 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/06/10 18:56:55 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -139,3 +139,5 @@ re : fclean all
 # message error in parc and exec stop cmd to run becose infile=-1;
 # message error "cmd not found"
 # 4
+
+# dakchi nadii
