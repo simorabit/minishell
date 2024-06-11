@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/10 18:44:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:56:17 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ void print_lexer(t_lexer *lexer)
 	}
 }
 
-void handel_input(char *line, char **env)
+void handel_input(char *line, t_env **env_list)
 {
 	t_lexer *lexer;
 	char **res;
 	t_simple_cmds *cmds;
-	t_env		*env_list;
 	
 	lexer = NULL;
 	cmds = NULL;
@@ -80,25 +79,24 @@ void handel_input(char *line, char **env)
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	free_lexer(lexer);
 	initialize_files(cmds);
-	if (line && *line)
-		add_history(line);
-	env_list = get_env(env);
-	multiple_cmd(env_list, cmds);
+	multiple_cmd(*env_list, cmds);
 	// print_cmd(&cmds);
 }
 
 void parsing(char **env)
 {
 	char *line;
+	t_env		*env_list;
 
+	env_list = get_env(env);
 	while (1)
 	{
-		line = readline("minishell> ");
+		line = readline(GREEN"minishell\x1b[0m \x1b[31m😎 "RESET);
 		if (!line)
 			break;
-		if (*line)
-			add_history(line);
-		handel_input(line, env);
+		if (line && *line)
+			add_history(line);	
+		handel_input(line, &env_list);
 		free(line); // be aware of this
 	}
 }
@@ -110,6 +108,4 @@ int main(int arc, char *arv[], char **env)
 	if (arc != 1)
 	    (printf("InputError"), exit(0));
 	parsing(env);
-	// syntax error
-	//  parser(&lexer);
 }

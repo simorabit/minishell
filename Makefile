@@ -6,12 +6,12 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/06/10 18:56:55 by souaouri         ###   ########.fr        #
+#    Updated: 2024/06/11 15:07:37 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				=	cc -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror
+# CC				+=	-Wall -Wextra -Werror
 NAME 			=	minishell
 HEADER 			=	minishell.h
 LIBS = -lreadline
@@ -36,20 +36,28 @@ all : $(TARGET)
 
 $(TARGET) : $(OBJ) minishell.h
 	@$(CC) $(FLAGS) -o $@ $(OBJ) $(LIBS)
-	@echo "Compilation complete: $(TARGET) created successfully!"
+	@echo "$(GREEN)[ + ] Compilation complete: $(TARGET) created successfully!$(RESET)"
 
 %.o : %.c minishell.h
 	@$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	@rm -rf $(OBJ)
-	@echo "Object files removed successfully!"
+	@echo "$(YELLOW)[ + ] Object files removed successfully!$(RESET)"
 
 fclean : clean
 	@rm -rf $(TARGET)
-	@echo "Executable '$(TARGET)' removed successfully!"
+	@echo "$(YELLOW)[ + ] Executable '$(TARGET)' removed successfully!$(RESET)"
 
 re : fclean all
+
+RED     = \033[31m
+GREEN   = \033[32m
+YELLOW  = \033[33m
+BLUE    = \033[34m
+MAGENTA = \033[35m
+CYAN    = \033[36m
+RESET   = \033[0m
 
 # CC 				=	cc -fsanitize=address -g
 # CC				+=	-Wall -Wextra -Werror
@@ -138,6 +146,7 @@ re : fclean all
 # export > solimi | cat | cat | cat > solimi
 # message error in parc and exec stop cmd to run becose infile=-1;
 # message error "cmd not found"
-# 4
+# 5
 
+# cat < Makefile > sssss
 # dakchi nadii

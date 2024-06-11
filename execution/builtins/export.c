@@ -142,15 +142,23 @@ char	*get_content_from_eq_to_fin(char *var)
 	return (var + i);
 }
 
-char	*check_var_does_it_exist(char *arg)
+// TODO
+
+int	check_var_does_it_exist(char *arg, t_env *list_env)
 {
 
 	char	*var;
 
 	var = get_var_from_beg_to_eq(arg);
+	while (list_env)
+	{
+		if (ft_strncmp(list_env->content, arg, ft_strlen(arg)) == 0)
+			return (1);
+		list_env = list_env->next;
+	}
 	// printf ("---> %s", arg);
 	// exit (0);
-	return (getenv(var));
+	return (0);
 }
 
 int	check_arg_is_valide(char *arg)
@@ -242,7 +250,20 @@ char	*remove_plus(char *new)
 	return (ptr);
 }
 
-void	add_variable(t_env **list_env, char *new)
+void	remove_var(t_env *list_env, char *var)
+{
+	while (list_env)
+	{
+		printf ("----->%s\n", var);
+		if (ft_strncmp(list_env->content, var, ft_strlen(var)))
+		{
+			list_env = list_env->next;
+		}
+		list_env = list_env->next;
+	}
+}
+
+void	add_variable(t_env *list_env, char *new)
 {
 	t_env	*var;
 	char	*new_var;
@@ -254,9 +275,10 @@ void	add_variable(t_env **list_env, char *new)
 	new_var = NULL;
 	if (check_for_plus_and_eq(new, 1))
 	{
-		new_var = check_var_does_it_exist(new);
+		new_var = check_var_does_it_exist(new, list_env);
 		if (new_var)
 		{
+			remove_var(list_env, get_var_from_beg_to_eq(new));
 			first_part = ft_strjoin(get_var_from_beg_to_eq(new), "=");
 			sec_part = ft_strjoin(new_var, get_content_from_eq_to_fin(new));
 			new = ft_strjoin(first_part, sec_part);
@@ -264,7 +286,7 @@ void	add_variable(t_env **list_env, char *new)
 		new = remove_plus(new);
 	}
 	var = ft_lstnew_env(new);
-	ft_lstadd_back_env(list_env, var);
+	ft_lstadd_back_env(&list_env, var);
 }
 
 t_env	*env_dup(t_env *list)
@@ -320,10 +342,10 @@ void	export_exe(char **cmd, t_env *list_env)
 	{
 		if (check_for_plus_and_eq(cmd[i], 0) && one_plus_and_one_eq(cmd[i]))
 		{
-			add_variable(&list_env, cmd[i]);
+			add_variable(list_env, cmd[i]);
 		}
 		else if (!check_arg_is_valide(cmd[i]) && !check_for_first_char(cmd[i]))
-			add_variable(&list_env, cmd[i]);
+			add_variable(list_env, cmd[i]);
 		else
 		{
 			ft_putstr_fd("minishell: export: `", 2);
@@ -336,7 +358,6 @@ void	export_exe(char **cmd, t_env *list_env)
 	
 	if (!ft_strncmp(cmd[0], "export", 6) && !cmd[1])
 	{
-		
 		copy_env = env_dup(list_env);
 		ft_sort_env(copy_env);
 		head = copy_env;

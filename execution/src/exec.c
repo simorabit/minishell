@@ -11,13 +11,13 @@ void	multiple_cmd(t_env *env_list, t_simple_cmds *list)
 
 	hold_fd_in = 0;
 	tmp = list;
-	// while (list)
-	// {
-	// 	change_list(list);
-	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
-	// 	list = list->next;
-	// }
-	// exit (0);
+	while (list)
+	{
+		change_list(list);
+		printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
+		list = list->next;
+	}
+	exit (0);
 	while (list)
 	{
 		p_in = dup (0);

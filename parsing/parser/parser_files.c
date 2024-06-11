@@ -68,7 +68,7 @@ int open_files(t_lexer **lexer, t_token token)
         fd = open(mfile, O_CREAT | O_RDWR | O_APPEND, 0644);
     if (fd == -1 && token == redirect_out)
         (error_msg("No such file or directory"));
-    else
+    else if(fd == -1 && token == redirect_in)
         (error_msg("Error in open file"));
     return fd;
 }

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 00:35:27 by souaouri          #+#    #+#             */
-/*   Updated: 2024/06/10 20:02:12 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:37:23 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,11 @@ void	classification_cmd(t_env *list_env, char **nood, t_simple_cmds *cmds)
 		write_env(list_env);
 	else if (!ft_strncmp("cd", nood[0], 2))
 		get_cd(*nood);
-	else if (!ft_strncmp("export", nood[0], 6))
-		export_exe(nood, list_env);
 	else
 	{
 		env = change_list_to_env(list_env);
 		ft_exec (nood, env);
 	}
-		
-	exit(0);   // cmd not found
+	//exit(0);   // cmd not found
 	//ft_fork(nood, env);
 }

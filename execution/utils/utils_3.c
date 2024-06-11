@@ -58,6 +58,8 @@ void	*free_double_ptr(char	**ptr)
 	size_t	i;
 
 	i = 0;
+	if (ptr == NULL || ptr[i]== NULL)
+		return (NULL);
 	while (ptr[i])
 	{
 		free(ptr[i]);
