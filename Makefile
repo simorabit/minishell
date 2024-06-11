@@ -6,12 +6,12 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/06/11 15:07:37 by souaouri         ###   ########.fr        #
+#    Updated: 2024/06/11 17:11:11 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				=	cc -fsanitize=address -g
-# CC				+=	-Wall -Wextra -Werror
+CC				+=	-Wall -Wextra -Werror
 NAME 			=	minishell
 HEADER 			=	minishell.h
 LIBS = -lreadline
@@ -148,5 +148,6 @@ RESET   = \033[0m
 # message error "cmd not found"
 # 5
 
+#  //printf ("\n\n---> : %s\n\n", new);
 # cat < Makefile > sssss
 # dakchi nadii

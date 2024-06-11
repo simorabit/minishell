@@ -152,7 +152,7 @@ int	check_var_does_it_exist(char *arg, t_env *list_env)
 	var = get_var_from_beg_to_eq(arg);
 	while (list_env)
 	{
-		if (ft_strncmp(list_env->content, arg, ft_strlen(arg)) == 0)
+		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
 			return (1);
 		list_env = list_env->next;
 	}
@@ -254,8 +254,8 @@ void	remove_var(t_env *list_env, char *var)
 {
 	while (list_env)
 	{
-		printf ("----->%s\n", var);
-		if (ft_strncmp(list_env->content, var, ft_strlen(var)))
+		// printf ("----->%s\n", var);
+		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
 		{
 			list_env = list_env->next;
 		}
@@ -263,27 +263,53 @@ void	remove_var(t_env *list_env, char *var)
 	}
 }
 
+char	*find_var(t_env *list_env, char	*var)
+{
+	while (list_env)
+	{
+		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
+			return (list_env->content);
+		list_env = list_env->next;
+	}
+	return (NULL);
+}
+
 void	add_variable(t_env *list_env, char *new)
 {
 	t_env	*var;
-	char	*new_var;
+	int		new_var;
 	char	*first_part;
 	char	*sec_part;
+	char	*ptr;
 	
 	first_part = NULL;
 	sec_part = NULL;
-	new_var = NULL;
+	new_var = 0;
 	if (check_for_plus_and_eq(new, 1))
 	{
+		//printf ("gjbfgjbg\n");
 		new_var = check_var_does_it_exist(new, list_env);
 		if (new_var)
 		{
-			remove_var(list_env, get_var_from_beg_to_eq(new));
+			//remove_var(list_env, get_var_from_beg_to_eq(new));
 			first_part = ft_strjoin(get_var_from_beg_to_eq(new), "=");
-			sec_part = ft_strjoin(new_var, get_content_from_eq_to_fin(new));
-			new = ft_strjoin(first_part, sec_part);
+			ptr = find_var(list_env, first_part);
+			sec_part = ft_strjoin(get_content_from_eq_to_fin(ptr), get_content_from_eq_to_fin(new));
+			
+			//new = ft_strjoin(first_part, sec_part);
+			
 		}
-		new = remove_plus(new);
+		//printf ("\n\n\n%s\n\n\n", get_var_from_beg_to_eq(new));
+		while (list_env)
+		{
+			if (!ft_strncmp(list_env->content, get_var_from_beg_to_eq(new), ft_strlen(get_var_from_beg_to_eq(new))))
+			{
+				//printf ("KKKK\n");
+				list_env->content = ft_strjoin(list_env->content, get_content_from_eq_to_fin(new));
+			}
+			list_env = list_env->next;
+		}
+		//new = remove_plus(new);
 	}
 	var = ft_lstnew_env(new);
 	ft_lstadd_back_env(&list_env, var);
@@ -328,20 +354,40 @@ int	one_plus_and_one_eq(char *str)
 	return (0);
 }
 
+int	ft_lstsize_exec(t_env *lst)
+{
+	int	i;
+
+	i = 0;
+	if (!lst)
+		return (0);
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++; 
+	}
+	return (i);
+}
+
+
 void	export_exe(char **cmd, t_env *list_env)
 {
 	// char	**export;
 	t_env	*head;
 	t_env	*copy_env;
 	int		i;
+	int		x;
 
 	i = 1;
+	x = ft_lstsize_exec(list_env);
 	if (cmd [0] == NULL || cmd == NULL)
 		return ;
 	while (cmd[i])
 	{
 		if (check_for_plus_and_eq(cmd[i], 0) && one_plus_and_one_eq(cmd[i]))
 		{
+			add_variable(list_env, cmd[i]);
+			cmd[i] = remove_plus(cmd[i]);
 			add_variable(list_env, cmd[i]);
 		}
 		else if (!check_arg_is_valide(cmd[i]) && !check_for_first_char(cmd[i]))
@@ -355,7 +401,6 @@ void	export_exe(char **cmd, t_env *list_env)
 		
 		i++;
 	}
-	
 	if (!ft_strncmp(cmd[0], "export", 6) && !cmd[1])
 	{
 		copy_env = env_dup(list_env);
