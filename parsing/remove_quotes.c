@@ -1,20 +1,5 @@
 #include "../minishell.h"
 
-int has_quotes(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == DOUBLE_QUOTE)
-			return 1;
-		else if (s[i] == SINGLE_QUOTE)
-			return 2;
-		i++;
-	}
-	return 0;
-}
 int get_mlen(char *s, char q)
 {
     int i;

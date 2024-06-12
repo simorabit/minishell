@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmds_op.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 22:16:43 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/06/12 22:17:28 by mal-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds)
@@ -11,7 +23,7 @@ t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds)
 	return (cmds);
 }
 
-t_simple_cmds	*ft_lstnew_cmd()
+t_simple_cmds	*ft_lstnew_cmd(void)
 {
 	t_simple_cmds	*cmds;
 

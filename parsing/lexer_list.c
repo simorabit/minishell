@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/10 16:47:21 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:16:03 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,6 @@ int	ft_lstsize(t_lexer *lst)
 
 	i = 0;
 	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-int	ft_lstsize_new(t_lexer *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst && lst->token != mpipe)
 	{
 		i++;
 		lst = lst->next;

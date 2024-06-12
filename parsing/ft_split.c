@@ -6,42 +6,34 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/10 16:46:58 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:34:05 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int is_withspaces(char c)
+void	count_if_quote(char *s, char qoute, int *i, int *counter)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
-int is_quotes(char c)
-{
-	return (c == DOUBLE_QUOTE || c == SINGLE_QUOTE);
-}
-void count_if_quote(char *s, char qoute, int *i, int *counter)
-{
-	int q;
+	int	q;
 
 	(*counter)++;
 	(*i)++;
 	q = 1;
-	while (s[*i] && !(s[*i] == qoute && is_withspaces(s[*i + 1])))
+	while (s[*i] && !(s[*i - 1] == qoute && is_withspaces(s[*i])))
 	{
 		if (s[*i] == qoute)
 			q++;
 		if (q % 2 == 0 && is_withspaces(s[*i]))
-			break;
+			break ;
 		(*i)++;
 	}
-	(*i)++;
+	// (*i)++;
 }
 
-void count_if_char(char *s, int *i)
+void	count_if_char(char *s, int *i)
 {
-	int flag;
-	int q;
+	int	flag;
+	int	q;
 
 	q = 0;
 	flag = -1;
@@ -61,20 +53,18 @@ void count_if_char(char *s, int *i)
 		}
 		if (flag == 1 && s[*i] == SINGLE_QUOTE)
 			q++;
-		if (is_withspaces(s[*i]) && !q)
-			break;
-		if (is_withspaces(s[*i]) && q % 2 != 0)
-			break;
+		if (is_withspaces(s[*i]) && (q % 2 != 0 || !q))
+			break ;
 		(*i)++;
 	}
 }
 
-static int count_words(char *s)
+static int	count_words(char *s)
 {
-	int counter;
-	int i;
-	int q;
-	
+	int	counter;
+	int	i;
+	int	q;
+
 	q = 0;
 	i = 0;
 	counter = 0;
@@ -83,7 +73,9 @@ static int count_words(char *s)
 		while (s[i] && is_withspaces(s[i]))
 			i++;
 		if (s[i] && s[i] == DOUBLE_QUOTE)
+		{
 			count_if_quote(s, DOUBLE_QUOTE, &i, &counter);
+		}
 		else if (s[i] && s[i] == SINGLE_QUOTE)
 			count_if_quote(s, SINGLE_QUOTE, &i, &counter);
 		else if (s[i] && !is_withspaces(s[i]))
@@ -95,23 +87,9 @@ static int count_words(char *s)
 	return (counter);
 }
 
-int is_space_after_quote(char *s, char quotes)
+static char	*allocate_element(char **s, char **array, int j)
 {
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == quotes && (s[i + 1] && !is_withspaces(s[i + 1])))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static char *allocate_element(char **s, char **array, int j)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	if (**s == SINGLE_QUOTE)
@@ -123,10 +101,10 @@ static char *allocate_element(char **s, char **array, int j)
 	return (NULL);
 }
 
-char **ft_split(char *s)
+char	**ft_split(char *s)
 {
-	char **array;
-	int j;
+	char	**array;
+	int		j;
 
 	j = 0;
 	if (!s)

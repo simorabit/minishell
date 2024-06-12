@@ -6,19 +6,19 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/10 16:49:09 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/12 22:11:47 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char *alloc_exp(char *str, int *pos)
+char	*alloc_exp(char *str, int *pos)
 {
-	int i;
-	int len_env;
-	char *new_s;
-	char *res;
-	char *reset;
+	int		i;
+	int		len_env;
+	char	*new_s;
+	char	*res;
+	char	*reset;
 
 	len_env = 0;
 	i = 0;
@@ -26,37 +26,37 @@ char *alloc_exp(char *str, int *pos)
 		len_env++;
 	new_s = ft_strncpy(str, len_env);
 	if (!new_s)
-		return NULL;
+		return (NULL);
 	i = 0;
 	while (!end_of_proccessing(str[i++]))
 		(*pos)++;
 	reset = ft_substr(str, len_env, get_len_ep(str) - len_env);
-	if(!*reset)
+	if (!*reset)
 		reset = NULL;
 	res = ft_strjoin(getenv(new_s), reset);
 	free(reset);
 	return (res);
 }
 
-void *find_dollar(char *result, char *s, int *i)
+void	*find_dollar(char *result, char *s, int *i)
 {
-	int k;
-	
+	int	k;
+
 	if (!result)
-		return NULL;
+		return (NULL);
 	k = *i;
 	while (s && s[*i] && s[*i] != DOUBLE_QUOTE)
 		i++;
 	result = ft_strjoin(result, ft_substr(s, k, (*i) - k + 1));
-	return result;
+	return (result);
 }
 
-char *expand_str(char *s)
+char	*expand_str(char *s)
 {
-	int i;
-	char *result;
-	char *befor_dollar;
-	int counter;
+	int		i;
+	int		counter;
+	char	*result;
+	char	*befor_dollar;
 
 	counter = 0;
 	result = NULL;
@@ -68,23 +68,23 @@ char *expand_str(char *s)
 	{
 		if (s[i] == '$' && !counter)
 			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i));
-		else if(s[i] == '$' && counter)
+		else if (s[i] == '$' && counter)
 			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
 		if (s[i] && s[i] != '$')
 			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
-		if (!result) 
-				return NULL;
+		if (!result)
+			return (NULL);
 		counter++;
 	}
 	free(befor_dollar);
 	return (result);
 }
 
-char *expand_str2(char *s)
+char	*expand_str2(char *s)
 {
-	int i;
-	int j;
-	char *result;
+	int		i;
+	int		j;
+	char	*result;
 
 	i = 0;
 	result = NULL;
@@ -103,16 +103,16 @@ char *expand_str2(char *s)
 		else
 			result = ft_strjoin(result, ft_substr(&s[i], 0, 1));
 		if (!result)
-			return NULL;
+			return (NULL);
 		i++;
 	}
 	return (result);
 }
 
-void handel_expanding(t_lexer **lexer)
+void	handel_expanding(t_lexer **lexer)
 {
-	t_lexer *tmp;
-	int i;
+	t_lexer	*tmp;
+	int		i;
 
 	tmp = *lexer;
 	while (tmp)
@@ -120,12 +120,12 @@ void handel_expanding(t_lexer **lexer)
 		if (str_chr(tmp->str, '$') == -1 || tmp->token == delimiter)
 		{
 			tmp = tmp->next;
-			continue;
+			continue ;
 		}
 		tmp->expanded = 1;
 		tmp->str = expand_str2(tmp->str);
-		if(tmp->token != word)
-			tmp->str = "";
+		if (tmp->token != word)
+			tmp->str = ft_strdup("");
 		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))
 		{
 			i = tmp->i;

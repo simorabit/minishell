@@ -107,7 +107,6 @@ void	*add_spaces(char *line);
 //tokenizer
 void	tokenizer(char **res, t_lexer **lexer);
 
-
 //utils_string
 size_t	ft_strlen(const char *s);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -128,17 +127,14 @@ int		quotes(char *line, char q);
 
 //syntax error
 int		syntax_error(t_lexer **lexer);
-int	is_redirs(t_lexer *lexer);
 
 // utils_split
-int		is_withspaces(char c);
 char	*ft_word(char *s, char **arr, char ind, char quotes);
 void	wait_till_end(char **s);
-int	is_quotes(char c);
 void count_if_char(char *s, int *i);
 
 //parser
-t_simple_cmds	*ft_lstnew_cmd();
+t_simple_cmds	*ft_lstnew_cmd(void);
 int	ft_lstsize_cmd(t_simple_cmds *lst);
 void	ft_lstadd_back_cmd(t_simple_cmds **cmds, t_simple_cmds *new);
 t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds);
@@ -148,7 +144,6 @@ int		open_files(t_lexer **lexer, t_token token);
 int		save_heredoc(t_lexer **lexer);
 void 	init_arrays(t_simple_cmds *cmds);
 void 	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len);
-int		ft_lstsize_new(t_lexer *lst);
 int 	handel_heredoc(char *del);
 
 //expanding
@@ -182,6 +177,13 @@ void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);
 void	parent(char *nood, char **env);
 char	**ft_split_exe(char *s, char c);
+
+//utils
+int	no_quotes(char *line, int i);
+int has_quotes(char *s);
+int	is_quotes(char c);
+int	is_withspaces(char c);
+int	is_redirs(t_lexer *lexer);
 
 // typedef struct list
 // {

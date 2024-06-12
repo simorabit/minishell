@@ -1,53 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_quotes_spaces.c                              :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 19:22:16 by mal-mora         ###   ########.fr       */
+/*   Created: 2024/06/12 20:11:06 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/06/12 22:02:38 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	quotes(char *line, char q)
+int	is_redirs(t_lexer *lexer)
+{
+	return (lexer->token >= 2 && lexer->token <= 5);
+}
+
+int	is_withspaces(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
+
+int	is_quotes(char c)
+{
+	return (c == DOUBLE_QUOTE || c == SINGLE_QUOTE);
+}
+
+int	has_quotes(char *s)
 {
 	int	i;
-	int	counter;
 
-	counter = 0;
 	i = 0;
-	while (line[i])
+	while (s[i])
 	{
-		if (line[i] == q)
-			counter++;
+		if (s[i] == DOUBLE_QUOTE)
+			return (1);
+		else if (s[i] == SINGLE_QUOTE)
+			return (2);
 		i++;
 	}
-	return (counter);
-}
-
-int	handel_quotes(char *line)
-{
-	if (quotes(line, SINGLE_QUOTE) % 2 == 0 && \
-		quotes(line, DOUBLE_QUOTE) % 2 == 0)
-		return (1);
-	error_msg(SYNTAX_ERROR);
 	return (0);
 }
 
-int	is_redir_has_found(char c)
+int	no_quotes(char *line, int i)
 {
-	if (c == '<' || c == '>' || c == '|')
+	if (i != 0 && (line[i] == DOUBLE_QUOTE || line[i] == SINGLE_QUOTE))
 		return (1);
 	return (0);
-}
-
-void	set_redir(char *s, int *j, int *i, char c)
-{
-	s[*j] = c;
-	(*j)++;
-	s[*j] = c;
-	(*i)++;
 }

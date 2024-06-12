@@ -3,30 +3,32 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
+#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/06/11 17:11:11 by souaouri         ###   ########.fr        #
+#    Updated: 2024/06/12 21:01:33 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				=	cc -fsanitize=address -g
+# -fsanitize=address -g
 CC				+=	-Wall -Wextra -Werror
 NAME 			=	minishell
 HEADER 			=	minishell.h
 LIBS = -lreadline
 
-SRC = 	parsing/main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
+SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		parsing/tokenizer.c parsing/utils_free.c parsing/quotes_spaces.c parsing/utils_quotes_spaces.c \
 		parsing/syntax_error.c parsing/utils_split.c parsing/expanding/quotes_expanding.c \
 		parsing/libft_func.c parsing/expanding/expanding.c parsing/expanding/utils.c \
-		parsing/remove_quotes.c parsing/parser/parser.c parsing/parser/utils.c parsing/parser/parser_files.c \
-		parsing/parser/cmds_op.c parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c \
+		parsing/utils.c parsing/remove_quotes.c parsing/parser/parser.c parsing/parser/utils_parser.c \
+		parsing/parser/parser_files.c parsing/parser/cmds_op.c \
+		parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c \
 		execution/src/exec.c execution/builtins/cd.c execution/builtins/echo.c execution/builtins/pwd.c \
 		execution/builtins/env.c execution/builtins/env_utile.c execution/builtins/export.c \
 		execution/utils/utils_1.c execution/utils/utils_2.c execution/utils/utils_3.c \
 		execution/utils/utils_4.c execution/utils/utils_5.c execution/utils/utils_6.c \
-		execution/utils/utils_7.c execution/utils/utils_8.c
+		execution/utils/utils_7.c execution/utils/utils_8.c debugging.c 
 
 OBJ = $(SRC:.c=.o)
 

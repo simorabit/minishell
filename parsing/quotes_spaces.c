@@ -6,18 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/10 16:46:41 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:00:58 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	no_quotes(char *line, int i)
-{
-	if (i != 0 && (line[i] == DOUBLE_QUOTE || line[i] == SINGLE_QUOTE))
-		return (1);
-	return (0);
-}
+
 int	count_redir(char *line)
 {
 	int	i;
@@ -29,11 +24,11 @@ int	count_redir(char *line)
 	{
 		if (is_redir_has_found(line[i]))
 		{
-			if(i != 0 && !is_withspaces(line[i - 1]))
+			if (i != 0 && !is_withspaces(line[i - 1]))
 				counter++;
 			if (is_redir_has_found(line[i + 1]))
 				i++;
-			if(line[i + 1] && !is_withspaces(line[i + 1]))
+			if (line[i + 1] && !is_withspaces(line[i + 1]))
 				counter++;
 		}
 		i++;
@@ -43,8 +38,8 @@ int	count_redir(char *line)
 
 void	redir_founded(char *line, char *new_value, int *i, int *j)
 {
-	int need_space;
-	
+	int	need_space;
+
 	need_space = 0;
 	if (*i != 0 && !is_withspaces(line[*i - 1]))
 	{
@@ -64,26 +59,24 @@ void	redir_founded(char *line, char *new_value, int *i, int *j)
 		new_value[*j] = ' ';
 		need_space = 1;
 	}
-	if(!need_space)
+	if (!need_space)
 		new_value[*j] = line[*i];
 }
-
-
 
 void	*add_spaces(char *line)
 {
 	int		i;
 	int		j;
 	int		len;
-	int		count_re;
 	char	*new_value;
 
 	i = 0;
 	j = 0;
-	count_re = count_redir(line);
-	if(count_re == 0)
-		return line;
-	len = ft_strlen(line) + 1 + count_redir(line);
+	len = count_redir(line);
+	if (len == 0)
+		return (line);
+	len = ft_strlen(line) + 1 + len;
+	// printf("%d\n", len);
 	new_value = malloc(len * sizeof(char));
 	if (!new_value)
 		allocation_error(line);
@@ -97,6 +90,8 @@ void	*add_spaces(char *line)
 		j++;
 	}
 	new_value[j] = '\0';
-	free(line);
+	// printf("%s\n", new_value);
+	// exit(0);
+	// free(line);
 	return (new_value);
 }
