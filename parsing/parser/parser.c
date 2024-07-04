@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 23:24:33 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/04 08:32:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_simple_cmds	*get_node_parse(t_lexer **tmp)
 	t_simple_cmds	*node;
 
 	j = 0;
-	node = ft_lstnew_cmd(void);
+	node = ft_lstnew_cmd();
 	init_arrays(node);
 	while (*tmp && (*tmp)->token != mpipe)
 	{

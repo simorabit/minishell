@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 20:02:13 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/04 08:33:10 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	handel_input(char *line, t_env **env_list)
 	if (!res)
 		return ;
 	tokenizer(res, &lexer);
-	print_lexer(lexer);
-	exit(0);
 	if (!syntax_error(&lexer))
 		return ;
 	handel_expanding(&lexer);
