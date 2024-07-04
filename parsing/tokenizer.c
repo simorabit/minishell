@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:19:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 21:59:51 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/04 09:23:06 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	check_redir(char *res, t_lexer *node, int *is_hdc, int *is_file)
 		*is_file = 0;
 	}
 	else if (!ft_strcmp(res, ">"))
-		node->token = redirect_in;
-	else if (!ft_strcmp(res, "<"))
 		node->token = redirect_out;
+	else if (!ft_strcmp(res, "<"))
+		node->token = redirect_in;
 	else if (!ft_strcmp(res, "<<"))
 	{
 		node->token = heredoc;
