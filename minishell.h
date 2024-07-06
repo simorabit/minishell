@@ -171,7 +171,7 @@ void	putstr(char *str, int i);
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
 void	echo(char **cmd, t_simple_cmds *cmds);
-void	classification_cmd(t_env *list_env, char **nood, t_simple_cmds *cmds);
+void	classification_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds);
 void	ft_exec(char **cmd, char **env);
 void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);
@@ -200,14 +200,33 @@ void	ft_find_pwd(void);
 t_env	*get_env(char **env);
 void	get_cd(char *cmd);
 void	export_exe(char **cmd, t_env *list_env);
-void	write_env(t_env *env);
+void	write_env(t_env *env, char **arg);
 char	**change_list_to_env(t_env *list_env);
 int		ft_lstsize_env(t_env *lst);
-void	multiple_cmd(t_env *env_list, t_simple_cmds *list);
+void	multiple_cmd(t_env **env_list, t_simple_cmds *list);
 t_env	*ft_lstnew_env(char *line);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	change_list(t_simple_cmds *list);
 void	initialize_files(t_simple_cmds	*list);
 char	**join_cmd_arg(char *cmd, char **arg);
+void	add_emergency_env(t_env **env);
+void	unset(t_env **list_env, char *arg);
+char	*get_env_eq(char *new);
+
+// export
+
+char	*add_double_quotes(char *var);
+void	ft_sort_env(t_env *env);
+char	*get_var_from_beg_to_eq(char *var);
+char	*get_content_from_eq_to_fin(char *var);
+int		check_var_does_it_exist(char *arg, t_env *list_env);
+int		check_arg_is_valide(char *arg);
+int		check_for_first_char(char *arg);
+char	*get_env_eq(char *new);
+char	*find_var(t_env *list_env, char	*var);
+t_env	*env_dup(t_env *list);
+int		check_for_plus_and_eq(char *arg, int w);
+char	*remove_plus(char *new);
+
 #endif
 // #endif

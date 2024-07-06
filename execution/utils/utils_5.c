@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 00:35:27 by souaouri          #+#    #+#             */
-/*   Updated: 2024/06/11 12:37:23 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/06 13:16:13 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@ void	ft_fork(char *nood, t_env *list_env) // ???
 		parent (nood, env);
 }
 
-void	classification_cmd(t_env *list_env, char **nood, t_simple_cmds *cmds)
+void	classification_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds)
 {
 	char	*pwd;
 	char	**env;
+	int		i;
 
 	pwd = NULL;
-	
-
+	i = -1;
 	// (null) kaydkhol lhad if
 	if (nood == NULL)
 		return ;
 	if (!ft_strncmp("export", nood[0], 6))
 	{
-		export_exe(nood, list_env);
+		export_exe(nood, *list_env);
 		// export(ft_split("export", ' '), list_env);
 		// printf ("\n\n\n");
 	}
@@ -51,12 +51,15 @@ void	classification_cmd(t_env *list_env, char **nood, t_simple_cmds *cmds)
 	else if (!ft_strncmp("pwd", nood[0], 3))
 		ft_find_pwd();
 	else if (!ft_strncmp("env", nood[0], 3))
-		write_env(list_env);
+		write_env(*list_env, nood);
 	else if (!ft_strncmp("cd", nood[0], 2))
 		get_cd(*nood);
+	else if (!ft_strncmp("unset", nood[0], 5))
+		while (nood[++i])
+			unset(list_env, nood[i]);
 	else
 	{
-		env = change_list_to_env(list_env);
+		env = change_list_to_env(*list_env);
 		ft_exec (nood, env);
 	}
 	//exit(0);   // cmd not found

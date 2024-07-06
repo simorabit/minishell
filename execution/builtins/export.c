@@ -1,292 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
+/*   Updated: 2024/07/06 13:00:45 by souaouri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-int	ft_lstsize_env(t_env *lst)
-{
-	int	i;
 
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst != NULL)
-	{
-		lst = lst->next;
-		i++; 
-	}
-	return (i);
-}
+// int	one_plus(char *str)
+// {
+// 	int	i;
+// 	int	x;
 
-void	ft_memcpy(char *dst, char *src, size_t	n)
-{
-	char	*d;
-	char	*s;
-	size_t	i;
+// 	i = 0;
+// 	x = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '+')
+// 			x++;
+// 		i++;
+// 	}
+// 	if (x == 1)
+// 		return (1);
+// 	return (0);
+// }
 
-	d = dst;
-	s = src;
-	i = 0;
-	if (d == NULL && s == NULL)
-		return ;
-	while (i < n)
-	{
-		d[i] = s[i];
-		i++;
-	}
-}
 
-char	*add_double_quotes(char *var)
-{
-	int		i;
-	int		j;
-	int		x;
-	int		size;
-	char	*ptr;
-
-	size = ft_strlen(var);
-	i = 0;
-	j = 0;
-	x = 0;
-	if (ft_strchr(var, '='))
-		size += 2;
-	
-	ptr = malloc(sizeof(char) * size + 1);
-	if (var[0] == '\0' || var == NULL)
-		return (NULL);
-	while (var[i])
-	{
-		if (var[i] == '=' && x == 0)
-		{
-			ptr[j] = '=';
-			j++;
-			ptr[j] = '\"';
-			j++;
-			i++;
-			x++;
-		}
-		if (var[i] != '\0')
-		{
-			ptr[j] = var[i];
-			i++;
-			j++;
-		}
-	}
-	
-	if (x != 0)
-	{
-		ptr[j] = '\"';
-		j++;
-	}
-	
-	ptr[j] = '\0';
-	return (ptr);
-}
-
-void	ft_sort_env(t_env *env)
-{
-	char	**ptr;
-	char	*tmp;
-	int		list_len;
-	int		i;
-	t_env	*head;
-
-	ptr = NULL;
-	list_len = ft_lstsize_env(env);
-	i = 0;
-	while (i < list_len)
-	{
-		head = env;
-		while(head->next)
-		{
-			if (ft_strcmp(head->content, head->next->content) > 0)
-			{
-				tmp = head->content;
-				head->content = head->next->content;
-				head->next->content = tmp;
-			}
-			head = head->next;
-		}
-		i++;
-	}
-	head = NULL;
-}
-
-char	*get_var_from_beg_to_eq(char *var)
-{
-	int 	i;
-	char	*ptr;
-
-	i = 0;
-	while (var[i] && var[i] != '+')
-		i++;
-	ptr = malloc(i + 1);
-	i = 0;
-	while (var[i] && var[i] != '+')
-	{
-		ptr[i] = var[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-char	*get_content_from_eq_to_fin(char *var)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strchr(var, '='))
-	{
-		while (var[i] && var[i] != '=')
-			i++;
-		i++;
-	}
-	return (var + i);
-}
-
-// TODO
-
-int	check_var_does_it_exist(char *arg, t_env *list_env)
-{
-
-	char	*var;
-
-	var = get_var_from_beg_to_eq(arg);
-	while (list_env)
-	{
-		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
-			return (1);
-		list_env = list_env->next;
-	}
-	// printf ("---> %s", arg);
-	// exit (0);
-	return (0);
-}
-
-int	check_arg_is_valide(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg && arg[i])
-	{
-		if ((arg[i] >= '0' && arg[i] <= '9')
-			|| (arg[i] >= 'a' && arg[i] <= 'z')
-				|| (arg[i] >= 'A' && arg[i] <= 'Z')
-					|| arg[i] == '_' || arg[i] == '=')
-				i++;
-		else
-			break ;
-	}
-	if (arg[i])
-		return (1);
-	return (0);
-}
-
-int	check_for_first_char(char *arg)
-{
-	if ((arg[0] >= 'a' && arg[0] <= 'z')
-		|| (arg[0] >= 'A' && arg[0] <= 'Z')
-			|| arg[0] == '_')
-			return (0);
-	else
-		return (1);
-}
-int	check_for_plus_and_eq(char *arg, int w)
-{
-	int	i;
-	char	*first_part;
-	char	*sec_part;
-
-	i = 0;
-	first_part = get_var_from_beg_to_eq(arg);
-	sec_part = get_content_from_eq_to_fin(arg);
-	if ((check_arg_is_valide(first_part) || check_for_first_char(first_part)) && w == 1)
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		//exit (1);
-	}
-	else if (check_arg_is_valide(sec_part) && w == 1 )
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd("export: ", 2);
-		ft_putstr_fd("`", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putstr_fd("'", 2);
-		ft_putstr_fd(": not a valid identifier", 2);
-		ft_putstr_fd("\n", 2);
-		//exit (1);
-	}
-	while (arg[i + 1])
-	{
-		if (arg[i] == '+' && arg[i + 1] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*remove_plus(char *new)
-{
-	int		i;
-	int		j;
-	char	*ptr;
-	
-
-	i = 0;
-	j = 0;
-	ptr = malloc(ft_strlen(new) + 1);
-	
-	while (new[i])
-	{
-		if (new[i] != '+')
-		{
-			ptr[j] = new[i];
-			j++;
-		}
-		i++;
-	}
-	ptr[j] = '\0';
-	return (ptr);
-}
-
-void	remove_var(t_env *list_env, char *var)
-{
-	while (list_env)
-	{
-		// printf ("----->%s\n", var);
-		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
-		{
-			list_env = list_env->next;
-		}
-		list_env = list_env->next;
-	}
-}
-
-char	*find_var(t_env *list_env, char	*var)
-{
-	while (list_env)
-	{
-		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
-			return (list_env->content);
-		list_env = list_env->next;
-	}
-	return (NULL);
-}
-
-void	add_variable(t_env *list_env, char *new)
+void	add_variable(t_env *list_env, char *new, int error)
 {
 	t_env	*var;
+	t_env	*temp;
 	int		new_var;
 	char	*first_part;
 	char	*sec_part;
 	char	*ptr;
 	
+	temp = list_env;
 	first_part = NULL;
 	sec_part = NULL;
 	new_var = 0;
-	if (check_for_plus_and_eq(new, 1))
+	if (check_for_plus_and_eq(new, 0))
 	{
+		//exit (0);
 		//printf ("gjbfgjbg\n");
 		new_var = check_var_does_it_exist(new, list_env);
 		if (new_var)
@@ -295,80 +56,53 @@ void	add_variable(t_env *list_env, char *new)
 			first_part = ft_strjoin(get_var_from_beg_to_eq(new), "=");
 			ptr = find_var(list_env, first_part);
 			sec_part = ft_strjoin(get_content_from_eq_to_fin(ptr), get_content_from_eq_to_fin(new));
-			
 			//new = ft_strjoin(first_part, sec_part);
-			
 		}
 		//printf ("\n\n\n%s\n\n\n", get_var_from_beg_to_eq(new));
 		while (list_env)
 		{
-			if (!ft_strncmp(list_env->content, get_var_from_beg_to_eq(new), ft_strlen(get_var_from_beg_to_eq(new))))
+			char *pptr = get_var_from_beg_to_eq(new);
+			if (!ft_strncmp(list_env->content, pptr, ft_strlen(pptr)))
 			{
-				//printf ("KKKK\n");
+				// printf ("KKKK\n");
 				list_env->content = ft_strjoin(list_env->content, get_content_from_eq_to_fin(new));
+				return ;
 			}
 			list_env = list_env->next;
 		}
 		//new = remove_plus(new);
 	}
-	var = ft_lstnew_env(new);
-	ft_lstadd_back_env(&list_env, var);
-}
-
-t_env	*env_dup(t_env *list)
-{
-	t_env	*nood;
-	t_env	*new_list;
-
-	new_list = NULL;
-	if (list == NULL)
-		return (NULL);
-	while (list)
+	// check if the var is in the env
+	// is not existed add like this: var = ft_lstnew_env(new);
+	// is existed 
+	/*
+		free(`string`); // var->content
+		var->content = ft_strdup(`new_string`);
+	*/
+	while (temp)
 	{
-		nood = ft_lstnew_env(list->content);
-		ft_lstadd_back_env(&new_list, nood);
-		list = list->next;
+		char *pptr = get_env_eq(new);
+		if (!ft_strncmp(temp->content, pptr, ft_strlen(pptr)))
+		{
+			// printf ("KKKK\n");
+			free(temp->content);
+			temp->content = ft_strdup(new);
+			free(pptr);
+			return ;
+		}
+		free(pptr);
+		temp = temp->next;
 	}
-	return (new_list);
-}
-
-int	one_plus_and_one_eq(char *str)
-{
-	int	i;
-	int	x;
-	int	y;
-
-	i = 0;
-	x = 0;
-	y = 0;
-	while (str[i])
+	// if (one_plus(get_env_eq(new)) && check_for_plus_and_eq(new, 0))
+	// {
+	//printf ("====> : %d\n" , check_for_plus_and_eq(new, 0));
+	if (error != -1)
 	{
-		if (str[i] == '+')
-			x++;
-		else if (str[i] == '=')
-			y++;
-		i++;
+		var = ft_lstnew_env(new);
+		ft_lstadd_back_env(&list_env, var);
 	}
-	if (x == 1 && y == 1)
-		return (1);
-	return (0);
+	// }
 }
-
-int	ft_lstsize_exec(t_env *lst)
-{
-	int	i;
-
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst != NULL)
-	{
-		lst = lst->next;
-		i++; 
-	}
-	return (i);
-}
-
 
 void	export_exe(char **cmd, t_env *list_env)
 {
@@ -377,28 +111,37 @@ void	export_exe(char **cmd, t_env *list_env)
 	t_env	*copy_env;
 	int		i;
 	int		x;
+	char	*var;
+	int		error;
 
 	i = 1;
-	x = ft_lstsize_exec(list_env);
+	x = ft_lstsize_env(list_env);
 	if (cmd [0] == NULL || cmd == NULL)
 		return ;
 	while (cmd[i])
 	{
-		if (check_for_plus_and_eq(cmd[i], 0) && one_plus_and_one_eq(cmd[i]))
+		error = check_for_plus_and_eq(cmd[i], 1);
+		if (error && !check_for_first_char(get_env_eq(cmd[i])))
 		{
-			add_variable(list_env, cmd[i]);
-			cmd[i] = remove_plus(cmd[i]);
-			add_variable(list_env, cmd[i]);
+			var = get_var_from_beg_to_eq(cmd[i]);
+			if (!find_var(list_env, var))
+			{
+				cmd[i] = remove_plus(cmd[i]);
+				add_variable(list_env, cmd[i], error);
+			}
+			else
+			{
+				add_variable(list_env, cmd[i], error);
+			}
 		}
-		else if (!check_arg_is_valide(cmd[i]) && !check_for_first_char(cmd[i]))
-			add_variable(list_env, cmd[i]);
-		else
+		else if (!check_arg_is_valide(get_env_eq(cmd[i])) && !check_for_first_char(get_env_eq(cmd[i])))
+			add_variable(list_env, cmd[i], error);
+		else if (error != -1)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(cmd[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
-		
 		i++;
 	}
 	if (!ft_strncmp(cmd[0], "export", 6) && !cmd[1])

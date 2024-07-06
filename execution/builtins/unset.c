@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 09:49:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/04 09:49:52 by souaouri         ###   ########.fr       */
+/*   Created: 2024/07/01 15:04:10 by souaouri          #+#    #+#             */
+/*   Updated: 2024/07/04 09:50:53 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_find_pwd(void)
+void	unset(t_env **list_env, char *arg)
 {
-	char	*pwd;
+	t_env	*tmp;
+	char	*str;
 
-	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
+	if (!list_env || !*list_env || !arg)
+		return ;
+	tmp = *list_env;
+	str = get_env_eq(tmp->content);
+	if (!ft_strcmp(str, arg))
+	{
+		*list_env = tmp->next;
+		free(tmp);
+	}
+	else
+		unset(&(*list_env)->next, arg);
 }

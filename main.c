@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/04 09:23:54 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/04 09:54:26 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	handel_input(char *line, t_env **env_list)
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	free_lexer(lexer);
 	initialize_files(cmds);
-	multiple_cmd(*env_list, cmds);
+	multiple_cmd(env_list, cmds);
 }
 
 void	read_input(char **env)

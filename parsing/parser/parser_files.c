@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/04 08:24:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/04 11:48:07 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int	open_files(t_lexer **lexer, t_token token)
 	if (mfile && !*mfile)
 		return (error_msg("ambiguous redirect"), -1);
 	if (token == redirect_out)
-		fd = open(mfile, O_RDONLY, 0644);
-	else if (token == redirect_in)
 		fd = open(mfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (token == redirect_in)
+		fd = open(mfile, O_RDONLY, 0644);
 	else
 		fd = open(mfile, O_CREAT | O_RDWR | O_APPEND, 0644);
 	show_file_error(fd, token);

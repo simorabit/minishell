@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-void	multiple_cmd(t_env *env_list, t_simple_cmds *list)
+void	multiple_cmd(t_env **env_list, t_simple_cmds *list)
 {
 	int		p_fd[2];
 	int		hold_fd_in;
@@ -23,7 +23,6 @@ void	multiple_cmd(t_env *env_list, t_simple_cmds *list)
 	{
 		p_in = dup (0);
 		p_out = dup (1);
-		
 		change_list(list);
 		if (list->in_file > 0)
 		{
