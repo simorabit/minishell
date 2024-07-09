@@ -171,7 +171,7 @@ void	putstr(char *str, int i);
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
 void	echo(char **cmd, t_simple_cmds *cmds);
-void	classification_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds);
+void	classification_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
 void	ft_exec(char **cmd, char **env);
 void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);
@@ -203,7 +203,7 @@ void	export_exe(char **cmd, t_env *list_env);
 void	write_env(t_env *env, char **arg);
 char	**change_list_to_env(t_env *list_env);
 int		ft_lstsize_env(t_env *lst);
-void	multiple_cmd(t_env **env_list, t_simple_cmds *list);
+void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len);
 t_env	*ft_lstnew_env(char *line);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	change_list(t_simple_cmds *list);
@@ -227,6 +227,8 @@ char	*find_var(t_env *list_env, char	*var);
 t_env	*env_dup(t_env *list);
 int		check_for_plus_and_eq(char *arg, int w);
 char	*remove_plus(char *new);
+
+int	exit_builtins(t_simple_cmds *cmd, char **args, int len);
 
 #endif
 // #endif

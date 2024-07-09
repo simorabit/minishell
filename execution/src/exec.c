@@ -1,24 +1,76 @@
 #include "../../minishell.h"
 
-void	multiple_cmd(t_env **env_list, t_simple_cmds *list)
+int	check_is_biltus(char **nood)
+{
+	int	i;
+
+	i = 0;
+	if (nood == NULL)
+		return (0);
+	if (!ft_strncmp("export", nood[0], 6))
+		i++;
+	else if (!ft_strncmp("echo", nood[0], 4))
+		i++;
+	else if (!ft_strncmp("pwd", nood[0], 3))
+		i++;
+	else if (!ft_strncmp("env", nood[0], 3))
+		i++;
+	else if (!ft_strncmp("cd", nood[0], 2))
+		i++;
+	else if (!ft_strncmp("exit", nood[0], 4))
+		i++;
+	else if (!ft_strncmp("unset", nood[0], 5))
+		i++;
+	return (i);
+}
+
+void	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
+{
+	char	*pwd;  
+	int		i;
+
+	pwd = NULL;
+	i = -1;
+	if (nood == NULL)
+		return ;
+	if (!ft_strncmp("export", nood[0], 6))
+		export_exe(nood, *list_env);
+	else if (!ft_strncmp("echo", nood[0], 4))
+		echo(nood, cmds);
+	else if (!ft_strncmp("pwd", nood[0], 3))
+		ft_find_pwd();
+	else if (!ft_strncmp("env", nood[0], 3))
+		write_env(*list_env, nood);
+	else if (!ft_strncmp("cd", nood[0], 2))
+		get_cd(*nood);
+	else if (!ft_strncmp("exit", nood[0], 4))
+		exit_builtins(cmds, nood, len);
+	else if (!ft_strncmp("unset", nood[0], 5))
+		while (nood[++i])
+			unset(list_env, nood[i]);
+}
+
+void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 {
 	int		p_fd[2];
 	int		hold_fd_in;
 	int		pid;
 	int		p_in ;
 	int		p_out;
+	int		check;
 	t_simple_cmds	*tmp;
 
 	hold_fd_in = 0;
 	tmp = list;
 	//list->in_file = open ("Makefile", O_RDONLY , 0644);
-	// while (list)
-	// {
-	// 	change_list(list);
-	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
-	// 	list = list->next;
-	// }
-	// exit (0);
+	while (list)
+	{
+		change_list(list);
+		printf ("---> %s\n", list->args[0]);
+		// printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
+		list = list->next;
+	}
+	exit (0);
 	while (list)
 	{
 		p_in = dup (0);
@@ -50,6 +102,8 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list)
 			close (list->out_file);
 		}
 		pid = fork();
+		if (!list->next)
+			run_built(env_list, list->cmmd, list, len);
 		if (pid == 0)
 		{
 			close (p_in);
@@ -60,8 +114,9 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list)
 			//printf ("kkk\n");
 			// while (1)
 			// 	;
-			if (list->in_file != -1 && list->out_file != -1)
-				classification_cmd(env_list, list->cmmd, list);
+			check = check_is_biltus(list->cmmd);
+			if (list->in_file != -1 && list->out_file != -1 && !check)
+				classification_cmd(env_list, list->cmmd, list, len);
 		}
 		if (pid < 0)
 		{

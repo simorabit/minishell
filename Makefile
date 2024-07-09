@@ -6,7 +6,7 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/06 13:18:20 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/09 22:00:11 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c \
 		execution/src/exec.c execution/builtins/cd.c execution/builtins/echo.c execution/builtins/pwd.c \
 		execution/builtins/export_utile_1.c execution/builtins/export_utile_2.c execution/builtins/export_utile_3.c \
-		execution/builtins/export_utile_4.c execution/builtins/env.c execution/builtins/env_utile.c \
+		execution/builtins/export_utile_4.c execution/builtins/env.c execution/builtins/env_utile.c execution/builtins/exit.c \
 		execution/builtins/export.c execution/builtins/unset.c execution/utils/utils_1.c \
 		execution/utils/utils_2.c execution/utils/utils_3.c execution/utils/utils_4.c \
 		execution/utils/utils_5.c execution/utils/utils_6.c \
@@ -155,5 +155,5 @@ RESET   = \033[0m
 #  //printf ("\n\n---> : %s\n\n", new);
 # cat < Makefile > sssss
 # dakchi nadii
-# 99
+# 00
 # export gggg after export gggg+=1337
