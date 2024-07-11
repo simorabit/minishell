@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/06 12:59:41 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:50:33 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,16 @@ char	*remove_plus(char *new)
 // 	}
 // }
 
+
 char	*find_var(t_env *list_env, char	*var)
 {
 	while (list_env)
 	{
 		if (ft_strncmp(list_env->content, var, ft_strlen(var)) == 0)
+		{
+			// printf ("--->list : %s    ---->new var : %s\n", list_env->content, var);
 			return (list_env->content);
+		}
 		list_env = list_env->next;
 	}
 	return (NULL);

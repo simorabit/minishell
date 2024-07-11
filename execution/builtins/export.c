@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/06 13:00:45 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:54:31 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 void	add_variable(t_env *list_env, char *new, int error)
 {
 	t_env	*var;
+	char	*join;
 	t_env	*temp;
 	int		new_var;
 	char	*first_part;
@@ -64,7 +65,11 @@ void	add_variable(t_env *list_env, char *new, int error)
 			char *pptr = get_var_from_beg_to_eq(new);
 			if (!ft_strncmp(list_env->content, pptr, ft_strlen(pptr)))
 			{
-				// printf ("KKKK\n");
+				if (!ft_strchr(list_env->content, '='))
+				{
+					join = ft_strjoin(list_env->content, "=");
+					list_env->content = ft_strjoin(join, get_content_from_eq_to_fin(new));
+				}
 				list_env->content = ft_strjoin(list_env->content, get_content_from_eq_to_fin(new));
 				return ;
 			}
@@ -81,7 +86,7 @@ void	add_variable(t_env *list_env, char *new, int error)
 	*/
 	while (temp)
 	{
-		char *pptr = get_env_eq(new);
+		char *pptr = ft_strjoin(get_env_eq(new), "=");
 		if (!ft_strncmp(temp->content, pptr, ft_strlen(pptr)))
 		{
 			// printf ("KKKK\n");
@@ -123,7 +128,7 @@ void	export_exe(char **cmd, t_env *list_env)
 		error = check_for_plus_and_eq(cmd[i], 1);
 		if (error && !check_for_first_char(get_env_eq(cmd[i])))
 		{
-			var = get_var_from_beg_to_eq(cmd[i]);
+			var = ft_strjoin(get_var_from_beg_to_eq(cmd[i]), "=");
 			if (!find_var(list_env, var))
 			{
 				cmd[i] = remove_plus(cmd[i]);

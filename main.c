@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/09 09:55:14 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:10:15 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	read_input(char **env)
 	env_list = get_env(env);
 	while (1)
 	{
-		line = readline(GREEN"minishell\x1b[0m \x1b[31m😎 "RESET);
+		line = readline("minishell : ");
 		if (!line)
 			break ;
 		if (line && *line)

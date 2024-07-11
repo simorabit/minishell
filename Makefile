@@ -6,7 +6,7 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/09 22:00:11 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/11 12:49:13 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -155,5 +155,5 @@ RESET   = \033[0m
 #  //printf ("\n\n---> : %s\n\n", new);
 # cat < Makefile > sssss
 # dakchi nadii
-# 00
-# export gggg after export gggg+=1337
+# 11
+

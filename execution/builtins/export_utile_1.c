@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:47 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/06 12:57:00 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:40:16 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ char	*get_content_from_eq_to_fin(char *var)
 	int	i;
 
 	i = 0;
+	if (!var)
+		return (NULL);
 	if (ft_strchr(var, '='))
 	{
 		while (var[i] && var[i] != '=')

@@ -19,6 +19,8 @@ char	*ft_find_path(char **env)
 	i = 0;
 	while (env[i] && ft_strncmp("PATH=", env[i], 5) != 0)
 		i++;
+	if (env[i] == NULL)
+		return (NULL);
 	return (env[i] + 5);
 }
 
@@ -57,6 +59,8 @@ char	*ft_get_path(char *cmd, char **env)
 
 	i = 0;
 	all_path = ft_split_exe(ft_find_path(env), ':');
+	if (all_path == NULL)
+		return (NULL);
 	while (all_path[i])
 	{
 		one_path = ft_strjoin(all_path[i], "/");
@@ -90,6 +94,13 @@ void	ft_exec(char **cmd, char **env)
 	//cmd = cmmd[0];
 	ft_check(cmd[0], env);
 	path = ft_get_path(cmd[0], env);
+	if (path == NULL)
+	{
+		ft_putstr_fd("minishell: ", 2);;
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return ;
+	}
 	if (execve(path, cmd, env) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);;
