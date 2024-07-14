@@ -1,0 +1,11 @@
+             
+Makefile
+debugging.c
+debugging.o
+execution
+main.c
+main.o
+minishell
+minishell.h
+parsing
+sdf

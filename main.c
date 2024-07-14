@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/14 01:35:48 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/14 04:55:42 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int arc, char *arv[], char **env)
 	(void)arv;
 	rl_catch_signals = 0; // 
 	//TODO - replace this variable into 1 in child for heredoc
+	//TODO - handle -n for echo
 	if (arc != 1)
 		(printf("InputError"), exit(0));
 	read_input(env);
