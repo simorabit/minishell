@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 21:00:58 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:21:39 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ int	count_redir(char *line)
 		{
 			if (i != 0 && !is_withspaces(line[i - 1]))
 				counter++;
-			if (is_redir_has_found(line[i + 1]))
+			if (is_redir_has_found(line[i + 1]) && line[i] == line[i + 1] 
+				&& (line[i] == '>' || line[i] == '<'))
 				i++;
+			else
+				counter++;
 			if (line[i + 1] && !is_withspaces(line[i + 1]))
 				counter++;
 		}
@@ -76,7 +79,6 @@ void	*add_spaces(char *line)
 	if (len == 0)
 		return (line);
 	len = ft_strlen(line) + 1 + len;
-	// printf("%d\n", len);
 	new_value = malloc(len * sizeof(char));
 	if (!new_value)
 		allocation_error(line);
@@ -90,8 +92,5 @@ void	*add_spaces(char *line)
 		j++;
 	}
 	new_value[j] = '\0';
-	// printf("%s\n", new_value);
-	// exit(0);
-	// free(line);
 	return (new_value);
 }

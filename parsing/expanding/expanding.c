@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 22:11:47 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:40:52 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,15 +109,29 @@ char	*expand_str2(char *s)
 	return (result);
 }
 
+int check_if_noexpand(t_lexer	*tmp)
+{
+	if(str_chr(tmp->str, '$') == -1 || tmp->token == delimiter)
+		return 1;
+	if((tmp->str[0] == '$' &&  !is_real_char(tmp->str[1])) || !ft_strcmp(tmp->str, "$?"))
+		return 1;
+	if(tmp->str[0] == '$' && is_number(tmp->str[1]))
+	{
+		tmp->str = ft_substr(tmp->str, 2, ft_strlen(tmp->str));
+		return 1;
+	}
+	return 0;
+}
+
 void	handel_expanding(t_lexer **lexer)
 {
 	t_lexer	*tmp;
 	int		i;
 
 	tmp = *lexer;
-	while (tmp)
+	while (tmp && tmp->str)
 	{
-		if (str_chr(tmp->str, '$') == -1 || tmp->token == delimiter)
+		if (check_if_noexpand(tmp))
 		{
 			tmp = tmp->next;
 			continue ;

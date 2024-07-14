@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 21:34:05 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/14 00:25:28 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,12 @@ void	count_if_quote(char *s, char qoute, int *i, int *counter)
 	(*counter)++;
 	(*i)++;
 	q = 1;
-	while (s[*i] && !(s[*i - 1] == qoute && is_withspaces(s[*i])))
+	while (s[*i] && !(q % 2 == 0 && is_withspaces(s[*i + 1])))
 	{
 		if (s[*i] == qoute)
 			q++;
-		if (q % 2 == 0 && is_withspaces(s[*i]))
-			break ;
 		(*i)++;
 	}
-	// (*i)++;
 }
 
 void	count_if_char(char *s, int *i)

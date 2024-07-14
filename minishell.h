@@ -16,12 +16,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+#include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "parsing/get_next_line/get_next_line.h"
+# include <limits.h>
 # include <fcntl.h>
 
-# define SYNTAX_ERROR			"syntax Error\n"
+# define SYNTAX_ERROR			"syntax error near unexpected token `newline'"
 # define INPUT_ERROR			"Please Enter Valid Argument\n"
 # define ERROR_IN_ALLOCATION	"Error In Allocation"
 # define SINGLE_QUOTE			'\'' 
@@ -127,6 +128,7 @@ int		quotes(char *line, char q);
 
 //syntax error
 int		syntax_error(t_lexer **lexer);
+void handel_herdoc_err(t_lexer **lexer);
 
 // utils_split
 char	*ft_word(char *s, char **arr, char ind, char quotes);
@@ -142,6 +144,7 @@ t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds);
 int		get_lcmd(t_lexer *lexer);
 int		open_files(t_lexer **lexer, t_token token);
 int		save_heredoc(t_lexer **lexer);
+void	save_heredoc2(t_lexer **lexer);
 void 	init_arrays(t_simple_cmds *cmds);
 void 	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len);
 int 	handel_heredoc(char *del);
@@ -184,7 +187,7 @@ int has_quotes(char *s);
 int	is_quotes(char c);
 int	is_withspaces(char c);
 int	is_redirs(t_lexer *lexer);
-
+int is_number (char c);
 // typedef struct list
 // {
 // 	t_container	content;

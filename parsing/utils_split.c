@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:13:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 21:35:11 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/14 00:24:30 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ static void	wait_for_quotes(char **s, char quotes)
 
 	(*s)++;
 	q = 1;
-	while (**s && !(*(*s - 1) == quotes && is_withspaces(**s)))
+	while (**s && !(q % 2 == 0 && is_withspaces(*(*s + 1))))
 	{
 		if (**s == quotes)
 			q++;
-		if (q % 2 == 0 && is_withspaces(**s))
-			break ;
 		(*s)++;
 	}
 }
@@ -39,12 +37,10 @@ int	get_len(char *s, char quotes)
 	{
 		i = 1;
 		q = 1;
-		while (s[i] && !(s[i - 1] == quotes && is_withspaces(s[i])))
+		while (s[i] && !(q % 2 == 0 && is_withspaces(s[i + 1])))
 		{
 			if (s[i] == quotes)
 				q++;
-			if (q % 2 == 0 && is_withspaces(s[i]))
-				break ;
 			i++;
 		}
 	}

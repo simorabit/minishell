@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:24:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 22:01:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/13 23:46:21 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,25 @@ int	syn_err_checker(t_lexer **lexer)
 	}
 	return (1);
 }
+void handel_herdoc_err(t_lexer **lexer)
+{
+	int len;
+	char *del;
 
+	len = 0;
+	del = NULL;
+	(*lexer) = (*lexer)->next;
+	while ((*lexer) && ((*lexer)->token == delimiter ||
+						(*lexer)->token == heredoc))
+	{
+		if ((*lexer)->token == delimiter)
+		{
+			del = ft_strdup((*lexer)->str);
+			handel_heredoc(del);
+		}
+		(*lexer) = (*lexer)->next;
+	}
+}
 int	syntax_error(t_lexer **lexer)
 {
 	if (!syn_err_checker(lexer))

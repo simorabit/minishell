@@ -1,7 +1,5 @@
 {
     "files.associations": {
-		"minishell.h": "c",
-		"readline.h": "c",
-		"get_next_line.h": "c"
-	}
+        "sstream": "c"
+    }
 }

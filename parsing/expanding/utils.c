@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:14:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 22:15:36 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:38:23 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	is_real_char(char c)
 		(c >= 'a' && c <= 'z') || \
 			(c >= 'A' && c <= 'Z') || c == '_');
 }
-
+int is_number (char c)
+{
+	return (c >= '0' && c <= '9');
+}
 int	end_of_proccessing(char c)
 {
 	return (c == '$' || c == DOUBLE_QUOTE || c == SINGLE_QUOTE || c == '\0');

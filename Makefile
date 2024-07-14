@@ -3,19 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
+#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/11 12:49:13 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/14 00:00:19 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC 				=	cc -fsanitize=address -g
+CC 				=	cc
 # -fsanitize=address -g
 CC				+=	-Wall -Wextra -Werror
 NAME 			=	minishell
 HEADER 			=	minishell.h
-LIBS = -lreadline
+
+LIBS = -L $(shell brew --prefix readline)/lib -lreadline
+LINKREADLINELIB1 = $(shell brew --prefix readline)/include
 
 SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		parsing/tokenizer.c parsing/utils_free.c parsing/quotes_spaces.c parsing/utils_quotes_spaces.c \
@@ -23,7 +25,6 @@ SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		parsing/libft_func.c parsing/expanding/expanding.c parsing/expanding/utils.c \
 		parsing/utils.c parsing/remove_quotes.c parsing/parser/parser.c parsing/parser/utils_parser.c \
 		parsing/parser/parser_files.c parsing/parser/cmds_op.c \
-		parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c \
 		execution/src/exec.c execution/builtins/cd.c execution/builtins/echo.c execution/builtins/pwd.c \
 		execution/builtins/export_utile_1.c execution/builtins/export_utile_2.c execution/builtins/export_utile_3.c \
 		execution/builtins/export_utile_4.c execution/builtins/env.c execution/builtins/env_utile.c execution/builtins/exit.c \
@@ -43,7 +44,7 @@ $(TARGET) : $(OBJ) minishell.h
 	@echo "$(GREEN)[ + ] Compilation complete: $(TARGET) created successfully!$(RESET)"
 
 %.o : %.c minishell.h
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c -I $(LINKREADLINELIB1) $< -o $@
 
 clean :
 	@rm -rf $(OBJ)

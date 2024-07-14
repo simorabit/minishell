@@ -17,6 +17,7 @@ char	*ft_strdup(const char *s1)
 	new_value[i] = '\0';
 	return (new_value);
 }
+
 char *ft_strncpy(char *s, int len)
 {
 	char *new_s;
@@ -36,6 +37,7 @@ char *ft_strncpy(char *s, int len)
 	new_s[i] = '\0';
 	return new_s;
 }
+
 int	str_chr(char *s, char c)
 {
 	int	i;
@@ -51,6 +53,7 @@ int	str_chr(char *s, char c)
 	}
 	return (-1);
 }
+
 int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
 	unsigned int	i;
@@ -62,6 +65,7 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+
 void	ft_putstr_fd(char *str, int fd)
 {
 	int	i;
