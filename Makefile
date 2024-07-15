@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/14 00:00:19 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/15 16:55:57 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,5 +156,5 @@ RESET   = \033[0m
 #  //printf ("\n\n---> : %s\n\n", new);
 # cat < Makefile > sssss
 # dakchi nadii
-# 11
+# 22
 

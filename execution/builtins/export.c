@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/11 11:54:31 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:55:22 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,55 +41,51 @@ void	add_variable(t_env *list_env, char *new, int error)
 	char	*first_part;
 	char	*sec_part;
 	char	*ptr;
+	char	*pptr;
+	int		i;
 	
 	temp = list_env;
 	first_part = NULL;
 	sec_part = NULL;
 	new_var = 0;
+	i = 0;
 	if (check_for_plus_and_eq(new, 0))
 	{
-		//exit (0);
-		//printf ("gjbfgjbg\n");
 		new_var = check_var_does_it_exist(new, list_env);
 		if (new_var)
 		{
-			//remove_var(list_env, get_var_from_beg_to_eq(new));
 			first_part = ft_strjoin(get_var_from_beg_to_eq(new), "=");
 			ptr = find_var(list_env, first_part);
 			sec_part = ft_strjoin(get_content_from_eq_to_fin(ptr), get_content_from_eq_to_fin(new));
-			//new = ft_strjoin(first_part, sec_part);
 		}
-		//printf ("\n\n\n%s\n\n\n", get_var_from_beg_to_eq(new));
-		while (list_env)
+		while (list_env)\
 		{
-			char *pptr = get_var_from_beg_to_eq(new);
-			if (!ft_strncmp(list_env->content, pptr, ft_strlen(pptr)))
+			char *ppptr = get_var_from_beg_to_eq(new);
+			
+			if (!ft_strncmp(list_env->content, ppptr, ft_strlen(ppptr)))
 			{
+				
 				if (!ft_strchr(list_env->content, '='))
 				{
+					
 					join = ft_strjoin(list_env->content, "=");
 					list_env->content = ft_strjoin(join, get_content_from_eq_to_fin(new));
+					i++;
 				}
-				list_env->content = ft_strjoin(list_env->content, get_content_from_eq_to_fin(new));
+				else
+				{
+					list_env->content = ft_strjoin(list_env->content, get_content_from_eq_to_fin(new));
+				}
 				return ;
 			}
 			list_env = list_env->next;
 		}
-		//new = remove_plus(new);
 	}
-	// check if the var is in the env
-	// is not existed add like this: var = ft_lstnew_env(new);
-	// is existed 
-	/*
-		free(`string`); // var->content
-		var->content = ft_strdup(`new_string`);
-	*/
 	while (temp)
 	{
-		char *pptr = ft_strjoin(get_env_eq(new), "=");
+		pptr = get_env_eq(new);
 		if (!ft_strncmp(temp->content, pptr, ft_strlen(pptr)))
 		{
-			// printf ("KKKK\n");
 			free(temp->content);
 			temp->content = ft_strdup(new);
 			free(pptr);
@@ -98,20 +94,15 @@ void	add_variable(t_env *list_env, char *new, int error)
 		free(pptr);
 		temp = temp->next;
 	}
-	// if (one_plus(get_env_eq(new)) && check_for_plus_and_eq(new, 0))
-	// {
-	//printf ("====> : %d\n" , check_for_plus_and_eq(new, 0));
 	if (error != -1)
 	{
 		var = ft_lstnew_env(new);
 		ft_lstadd_back_env(&list_env, var);
 	}
-	// }
 }
 
 void	export_exe(char **cmd, t_env *list_env)
 {
-	// char	**export;
 	t_env	*head;
 	t_env	*copy_env;
 	int		i;

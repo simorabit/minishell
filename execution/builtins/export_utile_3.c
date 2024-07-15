@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/11 11:50:33 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:59:07 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	check_for_plus_and_eq(char *arg, int w)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(arg, 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (-1);
 		}
-		return (-1);
 	}
 	i = 0;
 	while (arg[i + 1])
