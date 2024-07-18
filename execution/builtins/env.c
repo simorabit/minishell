@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:44:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/06 13:17:24 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:15:37 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	write_env(t_env *env, char **arg)
 	i = 1;
 	while(env)
 	{
-		if (ft_strchr(env->content, '='))
+		if (ft_strchr(env->content, '='))// && ft_strncmp(env->content, "?", 1))
 		{
 			ft_putstr_fd(env->content, 1);
 			ft_putstr_fd("\n", 1);

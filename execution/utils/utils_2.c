@@ -28,10 +28,12 @@ void	ft_check(char *cmd, char **env)
 {
 	int		i;
 	int		j;
+	int		x;
 	char	**path;
 
 	i = 0;
 	j = 0;
+	x = 0;
 	if (ft_strchr(cmd, '/'))
 	{
 		path = ft_split_exe(ft_find_path(env), ':');
@@ -41,11 +43,22 @@ void	ft_check(char *cmd, char **env)
 				j += 1;
 			i++;
 		}
-		if (!j)
+		i = 0;
+		while (i < 39)
 		{
-			perror("error !!");
-			free_double_ptr(path);
-			exit (EXIT_FAILURE);
+			if (!ft_strcmp(get_content_from_eq_to_fin(env[i]), cmd))
+				x++;
+			i++;
+		}
+		if (!j && !x)
+		{
+			print_error(cmd, "no_such_file");
+			exit (127);
+		}
+		if (!j && x)
+		{
+			print_error(cmd, "is_a_direc");
+			exit (126);
 		}
 	}
 }
@@ -108,7 +121,7 @@ void	ft_exec(char **cmd, char **env)
 		ft_putstr_fd(": command not found\n", 2);
 		free (path);
 		free_double_ptr(cmd);
-		exit (EXIT_FAILURE);
+		exit (127);
 	}
 	free (path);
 	free_double_ptr(cmd);

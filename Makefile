@@ -6,13 +6,13 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/15 16:55:57 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/18 13:18:27 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				=	cc
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror
+CC				+=	-Wall -Wextra -Werror -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
@@ -156,5 +156,9 @@ RESET   = \033[0m
 #  //printf ("\n\n---> : %s\n\n", new);
 # cat < Makefile > sssss
 # dakchi nadii
-# 22
-
+# cat < Makefile | exit
+# 44
+# echo LLL | cat
+# error !!: Invalid argument
+# singl cmd builtins
+# $PWD

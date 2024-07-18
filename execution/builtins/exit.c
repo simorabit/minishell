@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:46:38 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/11 12:03:25 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:26:47 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,7 @@ int	exit_builtins(t_simple_cmds *cmd, char **args, int len)
 			ft_putstr_fd(": numeric argument required\n", 2);
 			exit_num = 255;
 		}
-		printf ("{{{{%d}}}}\n", exit_num);
-		exit(exit_num);
 	}
+	exit(exit_num);
 	return (0);
 }

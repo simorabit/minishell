@@ -230,8 +230,9 @@ char	*find_var(t_env *list_env, char	*var);
 t_env	*env_dup(t_env *list);
 int		check_for_plus_and_eq(char *arg, int w);
 char	*remove_plus(char *new);
-
-int	exit_builtins(t_simple_cmds *cmd, char **args, int len);
+void	add_variable(t_env *list_env, char *new, int error);
+int		exit_builtins(t_simple_cmds *cmd, char **args, int len);
+int		print_error(char *cmd, char *type);
 
 #endif
 // #endif
