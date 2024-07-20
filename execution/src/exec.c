@@ -136,7 +136,7 @@ int	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 	}
 	else if (!ft_strcmp("cd", nood[0]))
 	{
-		get_cd(*nood);
+		cd_exec(cmds, *list_env);
 		return (1);
 	}
 	else if (!ft_strcmp("exit", nood[0]))
@@ -178,7 +178,7 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
 	// 	list = list->next;
 	// }
-	// exit(0);	
+	// exit(0);
 	// if (!list->next && check_is_biltus(list->cmmd[0]))
 	// {
 	// 	// printf("lllll\n");

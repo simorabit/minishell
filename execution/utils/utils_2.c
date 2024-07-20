@@ -12,16 +12,27 @@ void	putstr(char *str, int i)
 	}
 }
 
-char	*ft_find_path(char **env)
+char	*ft_find_path(char **env, char *var, int j)
 {
-	int	i;
+	int		i;
+	int		x;
+	char	*ptr;
 
+	ptr = (char *)malloc(sizeof(char *) * 1337);
 	i = 0;
-	while (env[i] && ft_strncmp("PATH=", env[i], 5) != 0)
+	x = 0;
+	while (env[i] && ft_strncmp(var, env[i], ft_strlen(var)) != 0)
 		i++;
 	if (env[i] == NULL)
 		return (NULL);
-	return (env[i] + 5);
+	while (env[i][j])
+	{
+		ptr[x] = env[i][j];
+		x++;
+		j++; 
+	}
+	ptr[x] = '\0';
+	return (ptr);
 }
 
 void	ft_check(char *cmd, char **env)
@@ -36,7 +47,7 @@ void	ft_check(char *cmd, char **env)
 	x = 0;
 	if (ft_strchr(cmd, '/'))
 	{
-		path = ft_split_exe(ft_find_path(env), ':');
+		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 		while (path[i])
 		{
 			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])))
@@ -71,7 +82,7 @@ char	*ft_get_path(char *cmd, char **env)
 	char	*cmd_with_path;
 
 	i = 0;
-	all_path = ft_split_exe(ft_find_path(env), ':');
+	all_path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 	if (all_path == NULL)
 		return (NULL);
 	while (all_path[i])

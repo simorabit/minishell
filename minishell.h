@@ -84,6 +84,13 @@ typedef struct env
 	struct env	*next;
 }			t_env;
 
+typedef struct tools
+{
+	char	*pwd;
+	char	*old_pwd;
+	char	*cmd;
+}
+			t_tools;
 //libift func
 char *ft_strncpy(char *s, int len);
 int	ft_strncmp(const char *s1, const char *s2, unsigned int n);
@@ -198,7 +205,7 @@ int is_number (char c);
 char	*ft_strjoin(char *s1, char *s2);
 void	ft_check(char *cmd, char **env);
 char	*ft_strchr(char *s, int c);
-char	*ft_find_path(char **env);
+char	*ft_find_path(char **env, char *var, int j);
 void	ft_find_pwd(void);
 t_env	*get_env(char **env);
 void	get_cd(char *cmd);
@@ -233,6 +240,7 @@ char	*remove_plus(char *new);
 void	add_variable(t_env *list_env, char *new, int error);
 int		exit_builtins(t_simple_cmds *cmd, char **args, int len);
 int		print_error(char *cmd, char *type);
+int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
 
 #endif
 // #endif

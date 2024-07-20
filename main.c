@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/16 12:58:58 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/20 10:49:44 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	handel_input(char *line, t_env **env_list)
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	free_lexer(lexer);
+
 	initialize_files(cmds);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
