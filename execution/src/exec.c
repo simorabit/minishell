@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
+/*   Updated: 2024/07/21 02:11:43 by souaouri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-int	print_error(char *cmd, char *type)
+int	 print_error(char *cmd, char *type)
 {
 	if (!ft_strcmp(type, "cmd_not_found"))
 	{
@@ -178,7 +190,6 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
 	// 	list = list->next;
 	// }
-	// exit(0);
 	// if (!list->next && check_is_biltus(list->cmmd[0]))
 	// {
 	// 	// printf("lllll\n");
@@ -266,7 +277,8 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	}
 	while (wait(&exit_status) != -1)
 		;
-	exit_status = WIFEXITED(exit_status);
+	exit_status = WEXITSTATUS(exit_status);
+	//printf ("----> %d\n", exit_status);
 	char *ex_st = ft_strjoin("?=", ft_itoa(exit_status));
 	add_variable(*env_list, ex_st, 1);
 }

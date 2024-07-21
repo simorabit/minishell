@@ -48,6 +48,8 @@ void	ft_check(char *cmd, char **env)
 	if (ft_strchr(cmd, '/'))
 	{
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
+		if (!path)
+			return ;
 		while (path[i])
 		{
 			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])))
@@ -61,6 +63,7 @@ void	ft_check(char *cmd, char **env)
 				x++;
 			i++;
 		}
+
 		if (!j && !x)
 		{
 			print_error(cmd, "no_such_file");
@@ -120,14 +123,19 @@ void	ft_exec(char **cmd, char **env)
 	path = ft_get_path(cmd[0], env);
 	if (path == NULL)
 	{
+		if (!ft_strcmp(cmd[0], ".."))
+		{
+			print_error(cmd[0], "is_a_direc");
+			exit (126);
+		}
 		ft_putstr_fd("minishell: ", 2);;
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		return ;
+		exit (127);
 	}
 	if (execve(path, cmd, env) == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);;
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		free (path);

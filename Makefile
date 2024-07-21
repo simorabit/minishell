@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/21 00:50:05 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/21 02:22:41 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				=	cc
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror -fsanitize=address -g
+CC				+=	-Wall -Wextra -Werror
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
@@ -157,7 +157,7 @@ RESET   = \033[0m
 # cat < Makefile > sssss
 # dakchi nadii
 # cat < Makefile | exit
-# 65
+# 66
 # echo LLL | cat
 # error !!: Invalid argument
 # singl cmd builtins
@@ -176,4 +176,5 @@ RESET   = \033[0m
 # addspaces
 # signals cat minishell : minishell : 
 # getenv
-# cmd ; export ab="ls -l" $ab
+# cmd ; export ab="ls -l"
+
