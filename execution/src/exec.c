@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 18:41:22 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:36:28 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,20 @@ int	check_is_biltus(char *cmd)
 
 int	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 {
-	char	*pwd;  
+	char	*pwd;
+	char	**env;
 	int		i;
 
 	pwd = NULL;
+	env = change_list_to_env(*list_env);
 	i = -1;
 	if (nood == NULL)
 		return (0);
+	if (!ft_find_path(env, "PATH=", 5))
+	{
+		print_error(nood[0], "no_such_file");
+		return (127);
+	}
 	if (!ft_strcmp("export", nood[0]))
 	{
 		export_exe(nood, *list_env);

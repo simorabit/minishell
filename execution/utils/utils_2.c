@@ -110,33 +110,24 @@ void	ft_exec(char **cmd, char **env)
 {
 	int		i;
 	char	*path;
-	//char	**cmmd;
 
 	i = 0;
-	// if (!cmd || !*cmd)
-	// 	exit (EXIT_FAILURE);
-	//cmmd = ft_split(cmd, ' ');
-	//cmd = cmmd[0];
 	ft_check(cmd[0], env);
 	path = ft_get_path(cmd[0], env);
 	if (path == NULL)
 	{
+		
 		if (!ft_strcmp(cmd[0], ".."))
 		{
 			print_error(cmd[0], "is_a_direc");
 			exit (126);
 		}
-		ft_putstr_fd("minishell: ", 2);;
-		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		print_error(cmd[0], "no_such_file");
 		exit (127);
 	}
 	if (execve(path, cmd, env) == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		//free (path);
+		print_error(cmd[0], "cmd_not_found");
 		free_double_ptr(cmd);
 		exit (127);
 	}
