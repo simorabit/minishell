@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
+#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/20 12:33:06 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/21 00:50:05 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -163,3 +163,17 @@ RESET   = \033[0m
 # singl cmd builtins
 #ls | ls | ls | cat < Makefile
 #cat | cat | cat | ls -l
+# get_content_from_eq_to_fin
+
+# Tasks for soulaiman
+# # 1- malloc
+# 2- normitte
+# 3- exit
+# #  4- unset PATH | "env No such file or directory" add this
+# # Tasks
+
+# tasks for me
+# addspaces
+# signals cat minishell : minishell : 
+# getenv
+# cmd ; export ab="ls -l" $ab

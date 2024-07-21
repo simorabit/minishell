@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/20 10:49:44 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:37:57 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void	handel_input(char *line, t_env **env_list)
 	tokenizer(res, &lexer);
 	if (!syntax_error(&lexer))
 		return handel_herdoc_err(&lexer);
-	handel_expanding(&lexer);
+	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	free_lexer(lexer);
-
 	initialize_files(cmds);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
@@ -46,6 +45,11 @@ void sighandler(int sig)
 {
 	 if (sig == SIGINT)
     {
+		if (waitpid(-1, NULL, WNOHANG) == 0)
+		{
+			printf("\n");
+			return ;
+		}
         printf("\n");
         rl_on_new_line();
         rl_replace_line("", 0);

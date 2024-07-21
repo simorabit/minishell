@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:08:16 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 22:14:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:10:00 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*handel_singleq(char *result, char *s, int *i, int *j)
 	return (result);
 }
 
-char	*handel_double_q(char *result, char *s, int *i, int *j)
+char	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list)
 {
 	int		k;
 	char	*res;
@@ -44,7 +44,7 @@ char	*handel_double_q(char *result, char *s, int *i, int *j)
 			if (!res)
 				return (NULL);
 			if (str_chr(res, '$') != -1)
-				result = ft_strjoin(result, expand_str(res));
+				result = ft_strjoin(result, expand_str(res, env_list));
 			else
 				result = ft_strjoin(result, res);
 			break ;

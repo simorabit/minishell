@@ -6,13 +6,28 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/14 01:40:52 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:33:13 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*alloc_exp(char *str, int *pos)
+char *m_get_env(char *str, t_env **env_list)
+{
+	t_env *env;
+	char *res;
+	
+	env = *env_list;
+	while (env)
+	{
+		if(!ft_strncmp(env->content, str, ft_strlen(str)) && 
+			env->content[ft_strlen(str)] == '=')
+			res = get_content_from_eq_to_fin(env->content);
+		env = env->next;
+	}
+	return res;
+}
+char	*alloc_exp(char *str, int *pos, t_env **env_list)
 {
 	int		i;
 	int		len_env;
@@ -33,7 +48,7 @@ char	*alloc_exp(char *str, int *pos)
 	reset = ft_substr(str, len_env, get_len_ep(str) - len_env);
 	if (!*reset)
 		reset = NULL;
-	res = ft_strjoin(getenv(new_s), reset);
+	res = ft_strjoin(m_get_env(new_s, env_list), reset);
 	free(reset);
 	return (res);
 }
@@ -51,7 +66,7 @@ void	*find_dollar(char *result, char *s, int *i)
 	return (result);
 }
 
-char	*expand_str(char *s)
+char	*expand_str(char *s, t_env **env_list)
 {
 	int		i;
 	int		counter;
@@ -67,9 +82,9 @@ char	*expand_str(char *s)
 	while (s[i])
 	{
 		if (s[i] == '$' && !counter)
-			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i));
+			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i, env_list));
 		else if (s[i] == '$' && counter)
-			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
+			result = ft_strjoin(result, alloc_exp(s + (++i), &i, env_list));
 		if (s[i] && s[i] != '$')
 			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
 		if (!result)
@@ -80,7 +95,7 @@ char	*expand_str(char *s)
 	return (result);
 }
 
-char	*expand_str2(char *s)
+char	*expand_str2(char *s, t_env **env_list)
 {
 	int		i;
 	int		j;
@@ -92,12 +107,12 @@ char	*expand_str2(char *s)
 	{
 		j = 0;
 		if (s[i] == DOUBLE_QUOTE)
-			result = handel_double_q(result, s, &i, &j);
+			result = handel_double_q(result, s, &i, &j, env_list);
 		else if (s[i] == SINGLE_QUOTE)
 			result = handel_singleq(result, s, &i, &j);
 		else if (s[i] == '$')
 		{
-			result = ft_strjoin(result, alloc_exp(s + (++i), &i));
+			result = ft_strjoin(result, alloc_exp(s + (++i), &i, env_list));
 			i--;
 		}
 		else
@@ -123,7 +138,7 @@ int check_if_noexpand(t_lexer	*tmp)
 	return 0;
 }
 
-void	handel_expanding(t_lexer **lexer)
+void	handel_expanding(t_lexer **lexer, t_env **env_list)
 {
 	t_lexer	*tmp;
 	int		i;
@@ -137,7 +152,7 @@ void	handel_expanding(t_lexer **lexer)
 			continue ;
 		}
 		tmp->expanded = 1;
-		tmp->str = expand_str2(tmp->str);
+		tmp->str = expand_str2(tmp->str, env_list);
 		if (tmp->token != word)
 			tmp->str = ft_strdup("");
 		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))

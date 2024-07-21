@@ -157,18 +157,18 @@ void 	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len);
 int 	handel_heredoc(char *del);
 
 //expanding
-void	handel_expanding(t_lexer **lexer);
-char 	*expand_str(char *s);
+void	handel_expanding(t_lexer **lexer, t_env **env_list);
+char 	*expand_str(char *s, t_env **env_list);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);
-char 	*handel_double_q(char *result, char *s, int *i, int *j);
+char 	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list);
 char 	*handel_singleq(char *result, char *s, int *i, int *j);
-char	*alloc_exp(char *str, int *pos);
+char	*alloc_exp(char *str, int *pos, t_env **env_list);
 int		get_len_ep(char *s);
 int		end_of_proccessing(char c);
 int		is_real_char(char c);
-char 	*expand_str2(char *s);
+char 	*expand_str2(char *s, t_env **env_list);
 
 //debugging
 void	print_cmd(t_simple_cmds **cmds);

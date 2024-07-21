@@ -1,0 +1,12 @@
+TODO for soulaiman
+# 1- malloc
+# 2- normitte
+# 3- exit
+# 4- unset PATH | "env No such file or directory" add this
+
+TODO - for me
+# addspaces
+# signals cat minishell : minishell :  fixed 
+# getenv    fixed
+# cmd ; export ab="ls -l" $ab fixed
+# segfault here : echo $ac ="ls -l"
