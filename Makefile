@@ -6,7 +6,7 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/21 16:02:50 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/21 18:51:40 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		parsing/syntax_error.c parsing/utils_split.c parsing/expanding/quotes_expanding.c \
 		parsing/libft_func.c parsing/expanding/expanding.c parsing/expanding/utils.c \
 		parsing/utils.c parsing/remove_quotes.c parsing/parser/parser.c parsing/parser/utils_parser.c \
-		parsing/parser/parser_files.c parsing/parser/cmds_op.c \
+		parsing/parser/parser_files.c parsing/parser/cmds_op.c addresses_collector.c\
 		execution/src/exec.c execution/builtins/cd.c execution/builtins/echo.c execution/builtins/pwd.c \
 		execution/builtins/export_utile_1.c execution/builtins/export_utile_2.c execution/builtins/export_utile_3.c \
 		execution/builtins/export_utile_4.c execution/builtins/env.c execution/builtins/env_utile.c execution/builtins/exit.c \

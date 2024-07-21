@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/06 12:57:42 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:40:41 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_env_eq(char *new)
 	i = 0;
 	while (new && new[i] && new[i] != '=')
 		i++;
-	ptr = malloc(i + 1);
+	ptr = my_alloc(i + 1, 'a');
 	if (!ptr)
 		return (NULL);
 	i = 0;

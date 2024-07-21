@@ -11,7 +11,7 @@ static char	*ft_substr_exe(char *s, unsigned int start, size_t	len)
 		return (ft_strdup(""));
 	if (len >= ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
-	ptr = malloc(sizeof(char) * (len + 1));
+	ptr = my_alloc(sizeof(char) * (len + 1), 'a');
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -81,7 +81,7 @@ char	**ft_split_exe(char *s, char c)
 	size = count_word(s, c);
 	i = 0;
 	j = 0;
-	ptr = (char **)malloc(sizeof(char *) * (size + 1));
+	ptr = (char **)my_alloc(sizeof(char *) * (size + 1), 'a');
 	if (!ptr)
 		return (NULL);
 	while (s[j] && size--)

@@ -18,7 +18,7 @@ char	*ft_find_path(char **env, char *var, int j)
 	int		x;
 	char	*ptr;
 
-	ptr = (char *)malloc(sizeof(char *) * 1337);
+	ptr = (char *)my_alloc(sizeof(char *) * 1337, 'a');
 	i = 0;
 	x = 0;
 	while (env[i] && ft_strncmp(var, env[i], ft_strlen(var)) != 0)

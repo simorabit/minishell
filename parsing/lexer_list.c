@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 20:16:03 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:44:26 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_lexer	*ft_lstnew(int content)
 {
 	t_lexer	*lexer;
 
-	lexer = (t_lexer *)malloc(sizeof(t_lexer));
+	lexer = (t_lexer *)my_alloc(sizeof(t_lexer), 'a');
 	if (!lexer)
 		return (NULL);
 	lexer->i = content;

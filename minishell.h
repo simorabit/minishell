@@ -37,6 +37,14 @@
 #define RESET   "\x1b[0m"
 
 
+typedef struct s_c_addresses t_c_addresses;
+
+struct s_c_addresses
+{
+    void                *adr;
+    struct s_c_addresses    *next;
+};
+
 typedef enum s_token
 {
 	word,
@@ -88,7 +96,6 @@ typedef struct tools
 {
 	char	*pwd;
 	char	*old_pwd;
-	char	*cmd;
 }
 			t_tools;
 //libift func
@@ -241,6 +248,8 @@ void	add_variable(t_env *list_env, char *new, int error);
 int		exit_builtins(t_simple_cmds *cmd, char **args, int len);
 int		print_error(char *cmd, char *type);
 int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
+
+void	*my_alloc(size_t size, int flag);
 
 #endif
 // #endif

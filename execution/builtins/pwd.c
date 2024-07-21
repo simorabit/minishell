@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/04 09:49:52 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:12:40 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@ void	ft_find_pwd(void)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
+	ft_putstr_fd(pwd, 1);
+	ft_putstr_fd("\n", 1);
+	free (pwd);
 }

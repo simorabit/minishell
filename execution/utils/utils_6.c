@@ -6,7 +6,7 @@ char	**change_list_to_env(t_env *list_env)
 	int		i;
 
 	i = 0;
-	env = malloc(1024);
+	env = my_alloc(1024, 'a');
 	while (list_env)
 	{
 		env[i] = list_env->content;

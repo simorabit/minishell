@@ -6,13 +6,13 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/20 10:45:34 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:07:27 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	change_path(t_tools *tools)
+char	*change_path(t_tools *tools)
 {
 	char	*tmp;
 
@@ -21,6 +21,7 @@ void	change_path(t_tools *tools)
 	tools->old_pwd = tmp;
 	free(tools->pwd);
 	tools->pwd = getcwd(NULL, sizeof(NULL));
+	return (tools->pwd);
 }
 
 char	*find_path_ret(char *str, t_env *list_env)
@@ -85,6 +86,7 @@ void	add_path_to_env(t_tools *tools, t_env *list_env)
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
 {
 	int		ret;
+	char	*free_one;
 
 	if (!simple_cmd->cmmd[1])
 		ret = specific_path(list_env, "HOME=");
@@ -106,7 +108,8 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
 	}
 	if (ret != 0)
 		return (EXIT_FAILURE);
-	change_path(tools);
+	free_one = change_path(tools);
+	free (free_one);
 	add_path_to_env(tools, list_env);
 	return (EXIT_SUCCESS);
 }
@@ -117,7 +120,7 @@ int	cd_exec(t_simple_cmds *cmds, t_env *list_env)
 	char	**env;
 	int		re;
 	
-    tools = (t_tools *)malloc(sizeof(t_tools));
+    tools = my_alloc(sizeof(t_tools), 'a');
     if (tools == NULL) 
         return (0); 
     env = change_list_to_env(list_env);

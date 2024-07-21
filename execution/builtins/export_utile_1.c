@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:47 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/11 10:40:16 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:40:17 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*add_double_quotes(char *var)
 	if (ft_strchr(var, '='))
 		size += 2;
 	
-	ptr = malloc(sizeof(char) * size + 1);
+	ptr = my_alloc(sizeof(char) * size + 1, 'a');
 	if (var[0] == '\0' || var == NULL)
 		return (NULL);
 	while (var[i])
@@ -128,7 +128,7 @@ char	*get_var_from_beg_to_eq(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	ptr = malloc(i + 1);
+	ptr = my_alloc(i + 1, 'a');
 	i = 0;
 	while (var[i] && var[i + 1] != '=')
 	{

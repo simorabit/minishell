@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:13:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/14 00:24:30 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:45:52 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_word(char *s, char **arr, char ind, char quotes)
 	i = 0;
 	j = 0;
 	len = get_len(s, quotes);
-	output = (char *)malloc(sizeof(char) * (len + 1));
+	output = (char *)my_alloc(sizeof(char) * (len + 1), 'a');
 	if (!output)
 	{
 		while (j < ind)

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/15 15:59:07 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:41:03 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*remove_plus(char *new)
 
 	i = 0;
 	j = 0;
-	ptr = malloc(ft_strlen(new) + 1);
+	ptr = my_alloc(ft_strlen(new) + 1, 'a');
 	
 	while (new[i])
 	{

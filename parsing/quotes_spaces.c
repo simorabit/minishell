@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_spaces.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/14 01:21:39 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:45:16 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	*add_spaces(char *line)
 	if (len == 0)
 		return (line);
 	len = ft_strlen(line) + 1 + len;
-	new_value = malloc(len * sizeof(char));
+	new_value = my_alloc(len * sizeof(char), 'a');
 	if (!new_value)
 		allocation_error(line);
 	while (j < len - 1)
