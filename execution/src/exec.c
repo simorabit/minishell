@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 15:19:36 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:39:18 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	// 	printf("list->cmd is empty\n");
 	// }
 	// exit(1);
-	if (!list->cmd)
+	if (!list || !list->cmd)
 		return ;
 	hold_fd_in = 0;
 	exit_status = 0;

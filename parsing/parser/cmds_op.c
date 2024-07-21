@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:16:43 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 22:17:28 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:37:09 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_simple_cmds	*ft_lstnew_cmd(void)
 	if (!cmds)
 		return (NULL);
 	cmds->next = NULL;
+	cmds->cmd = NULL;
 	return (cmds);
 }
 
