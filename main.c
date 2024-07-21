@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 00:37:57 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 02:30:01 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,11 @@ void	read_input(char **env)
 {
 	char	*line;
 	t_env	*env_list;
-
-	env_list = get_env(env);
+	
+	if (!env || !env[0])
+		add_emergency_env(&env_list);
+	else
+		env_list = get_env(env);
 	signal(SIGINT, sighandler);
 	while (1)
 	{
