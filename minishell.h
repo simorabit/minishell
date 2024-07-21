@@ -76,7 +76,7 @@ typedef struct s_simple_cmds
     int		aout_file;
     int		heredoc;	
 	struct s_simple_cmds *next;
-} t_simple_cmds; 
+}			t_simple_cmds; 
 
 typedef struct env
 {

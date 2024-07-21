@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 02:11:43 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:19:36 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,18 +178,39 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	int		i;
 	t_simple_cmds	*tmp;
 
+	// if (list)
+	// 	printf("LIST IS FULL\n");
+	// if (list->cmd) {
+	// 	printf("=={%s}==\n", list->cmd);
+	// }
+	// else {
+	// 	printf("list->cmd is empty\n");
+	// }
+	// exit(1);
+	if (!list->cmd)
+		return ;
 	hold_fd_in = 0;
 	exit_status = 0;
 	tmp = list;
 	i = 0;
+	//exit (0);
 	//list->in_file = open ("Makefile", O_RDONLY , 0644);
+	// if (list == NULL) 
+	// {
+	// 	printf ("LLLLLL\n");
+    //     fprintf(stderr, "Error: list is NULL\n");
+    //     return;
+    // }
+	// printf ("%d\n", list->in_file);
+	// exit (0);
 	// while (list)
 	// {
-	// 	change_list(list);
+	// 	//change_list(list);
 	// 	// printf ("---> %s\n", list->args[0]);
-	// 	printf ("cmd : %s %s | infile : %d | outfile : %d\n", list->cmmd[0], list->cmmd[1], list->in_file, list->out_file);
+	// 	printf ("cmd : %s | %s | infile : %d | outfile : %d\n", list->cmd, list->args[0], list->in_file, list->out_file);
 	// 	list = list->next;
 	// }
+	// exit (0);
 	// if (!list->next && check_is_biltus(list->cmmd[0]))
 	// {
 	// 	// printf("lllll\n");

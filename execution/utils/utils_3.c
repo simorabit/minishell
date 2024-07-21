@@ -24,14 +24,14 @@ static char	*ft_substr_exe(char *s, unsigned int start, size_t	len)
 	return (ptr);
 }
 
-static int	count_word(const char	*s, char c)
+static int	count_word(const char *s, char c)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	j = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		while (s[i] && s[i] == c)
 			i++;
