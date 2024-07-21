@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 15:38:31 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:48:34 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	handel_input(char *line, t_env **env_list)
 		return handel_herdoc_err(&lexer);
 	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
-	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
-	print_cmd(&cmds);
+	cmds = parser(&lexer, &cmds, get_lcmd(lexer));;
 	free_lexer(lexer);
 	initialize_files(cmds);
 	len = ft_lstsize_cmd(cmds);

@@ -113,10 +113,8 @@ void	ft_exec(char **cmd, char **env)
 	//char	**cmmd;
 
 	i = 0;
-	if (!ft_strncmp(cmd[0], "\0", 1))
-	{
-		exit (EXIT_FAILURE);
-	}
+	// if (!cmd || !*cmd)
+	// 	exit (EXIT_FAILURE);
 	//cmmd = ft_split(cmd, ' ');
 	//cmd = cmmd[0];
 	ft_check(cmd[0], env);
@@ -138,7 +136,7 @@ void	ft_exec(char **cmd, char **env)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		free (path);
+		//free (path);
 		free_double_ptr(cmd);
 		exit (127);
 	}
