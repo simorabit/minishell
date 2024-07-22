@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <limits.h>
 # include <fcntl.h>
+#include <sys/stat.h>
 
 # define SYNTAX_ERROR			"syntax error near unexpected token `newline'"
 # define INPUT_ERROR			"Please Enter Valid Argument\n"
@@ -213,7 +214,7 @@ int is_number (char c);
 
 // // virtual
 char	*ft_strjoin(char *s1, char *s2);
-void	ft_check(char *cmd, char **env);
+void	ft_check(char *cmd);
 char	*ft_strchr(char *s, int c);
 char	*ft_find_path(char **env, char *var, int j);
 void	ft_find_pwd(void);
