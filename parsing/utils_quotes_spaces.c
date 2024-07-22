@@ -6,37 +6,59 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 19:22:16 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/22 06:05:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	quotes(char *line, char q)
-{
-	int	i;
-	int	counter;
 
-	counter = 0;
+int	check_quotes(char *line)
+{
+	int i;
+	int flag;
+	
 	i = 0;
+	flag = 1;
 	while (line[i])
 	{
-		if (line[i] == q)
-			counter++;
+		if(line[i] == DOUBLE_QUOTE)
+		{
+			i++;
+			flag = 0;
+			while (line[i])
+			{
+				if(line[i] == DOUBLE_QUOTE)
+				{
+					flag = 1;
+					break;	
+				}
+				i++;
+			}
+		}else if(line[i] == SINGLE_QUOTE)
+		{
+				i++;
+			flag = 0;
+			while (line[i])
+			{
+				if(line[i] == SINGLE_QUOTE)
+				{
+					flag = 1;
+					break;	
+				}
+				i++;
+			}
+		}
 		i++;
 	}
-	return (counter);
+	return flag;
 }
-
 int	handel_quotes(char *line)
 {
-	if (quotes(line, SINGLE_QUOTE) % 2 == 0 && \
-		quotes(line, DOUBLE_QUOTE) % 2 == 0)
-		return (1);
-	error_msg(SYNTAX_ERROR);
-	return (0);
+	if(!check_quotes(line))
+		return 0;
+	return 1;
 }
-
 int	is_redir_has_found(char c)
 {
 	if (c == '<' || c == '>' || c == '|')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 18:48:03 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/22 04:52:56 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	handel_files(t_lexer **tmp, t_simple_cmds *cmds)
 
 void	*handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
 {
-	if (*j == 0 && (*tmp)->token == word)
+	if ((*j == 0 && (*tmp)->token == word) || 
+		((*tmp)->token == word && (*tmp)->prev->token != word))
 	{
 		cmds->cmd = ft_strdup((*tmp)->str);
 		if (!cmds->cmd)

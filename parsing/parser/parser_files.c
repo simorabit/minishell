@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/14 00:36:20 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:18:35 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,45 @@
 
 int handel_heredoc(char *del)
 {
-	int fd_in;
-	char *line;
+    int fd_in;
+    char *line;
+    int pid;
+    int exit_status;
 
-	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (fd_in == -1)
-		(perror("Error in open file"));
-	else
-	{
-		line = readline(">");
-		while (ft_strncmp(line, del, ft_strlen(del)))
+    fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
+    pid = fork();
+    if (pid == -1)
+        return (perror("Error forking process"), -1);
+    else if (pid == 0)
+	{ 
+        signal(SIGINT, SIG_DFL); // Reset SIGINT to default behavior
+        while (1)
 		{
-			ft_putstr_fd(line, fd_in);
-			free(line);
-			line = readline(">");
-			if (!line)
-				break;
-		}
-	}
-	return (fd_in);
+            line = readline(">");
+            if (!line || ft_strncmp(line, del, strlen(del)) == 0) {
+                free(line);
+                break;
+            }
+            ft_putstr_fd(line, fd_in);
+            free(line);
+        }
+        close(0);
+        exit(0); // Child process exits
+    } 
+	else
+	{ 
+		wait(&exit_status); 
+        if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+		{
+            exit_status = 1;
+            close(0);
+			exit(0);
+        }
+        close(0);
+    }
+    return fd_in;
 }
+
 
 int save_heredoc(t_lexer **lexer)
 {

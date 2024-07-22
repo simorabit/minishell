@@ -98,6 +98,9 @@ typedef struct tools
 	char	*old_pwd;
 }
 			t_tools;
+
+void sighandler(int sig);
+
 //libift func
 char *ft_strncpy(char *s, int len);
 int	ft_strncmp(const char *s1, const char *s2, unsigned int n);

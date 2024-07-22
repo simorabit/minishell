@@ -1,8 +1,10 @@
 TODO for soulaiman
-# 1- malloc
+
 # 2- normitte
 # 3- exit status
-# 4- unset PATH | "env No such file or directory" add this
+bash: export: `a++=++1': not a valid identifier
+
+5 echo a > file
 
 ///////////////////////
 
@@ -14,4 +16,6 @@ TODO - for simo
 # segfault here : echo $ac ="ls -l"
 # export a="main.c minishell.h"
 # kill -11 0
+echo $a  a= "a    b    c" 
+"$a"
 #minishell : $454-45

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 18:29:15 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/22 07:28:41 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handel_input(char *line, t_env **env_list)
 	lexer = NULL;
 	cmds = NULL;
 	if (!handel_quotes(line))
-		return ;
+		return (error_msg(SYNTAX_ERROR));
 	line = add_spaces(line);
 	if (!line)
 		return ;
@@ -35,6 +35,7 @@ void	handel_input(char *line, t_env **env_list)
 	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));;
+	// print_cmd(&cmds);
 	free_lexer(lexer);
 	initialize_files(cmds);
 	len = ft_lstsize_cmd(cmds);
@@ -85,8 +86,6 @@ int	main(int arc, char *arv[], char **env)
 {
 	(void)arv;
 	rl_catch_signals = 0; // 
-	//TODO - replace this variable into 1 in child for heredoc
-	//TODO - handle -n for echo
 	if (arc != 1)
 		(printf("InputError"), exit(0));
 	read_input(env);

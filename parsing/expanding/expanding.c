@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 00:33:13 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:01:15 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@ char *m_get_env(char *str, t_env **env_list)
 {
 	t_env *env;
 	char *res;
-	
+
 	env = *env_list;
 	while (env)
 	{
-		if(!ft_strncmp(env->content, str, ft_strlen(str)) && 
+		if (!ft_strncmp(env->content, str, ft_strlen(str)) &&
 			env->content[ft_strlen(str)] == '=')
 			res = get_content_from_eq_to_fin(env->content);
 		env = env->next;
 	}
 	return res;
 }
-char	*alloc_exp(char *str, int *pos, t_env **env_list)
+char *alloc_exp(char *str, int *pos, t_env **env_list)
 {
-	int		i;
-	int		len_env;
-	char	*new_s;
-	char	*res;
-	char	*reset;
+	int i;
+	int len_env;
+	char *new_s;
+	char *res;
+	char *reset;
 
 	len_env = 0;
 	i = 0;
@@ -53,9 +53,9 @@ char	*alloc_exp(char *str, int *pos, t_env **env_list)
 	return (res);
 }
 
-void	*find_dollar(char *result, char *s, int *i)
+void *find_dollar(char *result, char *s, int *i)
 {
-	int	k;
+	int k;
 
 	if (!result)
 		return (NULL);
@@ -66,12 +66,12 @@ void	*find_dollar(char *result, char *s, int *i)
 	return (result);
 }
 
-char	*expand_str(char *s, t_env **env_list)
+char *expand_str(char *s, t_env **env_list)
 {
-	int		i;
-	int		counter;
-	char	*result;
-	char	*befor_dollar;
+	int i;
+	int counter;
+	char *result;
+	char *befor_dollar;
 
 	counter = 0;
 	result = NULL;
@@ -95,11 +95,11 @@ char	*expand_str(char *s, t_env **env_list)
 	return (result);
 }
 
-char	*expand_str2(char *s, t_env **env_list)
+char *expand_str2(char *s, t_env **env_list)
 {
-	int		i;
-	int		j;
-	char	*result;
+	int i;
+	int j;
+	char *result;
 
 	i = 0;
 	result = NULL;
@@ -124,24 +124,46 @@ char	*expand_str2(char *s, t_env **env_list)
 	return (result);
 }
 
-int check_if_noexpand(t_lexer	*tmp)
+int check_if_noexpand(t_lexer *tmp)
 {
-	if(str_chr(tmp->str, '$') == -1 || tmp->token == delimiter)
+	if (str_chr(tmp->str, '$') == -1 || tmp->token == delimiter)
 		return 1;
-	if((tmp->str[0] == '$' &&  !is_real_char(tmp->str[1])) || !ft_strcmp(tmp->str, "$?"))
-		return 1;
-	if(tmp->str[0] == '$' && is_number(tmp->str[1]))
+	// if((tmp->str[0] == '$' &&  !is_real_char(tmp->str[1])) || !ft_strcmp(tmp->str, "$?"))
+	// 	return 1;
+	if (tmp->str[0] == '$' && is_number(tmp->str[1]))
 	{
 		tmp->str = ft_substr(tmp->str, 2, ft_strlen(tmp->str));
 		return 1;
 	}
 	return 0;
 }
-
-void	handel_expanding(t_lexer **lexer, t_env **env_list)
+void handle_options(t_lexer **tmp, t_env **env_list)
 {
-	t_lexer	*tmp;
-	int		i;
+    char **str;
+    t_lexer *tmp2;
+    t_lexer *node;
+    t_lexer *current;
+    int i = 0;
+
+    str = ft_split(expand_str2((*tmp)->str, env_list));
+    tmp2 = (*tmp)->next;
+    (*tmp)->str = ft_strdup(str[i++]);
+
+    current = *tmp;
+    while (str[i])
+    {
+        node = ft_lstnew((*tmp)->i++);
+        node->str = ft_strdup(str[i++]); 
+        current->next = node; 
+        current = node; 
+    }
+    current->next = tmp2;
+}
+
+void handel_expanding(t_lexer **lexer, t_env **env_list)
+{
+	t_lexer *tmp;
+	int i;
 
 	tmp = *lexer;
 	while (tmp && tmp->str)
@@ -149,10 +171,13 @@ void	handel_expanding(t_lexer **lexer, t_env **env_list)
 		if (check_if_noexpand(tmp))
 		{
 			tmp = tmp->next;
-			continue ;
+			continue;
 		}
 		tmp->expanded = 1;
-		tmp->str = expand_str2(tmp->str, env_list);
+		if (tmp->token == word)
+			handle_options(&tmp, env_list);
+		else
+			tmp->str = expand_str2(tmp->str, env_list);
 		if (tmp->token != word)
 			tmp->str = ft_strdup("");
 		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))
