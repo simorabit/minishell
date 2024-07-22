@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 12:13:20 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/22 12:23:21 by mal-mora         ###   ########.fr       */
+/*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
+/*   Updated: 2024/07/22 12:49:50 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,67 @@ int	check_is_dir(char *cmd)
 	return (-1);
 }
 
-void	ft_check(char *cmd)
+void	is_error(char *cmd)
+{
+	if (check_is_dir(cmd) == 2)
+	{
+		print_error(cmd, "is_a_direc");
+		exit (126);
+	}
+	if (check_is_dir(cmd) == 1)
+	{
+		print_error(cmd, "Per_denied");
+		exit (126);
+	}
+	if (check_is_dir(cmd) == -1)
+	{
+		print_error(cmd, "no_such_file");
+		exit (127);
+	}
+}
+
+void	ft_check(char *cmd, char **env)
 {
 	int		i;
 	int		j;
 	int		x;
+	char	**path;
 
 	i = 0;
 	j = 0;
 	x = 0;
 	if (ft_strchr(cmd, '/'))
 	{
-		if (check_is_dir(cmd) == 2)
+		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
+		if (!path)
+			return ;
+		while (path[i])
 		{
-			print_error(cmd, "is_a_direc");
-			exit (126);
+			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])) && ft_strcmp(cmd, path[i]))
+				j += 1;
+			i++;
 		}
-		if (check_is_dir(cmd) == 1)
-		{
-			print_error(cmd, "Per_denied");
-			exit (126);
-		}
-		if (check_is_dir(cmd) == -1)
-		{
-			print_error(cmd, "no_such_file");
-			exit (127);
-		}
+		if (j)
+			return ;
+		is_error(cmd);
+		//printf ("--- > : %d\n", check_id_dir(cmd));
+		//i = 0;
+		// while (i < 39)
+		// {
+		// 	if (!ft_strcmp(get_content_from_eq_to_fin(env[i]), cmd))
+		// 		x++;
+		// 	i++;
+		// }
+		// if (!j && !x)
+		// {
+		// 	print_error(cmd, "no_such_file");
+		// 	exit (127);
+		// }
+		// if (!j && x)
+		// {
+		// 	print_error(cmd, "is_a_direc");
+		// 	exit (126);
+		// }
 	}
 }
 
@@ -128,15 +163,11 @@ void	ft_exec(char **cmd, char **env)
 	char	*path;
 
 	i = 0;
-	ft_check(cmd[0]);
+	ft_check(cmd[0], env);
 	path = ft_get_path(cmd[0], env);
 	if (path == NULL)
 	{
-		if (!ft_strcmp(cmd[0], ".."))
-		{
-			print_error(cmd[0], "is_a_direc");
-			exit (126);
-		}
+		is_error(cmd[0]);
 		print_error(cmd[0], "no_such_file");
 		exit (127);
 	}

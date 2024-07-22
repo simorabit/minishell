@@ -214,7 +214,7 @@ int is_number (char c);
 
 // // virtual
 char	*ft_strjoin(char *s1, char *s2);
-void	ft_check(char *cmd);
+void	ft_check(char *cmd, char **env);
 char	*ft_strchr(char *s, int c);
 char	*ft_find_path(char **env, char *var, int j);
 void	ft_find_pwd(void);
