@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/22 11:55:29 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/23 06:18:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int handel_heredoc(char *del)
         return (perror("Error forking process"), -1);
     else if (pid == 0)
 	{ 
-        signal(SIGINT, SIG_DFL); // Reset SIGINT to default behavior
+        signal(SIGINT, SIG_DFL);
+		rl_catch_signals = 1; 
         while (1)
 		{
             line = readline(">");

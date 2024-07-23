@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/22 09:01:15 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:01:29 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,25 @@ char *expand_str(char *s, t_env **env_list)
 	return (result);
 }
 
-char *expand_str2(char *s, t_env **env_list)
+char *expand_str2(t_lexer **tmp, t_env **env_list)
 {
 	int i;
 	int j;
 	char *result;
+	char *s;
 
+	s = (*tmp)->str;
 	i = 0;
 	result = NULL;
+	
 	while (s[i])
 	{
 		j = 0;
 		if (s[i] == DOUBLE_QUOTE)
+		{
 			result = handel_double_q(result, s, &i, &j, env_list);
+			(*tmp)->has_quotes = 1;
+		}
 		else if (s[i] == SINGLE_QUOTE)
 			result = handel_singleq(result, s, &i, &j);
 		else if (s[i] == '$')
@@ -117,8 +123,8 @@ char *expand_str2(char *s, t_env **env_list)
 		}
 		else
 			result = ft_strjoin(result, ft_substr(&s[i], 0, 1));
-		if (!result)
-			return (NULL);
+		if (result == NULL)
+			return (ft_strdup(""));
 		i++;
 	}
 	return (result);
@@ -137,7 +143,7 @@ int check_if_noexpand(t_lexer *tmp)
 	}
 	return 0;
 }
-void handle_options(t_lexer **tmp, t_env **env_list)
+t_lexer *handle_options(t_lexer **tmp, t_env **env_list)
 {
     char **str;
     t_lexer *tmp2;
@@ -145,10 +151,18 @@ void handle_options(t_lexer **tmp, t_env **env_list)
     t_lexer *current;
     int i = 0;
 
-    str = ft_split(expand_str2((*tmp)->str, env_list));
+    str = my_split(expand_str2(tmp, env_list), 32);
+	if(str[1] == NULL)
+	{
+		(*tmp)->str = str[0];
+		return *tmp;
+	}
     tmp2 = (*tmp)->next;
-    (*tmp)->str = ft_strdup(str[i++]);
-
+	if(!str[i])
+	{
+    	(*tmp)->str = ft_strdup("");
+		return *tmp;
+	}
     current = *tmp;
     while (str[i])
     {
@@ -158,14 +172,17 @@ void handle_options(t_lexer **tmp, t_env **env_list)
         current = node; 
     }
     current->next = tmp2;
+	return current;
 }
 
 void handel_expanding(t_lexer **lexer, t_env **env_list)
 {
 	t_lexer *tmp;
 	int i;
-
+	char *vaar;
+	
 	tmp = *lexer;
+	vaar = NULL;
 	while (tmp && tmp->str)
 	{
 		if (check_if_noexpand(tmp))
@@ -174,19 +191,26 @@ void handel_expanding(t_lexer **lexer, t_env **env_list)
 			continue;
 		}
 		tmp->expanded = 1;
+		tmp->has_quotes = 0;
+		if(!ft_strcmp("$?", tmp->str))
+			vaar = ft_strdup(tmp->str);
 		if (tmp->token == word)
-			handle_options(&tmp, env_list);
+			tmp = handle_options(&tmp, env_list);
 		else
-			tmp->str = expand_str2(tmp->str, env_list);
+			tmp->str = expand_str2(&tmp, env_list);
 		if (tmp->token != word)
 			tmp->str = ft_strdup("");
-		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))
+		if(vaar != NULL && tmp->str == NULL)
+			tmp->str = ft_strdup("0");
+		if(!tmp->str && tmp->has_quotes == 1)
+			tmp->str = ft_strdup("");
+		else if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))
 		{
 			i = tmp->i;
 			tmp = tmp->next;
 			ft_lst_remove(lexer, i);
 		}
 		else
-			tmp = tmp->next;
+			tmp = tmp->next;	
 	}
 }

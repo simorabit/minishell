@@ -73,6 +73,7 @@ typedef struct s_lexer
 	t_wquotes		wquotes;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
+	int				has_quotes;
 }	t_lexer;
 
 typedef struct s_simple_cmds
@@ -144,6 +145,9 @@ int		is_redir_has_found(char c);
 int		handel_quotes(char *line);
 int		quotes(char *line, char q);
 
+//my split
+char	**my_split(char const *s, char c);
+
 //syntax error
 int		syntax_error(t_lexer **lexer);
 void handel_herdoc_err(t_lexer **lexer);
@@ -179,7 +183,7 @@ char	*alloc_exp(char *str, int *pos, t_env **env_list);
 int		get_len_ep(char *s);
 int		end_of_proccessing(char c);
 int		is_real_char(char c);
-char 	*expand_str2(char *s, t_env **env_list);
+char *expand_str2(t_lexer **tmp, t_env **env_list);
 
 //debugging
 void	print_cmd(t_simple_cmds **cmds);
