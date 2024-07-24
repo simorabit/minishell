@@ -3,97 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/22 10:02:53 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:12:56 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+int	_remove_var(t_env *temp, char *new)
+{
+	char	*ptr;
 
-// int	one_plus(char *str)
-// {
-// 	int	i;
-// 	int	x;
+	while (temp)
+	{
+		ptr = ft_strjoin(get_env_eq(new), "=");
+		if (!ft_strncmp(temp->content, ptr, ft_strlen(ptr))
+			|| !ft_strcmp(temp->content, get_env_eq(new)))
+		{
+			free(temp->content);
+			temp->content = ft_strdup(new);
+			free(ptr);
+			return (1);
+		}
+		free(ptr);
+		temp = temp->next;
+	}
+	return (0);
+}
 
-// 	i = 0;
-// 	x = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '+')
-// 			x++;
-// 		i++;
-// 	}
-// 	if (x == 1)
-// 		return (1);
-// 	return (0);
-// }
+int	preparing_var(t_env *list_env, char *new)
+{
+	char	*join;
+	char	*join_1;
+	char	*ptr;
 
+	while (list_env)
+	{
+		ptr = get_var_from_beg_to_eq(new);
+		if (!ft_strncmp(list_env->content, ptr, ft_strlen(ptr)))
+		{
+			if (!ft_strchr(list_env->content, '='))
+			{
+				join = ft_strjoin(list_env->content, "=");
+				list_env->content = ft_strjoin(join, get_eq_to_fin(new));
+			}
+			else
+			{
+				join_1 = get_eq_to_fin(new);
+				list_env->content = ft_strjoin(list_env->content, join_1);
+			}
+			return (1);
+		}
+		list_env = list_env->next;
+	}
+	return (0);
+}
 
 void	add_variable(t_env *list_env, char *new, int error)
 {
 	t_env	*var;
-	char	*join;
 	t_env	*temp;
-	int		new_var;
-	char	*first_part;
-	char	*sec_part;
-	char	*ptr;
-	char	*pptr;
-	int		i;
-	
+
 	temp = list_env;
-	first_part = NULL;
-	sec_part = NULL;
-	new_var = 0;
-	i = 0;
 	if (check_for_plus_and_eq(new, 0))
-	{
-		new_var = check_var_does_it_exist(new, list_env);
-		if (new_var)
-		{
-			first_part = ft_strjoin(get_var_from_beg_to_eq(new), "=");
-			ptr = find_var(list_env, first_part);
-			sec_part = ft_strjoin(get_content_from_eq_to_fin(ptr), get_content_from_eq_to_fin(new));
-		}
-		while (list_env)\
-		{
-			char *ppptr = get_var_from_beg_to_eq(new);
-			
-			if (!ft_strncmp(list_env->content, ppptr, ft_strlen(ppptr)))
-			{
-				
-				if (!ft_strchr(list_env->content, '='))
-				{
-					
-					join = ft_strjoin(list_env->content, "=");
-					list_env->content = ft_strjoin(join, get_content_from_eq_to_fin(new));
-					i++;
-				}
-				else
-				{
-					list_env->content = ft_strjoin(list_env->content, get_content_from_eq_to_fin(new));
-				}
-				return ;
-			}
-			list_env = list_env->next;
-		}
-	}
-	while (temp)
-	{
-		pptr = get_env_eq(new);
-		if (!ft_strncmp(temp->content, pptr, ft_strlen(pptr)))
-		{
-			free(temp->content);
-			temp->content = ft_strdup(new);
-			free(pptr);
+		if (preparing_var(list_env, new))
 			return ;
-		}
-		free(pptr);
-		temp = temp->next;
-	}
+	if (_remove_var(temp, new))
+		return ;
 	if (error != -1)
 	{
 		var = ft_lstnew_env(new);
@@ -101,13 +79,54 @@ void	add_variable(t_env *list_env, char *new, int error)
 	}
 }
 
-void	export_exe(char **cmd, t_env *list_env)
+void	print_export(t_env *list_env)
 {
 	t_env	*head;
 	t_env	*copy_env;
+
+	copy_env = env_dup(list_env);
+	ft_sort_env(copy_env);
+	head = copy_env;
+	while (head)
+	{
+		// if (!ft_strchr(get_env_eq(head->content), '?'))
+		// {
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(add_double_quotes(head->content), 1);
+		ft_putstr_fd("\n", 1);
+		// }
+		head = head->next;
+	}
+}
+
+void	add_var_exist(char *cmd, t_env *list_env, int error)
+{
+	char	*var;
+
+	var = ft_strjoin(get_var_from_beg_to_eq(cmd), "=");
+	if (!find_var(list_env, var))
+	{
+		cmd = remove_plus(cmd);
+		add_variable(list_env, cmd, error);
+	}
+	else
+		add_variable(list_env, cmd, error);
+}
+
+int	if_var_exist_return(char *cmd, t_env *list_env)
+{
+	char	*var;
+
+	var = ft_strjoin(get_var_from_beg_to_eq(cmd), "=");
+	if (find_var(list_env, var))
+		return (1);
+	return (0);
+}
+
+void	export_exe(char **cmd, t_env *list_env)
+{
 	int		i;
 	int		x;
-	char	*var;
 	int		error;
 
 	i = 1;
@@ -116,40 +135,19 @@ void	export_exe(char **cmd, t_env *list_env)
 		return ;
 	while (cmd[i])
 	{
+		if (!ft_strchr(cmd[i], '='))
+			if (if_var_exist_return(cmd[i], list_env))
+				return ;
 		error = check_for_plus_and_eq(cmd[i], 1);
 		if (error && error != -1 && !check_for_first_char(get_env_eq(cmd[i])))
-		{
-			var = ft_strjoin(get_var_from_beg_to_eq(cmd[i]), "=");
-			if (!find_var(list_env, var))
-			{
-				cmd[i] = remove_plus(cmd[i]);
-				add_variable(list_env, cmd[i], error);
-			}
-			else
-			{
-				add_variable(list_env, cmd[i], error);
-			}
-		}
-		else if (!check_arg_is_valide(get_env_eq(cmd[i])) && !check_for_first_char(get_env_eq(cmd[i])))
+			add_var_exist(cmd[i], list_env, error);
+		else if (!check_arg_is_valide(get_env_eq(cmd[i]))
+			&& !check_for_first_char(get_env_eq(cmd[i])))
 			add_variable(list_env, cmd[i], error);
 		else if (error != -1)
-			print_error(cmd[i], "pars_export");
+			builtins_print_error(cmd[i], "pars_export");
 		i++;
 	}
 	if (!ft_strcmp(cmd[0], "export") && !cmd[1])
-	{
-		copy_env = env_dup(list_env);
-		ft_sort_env(copy_env);
-		head = copy_env;
-		while (head)
-		{
-			// if (!ft_strchr(get_env_eq(head->content), '?'))
-			// {
-				ft_putstr_fd("declare -x ", 1);
-				ft_putstr_fd(add_double_quotes(head->content), 1);
-				ft_putstr_fd("\n", 1);
-			// }
-			head = head->next;
-		}
-	}
+		print_export(list_env);
 }

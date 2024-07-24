@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:13:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 18:45:52 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:27:30 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_word(char *s, char **arr, char ind, char quotes)
 	i = 0;
 	j = 0;
 	len = get_len(s, quotes);
-	output = (char *)my_alloc(sizeof(char) * (len + 1), 'a');
+	output = (char *)my_alloc(sizeof(char) * (len + 1));
 	if (!output)
 	{
 		while (j < ind)

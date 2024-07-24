@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 18:40:41 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:10:03 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	check_arg_is_valide(char *arg)
 	{
 		if ((arg[i] >= '0' && arg[i] <= '9')
 			|| (arg[i] >= 'a' && arg[i] <= 'z')
-				|| (arg[i] >= 'A' && arg[i] <= 'Z')
-					|| arg[i] == '_' || arg[i] == '=')
-				i++;
+			|| (arg[i] >= 'A' && arg[i] <= 'Z')
+			|| arg[i] == '_' || arg[i] == '=')
+			i++;
 		else
 			break ;
 	}
@@ -50,8 +50,8 @@ int	check_for_first_char(char *arg)
 {
 	if ((arg[0] >= 'a' && arg[0] <= 'z')
 		|| (arg[0] >= 'A' && arg[0] <= 'Z')
-			|| arg[0] == '_')
-			return (0);
+		|| arg[0] == '_')
+		return (0);
 	else
 		return (1);
 }
@@ -64,7 +64,7 @@ char	*get_env_eq(char *new)
 	i = 0;
 	while (new && new[i] && new[i] != '=')
 		i++;
-	ptr = my_alloc(i + 1, 'a');
+	ptr = my_alloc(i + 1);
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -73,7 +73,7 @@ char	*get_env_eq(char *new)
 		if (new[i] != '=')
 			ptr[i] = new[i];
 		else if (new[i] == '=')
-			break;
+			break ;
 		i++;
 	}
 	ptr[i] = '\0';

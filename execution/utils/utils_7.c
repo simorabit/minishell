@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 18:44:01 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:20:37 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**join_cmd_arg(char *cmd, char **arg)
 		return (arg);
 	else if (arg == NULL)
 		return (ft_split_exe(cmd, ' '));
-	ptr = my_alloc(sizeof(char *) * (len_of_arg(arg) + 1), 'a');
+	ptr = my_alloc(sizeof(char *) * (len_of_arg(arg) + 1));
 	ptr[0] = cmd;
 	i++;
 	while (arg[j])

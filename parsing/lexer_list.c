@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 18:44:26 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:26:54 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_lexer	*ft_lstnew(int content)
 {
 	t_lexer	*lexer;
 
-	lexer = (t_lexer *)my_alloc(sizeof(t_lexer), 'a');
+	lexer = (t_lexer *)my_alloc(sizeof(t_lexer));
 	if (!lexer)
 		return (NULL);
 	lexer->i = content;

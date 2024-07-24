@@ -6,7 +6,7 @@ char	*ft_strdup(const char *s1)
 	char	*new_value;
 
 	i = 0;
-	new_value = (char *)my_alloc((ft_strlen(s1) + 1) * sizeof(char), 'a');
+	new_value = (char *)my_alloc((ft_strlen(s1) + 1) * sizeof(char));
 	if (!new_value)
 		return (NULL);
 	while (s1[i])
@@ -26,7 +26,7 @@ char *ft_strncpy(char *s, int len)
 	i = 0;
 	if(!s)
 		return NULL;
-	new_s = my_alloc(len + 1, 'a');
+	new_s = my_alloc(len + 1);
 	if (!new_s)
 		return (NULL);
 	while (i < len)

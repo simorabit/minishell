@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 18:44:13 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:26:45 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**ft_split(char *s)
 	j = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)my_alloc((count_words((char *)s) + 1) * sizeof(char *), 'a');
+	array = (char **)my_alloc((count_words((char *)s) + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
 	while (*s)

@@ -217,7 +217,6 @@ int is_number (char c);
 // }			t_list;
 
 // // virtual
-char	*ft_strjoin(char *s1, char *s2);
 void	ft_check(char *cmd, char **env);
 char	*ft_strchr(char *s, int c);
 char	*ft_find_path(char **env, char *var, int j);
@@ -243,7 +242,7 @@ char	*get_env_eq(char *new);
 char	*add_double_quotes(char *var);
 void	ft_sort_env(t_env *env);
 char	*get_var_from_beg_to_eq(char *var);
-char	*get_content_from_eq_to_fin(char *var);
+char	*get_eq_to_fin(char *var);
 int		check_var_does_it_exist(char *arg, t_env *list_env);
 int		check_arg_is_valide(char *arg);
 int		check_for_first_char(char *arg);
@@ -257,7 +256,8 @@ int		exit_builtins(t_simple_cmds *cmd, char **args, int len);
 int		print_error(char *cmd, char *type);
 int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
 
-void	*my_alloc(size_t size, int flag);
+void	*my_alloc(size_t size);
+void	builtins_print_error(char *cmd, char *type);
 
 #endif
 // #endif

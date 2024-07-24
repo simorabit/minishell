@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_3.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/23 13:20:48 by souaouri          #+#    #+#             */
+/*   Updated: 2024/07/24 01:16:24 by souaouri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 static char	*ft_substr_exe(char *s, unsigned int start, size_t	len)
@@ -11,7 +23,7 @@ static char	*ft_substr_exe(char *s, unsigned int start, size_t	len)
 		return (ft_strdup(""));
 	if (len >= ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
-	ptr = my_alloc(sizeof(char) * (len + 1), 'a');
+	ptr = my_alloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -58,7 +70,7 @@ void	*free_double_ptr(char	**ptr)
 	size_t	i;
 
 	i = 0;
-	if (ptr == NULL || ptr[i]== NULL)
+	if (ptr == NULL || ptr[i] == NULL)
 		return (NULL);
 	while (ptr[i])
 	{
@@ -81,7 +93,7 @@ char	**ft_split_exe(char *s, char c)
 	size = count_word(s, c);
 	i = 0;
 	j = 0;
-	ptr = (char **)my_alloc(sizeof(char *) * (size + 1), 'a');
+	ptr = (char **)my_alloc(sizeof(char *) * (size + 1));
 	if (!ptr)
 		return (NULL);
 	while (s[j] && size--)

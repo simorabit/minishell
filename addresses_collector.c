@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 20:26:41 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 20:26:46 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:05:24 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,42 +45,21 @@ static t_c_addresses	*garb_new(void *addrress)
 	return (newnode);
 }
 
-static void	free_garb_list(t_c_addresses **head)
-{
-	t_c_addresses	*current;
-	t_c_addresses	*next;
-
-	current = *head;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current->adr);
-		current->adr = NULL;
-		current = next;
-	}
-}
-
-void	*my_alloc(size_t size, int flag)
+void	*my_alloc(size_t size)
 {
 	static t_c_addresses	*gooper;
 	t_c_addresses			*node;
 	void				*address;
 
-	address = NULL;
-	if (flag == 'a')
+	address = malloc(size);
+	if (!address)
+		(perror("malloc"), exit(1));
+	if (gooper == NULL)
+		gooper = garb_new(address);
+	else
 	{
-		address = malloc(size);
-		if (!address)
-			(perror("malloc"), exit(1));
-		if (gooper == NULL)
-			gooper = garb_new(address);
-		else
-		{
-			node = garb_new(address);
-			garb_add(&gooper, node);
-		}
+		node = garb_new(address);
+		garb_add(&gooper, node);
 	}
-	else if (flag == 'f')
-		free_garb_list(&gooper);
 	return (address);
 }

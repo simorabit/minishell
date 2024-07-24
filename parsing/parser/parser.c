@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/22 04:52:56 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:27:57 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*save_args(t_lexer **lexer, t_simple_cmds *cmds)
 		len++;
 		tmp = tmp->next;
 	}
-	cmds->args = my_alloc((len + 1) * sizeof(char *), 'a');
+	cmds->args = my_alloc((len + 1) * sizeof(char *));
 	if (!cmds->args)
 		return (NULL);
 	while (i < len)

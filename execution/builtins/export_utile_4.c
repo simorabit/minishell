@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:40:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/06 13:00:20 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:12:10 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,3 @@ t_env	*env_dup(t_env *list)
 	}
 	return (new_list);
 }
-
-// int	ft_lstsize_exec(t_env *lst)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!lst)
-// 		return (0);
-// 	while (lst != NULL)
-// 	{
-// 		lst = lst->next;
-// 		i++; 
-// 	}
-// 	return (i);
-// }

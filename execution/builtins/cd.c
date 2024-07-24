@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 19:07:27 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:03:59 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,22 @@ void	add_path_to_env(t_tools *tools, t_env *list_env)
 	}
 }
 
+void	builtins_print_error(char *cmd, char *type)
+{
+	if (!ft_strcmp(type, "pars_export"))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+	}
+	else if (!ft_strcmp(type, "no_such_file"))
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+}
+
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
 {
 	int		ret;
@@ -100,11 +116,7 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
 	{
 		ret = chdir(simple_cmd->cmmd[1]);
 		if (ret != 0)
-		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			ft_putstr_fd(simple_cmd->cmmd[1], 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-		}
+			builtins_print_error(simple_cmd->cmmd[1], "no_such_file");
 	}
 	if (ret != 0)
 		return (EXIT_FAILURE);
@@ -119,14 +131,14 @@ int	cd_exec(t_simple_cmds *cmds, t_env *list_env)
 	t_tools	*tools;
 	char	**env;
 	int		re;
-	
-    tools = my_alloc(sizeof(t_tools), 'a');
-    if (tools == NULL) 
-        return (0); 
-    env = change_list_to_env(list_env);
-    tools->pwd = ft_find_path(env, "PWD=", 4);
-    tools->old_pwd = ft_find_path(env, "OLDPWD=", 7);
-    re = mini_cd(tools, cmds, list_env);
-    free(tools);
-    return re;
+
+	tools = my_alloc(sizeof(t_tools));
+	if (tools == NULL)
+		return (0);
+	env = change_list_to_env(list_env);
+	tools->pwd = ft_find_path(env, "PWD=", 4);
+	tools->old_pwd = ft_find_path(env, "OLDPWD=", 7);
+	re = mini_cd(tools, cmds, list_env);
+	free(tools);
+	return (re);
 }

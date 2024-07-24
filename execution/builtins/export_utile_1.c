@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:47 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/21 18:40:17 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:09:35 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,39 @@ int	ft_lstsize_env(t_env *lst)
 	while (lst != NULL)
 	{
 		lst = lst->next;
-		i++; 
+		i++;
 	}
 	return (i);
 }
 
-// void	ft_memcpy(char *dst, char *src, size_t	n)
-// {
-// 	char	*d;
-// 	char	*s;
-// 	size_t	i;
+char	*print_quotes(char *var, int i, int size)
+{
+	int		j;
+	int		x;
+	char	*ptr;
 
-// 	d = dst;
-// 	s = src;
-// 	i = 0;
-// 	if (d == NULL && s == NULL)
-// 		return ;
-// 	while (i < n)
-// 	{
-// 		d[i] = s[i];
-// 		i++;
-// 	}
-// }
+	j = 0;
+	x = 0;
+	ptr = my_alloc(sizeof(char) * size + 1);
+	while (var[i])
+	{
+		if (var[i] == '=' && x == 0)
+		{
+			ptr[j] = '=';
+			j++;
+			ptr[j] = '\"';
+			j++;
+			i++;
+			x++;
+		}
+		if (var[i] != '\0')
+			ptr[j++] = var[i++];
+	}
+	if (x != 0)
+		ptr[j++] = '\"';
+	ptr[j] = '\0';
+	return (ptr);
+}
 
 char	*add_double_quotes(char *var)
 {
@@ -59,35 +70,10 @@ char	*add_double_quotes(char *var)
 	x = 0;
 	if (ft_strchr(var, '='))
 		size += 2;
-	
-	ptr = my_alloc(sizeof(char) * size + 1, 'a');
+	ptr = my_alloc(sizeof(char) * size + 1);
 	if (var[0] == '\0' || var == NULL)
 		return (NULL);
-	while (var[i])
-	{
-		if (var[i] == '=' && x == 0)
-		{
-			ptr[j] = '=';
-			j++;
-			ptr[j] = '\"';
-			j++;
-			i++;
-			x++;
-		}
-		if (var[i] != '\0')
-		{
-			ptr[j] = var[i];
-			i++;
-			j++;
-		}
-	}
-	
-	if (x != 0)
-	{
-		ptr[j] = '\"';
-		j++;
-	}
-	ptr[j] = '\0';
+	ptr = print_quotes(var, i, size);
 	return (ptr);
 }
 
@@ -105,7 +91,7 @@ void	ft_sort_env(t_env *env)
 	while (i < list_len)
 	{
 		head = env;
-		while(head->next)
+		while (head->next)
 		{
 			if (ft_strcmp(head->content, head->next->content) > 0)
 			{
@@ -122,13 +108,13 @@ void	ft_sort_env(t_env *env)
 
 char	*get_var_from_beg_to_eq(char *var)
 {
-	int 	i;
+	int		i;
 	char	*ptr;
 
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	ptr = my_alloc(i + 1, 'a');
+	ptr = my_alloc(i + 1);
 	i = 0;
 	while (var[i] && var[i + 1] != '=')
 	{
@@ -139,7 +125,7 @@ char	*get_var_from_beg_to_eq(char *var)
 	return (ptr);
 }
 
-char	*get_content_from_eq_to_fin(char *var)
+char	*get_eq_to_fin(char *var)
 {
 	int	i;
 

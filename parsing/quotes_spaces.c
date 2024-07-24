@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/21 18:45:16 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:27:21 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	*add_spaces(char *line)
 	if (len == 0)
 		return (line);
 	len = ft_strlen(line) + 1 + len;
-	new_value = my_alloc(len * sizeof(char), 'a');
+	new_value = my_alloc(len * sizeof(char));
 	if (!new_value)
 		allocation_error(line);
 	while (j < len - 1)

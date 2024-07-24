@@ -25,7 +25,7 @@ void *remove_each_one(char *s, char q)
 	j = 0;
 	i = 0;
 	len = get_mlen(s, q);
-	new_s = my_alloc(len + 1, 'a');
+	new_s = my_alloc(len + 1);
 	if(!new_s)
 		return NULL;
 	i = 0;

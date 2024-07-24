@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/22 12:23:12 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:26:21 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	len = ft_len(n);
-	ptr = (char *)my_alloc(sizeof(char) * (len + 1), 'a');
+	ptr = (char *)my_alloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		return (NULL);
 	if (n < 0)

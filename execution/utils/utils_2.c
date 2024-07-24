@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/22 12:49:50 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:15:50 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_find_path(char **env, char *var, int j)
 	int		x;
 	char	*ptr;
 
-	ptr = (char *)my_alloc(sizeof(char *) * 1337, 'a');
+	ptr = (char *)my_alloc(sizeof(char *) * 1337);
 	i = 0;
 	x = 0;
 	while (env[i] && ft_strncmp(var, env[i], ft_strlen(var)) != 0)
@@ -41,7 +41,7 @@ char	*ft_find_path(char **env, char *var, int j)
 	{
 		ptr[x] = env[i][j];
 		x++;
-		j++; 
+		j++;
 	}
 	ptr[x] = '\0';
 	return (ptr);
@@ -49,8 +49,8 @@ char	*ft_find_path(char **env, char *var, int j)
 
 int	check_is_dir(char *cmd)
 {
-	int	re;
-	struct stat st;
+	int			re;
+	struct stat	st;
 
 	re = stat(cmd, &st);
 	if (!re)
@@ -100,31 +100,14 @@ void	ft_check(char *cmd, char **env)
 			return ;
 		while (path[i])
 		{
-			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])) && ft_strcmp(cmd, path[i]))
+			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i]))
+				&& ft_strcmp(cmd, path[i]))
 				j += 1;
 			i++;
 		}
 		if (j)
 			return ;
 		is_error(cmd);
-		//printf ("--- > : %d\n", check_id_dir(cmd));
-		//i = 0;
-		// while (i < 39)
-		// {
-		// 	if (!ft_strcmp(get_content_from_eq_to_fin(env[i]), cmd))
-		// 		x++;
-		// 	i++;
-		// }
-		// if (!j && !x)
-		// {
-		// 	print_error(cmd, "no_such_file");
-		// 	exit (127);
-		// }
-		// if (!j && x)
-		// {
-		// 	print_error(cmd, "is_a_direc");
-		// 	exit (126);
-		// }
 	}
 }
 

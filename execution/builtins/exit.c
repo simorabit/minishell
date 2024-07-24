@@ -6,23 +6,11 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:46:38 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/17 17:26:47 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:08:45 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-
-// int	is_there_a_prev(t_simple_cmds *data)
-// {
-// 	int	len;
-
-// 	len = ft_lstsize_cmd(data);
-	
-// 	printf ("-)(--> : %d\n", len);
-// 	exit (0);
-// 	return (0);
-// }
 
 int	ft_isdigit(int c)
 {
@@ -40,7 +28,7 @@ int	check_out_of_range(int sign, unsigned long long num, int *error)
 	return (*error);
 }
 
-unsigned long long ft_atoi_long(char *str, int *error)
+unsigned long long	ft_atoi_long(char *str, int *error)
 {
 	unsigned long long	num;
 	int					sign;
@@ -61,13 +49,37 @@ unsigned long long ft_atoi_long(char *str, int *error)
 	}
 	while (str[i] && ft_isdigit(str[i]))
 	{
-		
 		num = (num * 10) + (str[i] - '0');
 		if (check_out_of_range(sign, num, error))
 			break ;
 		i++;
 	}
 	return (num * sign);
+}
+
+int	check_for_errors(char *arg, int i, int *error)
+{
+	while (arg[i])
+	{
+		if ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
+		{
+			while (arg[i])
+			{
+				if (arg[i] != 32)
+				{
+					*error = 1;
+					break ;
+				}
+				*error = 0;
+				i++;
+			}
+			break ;
+		}
+		if (!ft_isdigit(arg[i]))
+			*error = 1;
+		i++;
+	}
+	return (0);
 }
 
 int	get_exit_code(char *arg, int *error)
@@ -85,26 +97,7 @@ int	get_exit_code(char *arg, int *error)
 		i++;
 	if (!ft_isdigit(arg[i]))
 		*error = 1;
-	while (arg[i])
-	{
-		if ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
-		{
-			while (arg[i])
-			{
-				if (arg[i] != 32)
-				{
-					*error = 1;
-					break;
-				}
-				*error = 0;
-				i++;
-			}
-			break;
-		}
-		if (!ft_isdigit(arg[i]))
-			*error = 1;
-		i++;
-	}
+	check_for_errors(arg, i, error);
 	i = ft_atoi_long(arg, error);
 	return (i % 256);
 }

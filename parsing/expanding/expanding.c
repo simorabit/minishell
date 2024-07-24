@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/23 15:01:29 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:30:42 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *m_get_env(char *str, t_env **env_list)
 	{
 		if (!ft_strncmp(env->content, str, ft_strlen(str)) &&
 			env->content[ft_strlen(str)] == '=')
-			res = get_content_from_eq_to_fin(env->content);
+			res = get_eq_to_fin(env->content);
 		env = env->next;
 	}
 	return res;
