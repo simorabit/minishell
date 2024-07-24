@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:12:56 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 08:04:23 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	_remove_var(t_env *temp, char *new)
 		if (!ft_strncmp(temp->content, ptr, ft_strlen(ptr))
 			|| !ft_strcmp(temp->content, get_env_eq(new)))
 		{
-			free(temp->content);
+			// free(temp->content);
 			temp->content = ft_strdup(new);
 			free(ptr);
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/23 06:18:31 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:12:01 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int handel_heredoc(char *del)
         while (1)
 		{
             line = readline(">");
-            if (!line || ft_strncmp(line, del, strlen(del)) == 0) {
+            if (!line || ft_strcmp(line, del) == 0) {
                 free(line);
                 break;
             }

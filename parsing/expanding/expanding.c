@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 01:30:42 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 09:58:07 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,37 +143,74 @@ int check_if_noexpand(t_lexer *tmp)
 	}
 	return 0;
 }
-t_lexer *handle_options(t_lexer **tmp, t_env **env_list)
+
+
+void handle_options(t_lexer **tmp, t_env **env_list)
 {
     char **str;
     t_lexer *tmp2;
     t_lexer *node;
-    t_lexer *current;
     int i = 0;
 
     str = my_split(expand_str2(tmp, env_list), 32);
+
+    if (!str[0]) {
+        (*tmp)->str = ft_strdup("");
+        return;
+    }
 	if(str[1] == NULL)
 	{
 		(*tmp)->str = str[0];
-		return *tmp;
+		return;
 	}
-    tmp2 = (*tmp)->next;
-	if(!str[i])
+    (*tmp)->str = ft_strdup(str[0]);
+    node = ft_lstnew((*tmp)->i++);
+    node->str = ft_strdup(str[1]); 
+    node->token = word;
+    node->prev = *tmp;
+    (*tmp)->next = node;
+    tmp2 = node;
+	
+    i = 2;
+    while (str[i] != NULL)
 	{
-    	(*tmp)->str = ft_strdup("");
-		return *tmp;
-	}
-    current = *tmp;
-    while (str[i])
-    {
         node = ft_lstnew((*tmp)->i++);
-        node->str = ft_strdup(str[i++]); 
-        current->next = node; 
-        current = node; 
+        node->str = ft_strdup(str[i]);
+        node->token = word;
+        node->prev = tmp2;
+        tmp2->next = node;
+        tmp2 = node;
+        i++;
     }
-    current->next = tmp2;
-	return current;
 }
+
+// void handle_options(t_lexer **tmp, t_env **env_list)
+// {
+//     char **str;
+//     t_lexer *tmp2;
+//     t_lexer *node;
+//     int i = 0;
+
+//     str = my_split(expand_str2(tmp, env_list), 32);
+// 	if(str[1] == NULL)
+// 	{
+// 		(*tmp)->str = str[0];
+// 		return;
+// 	}
+//     tmp2 = (*tmp)->next;
+// 	if(!str[i])
+// 	{
+//     	(*tmp)->str = ft_strdup("");
+// 		return ;
+// 	}
+// 	(*tmp)->str = ft_strdup(str[0]);
+// 	node = ft_lstnew((*tmp)->i++);
+// 	node->str = ft_strdup(str[1]);
+// 	node->token = word;
+// 	node->prev = *tmp;
+// 	(*tmp)->next = node;
+// 	node->next = tmp2;
+// }
 
 void handel_expanding(t_lexer **lexer, t_env **env_list)
 {
@@ -195,7 +232,7 @@ void handel_expanding(t_lexer **lexer, t_env **env_list)
 		if(!ft_strcmp("$?", tmp->str))
 			vaar = ft_strdup(tmp->str);
 		if (tmp->token == word)
-			tmp = handle_options(&tmp, env_list);
+			handle_options(&tmp, env_list);
 		else
 			tmp->str = expand_str2(&tmp, env_list);
 		if (tmp->token != word)
@@ -210,7 +247,7 @@ void handel_expanding(t_lexer **lexer, t_env **env_list)
 			tmp = tmp->next;
 			ft_lst_remove(lexer, i);
 		}
-		else
-			tmp = tmp->next;	
+		else 
+			tmp = tmp->next;
 	}
 }
