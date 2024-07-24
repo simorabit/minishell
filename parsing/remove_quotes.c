@@ -26,8 +26,6 @@ void *remove_each_one(char *s, char q)
 	i = 0;
 	len = get_mlen(s, q);
 	new_s = my_alloc(len + 1);
-	if(!new_s)
-		return NULL;
 	i = 0;
 	while(s[i] && j < len)
     {
@@ -38,6 +36,7 @@ void *remove_each_one(char *s, char q)
 	new_s[j] = '\0';
 	return new_s;
 }
+
 void remove_quotes(t_lexer **lexer)
 {
 	t_lexer *tmp;

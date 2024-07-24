@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 09:58:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:10:09 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char *alloc_exp(char *str, int *pos, t_env **env_list)
 	if (!*reset)
 		reset = NULL;
 	res = ft_strjoin(m_get_env(new_s, env_list), reset);
+	if(res == NULL)
+		return ft_strdup("");
 	free(reset);
 	return (res);
 }
@@ -105,7 +107,6 @@ char *expand_str2(t_lexer **tmp, t_env **env_list)
 	s = (*tmp)->str;
 	i = 0;
 	result = NULL;
-	
 	while (s[i])
 	{
 		j = 0;
@@ -123,10 +124,12 @@ char *expand_str2(t_lexer **tmp, t_env **env_list)
 		}
 		else
 			result = ft_strjoin(result, ft_substr(&s[i], 0, 1));
-		if (result == NULL)
-			return (ft_strdup(""));
+		// if (result == NULL)
+		// 	return (ft_strdup(""));
 		i++;
 	}
+	// printf("look %s", result);
+	// exit(0);
 	return (result);
 }
 
@@ -170,7 +173,6 @@ void handle_options(t_lexer **tmp, t_env **env_list)
     node->prev = *tmp;
     (*tmp)->next = node;
     tmp2 = node;
-	
     i = 2;
     while (str[i] != NULL)
 	{
@@ -231,6 +233,8 @@ void handel_expanding(t_lexer **lexer, t_env **env_list)
 		tmp->has_quotes = 0;
 		if(!ft_strcmp("$?", tmp->str))
 			vaar = ft_strdup(tmp->str);
+		if(tmp->str[0] == '$' && (tmp->str[1] == DOUBLE_QUOTE ||tmp->str[1] == SINGLE_QUOTE))
+			tmp->str = ft_substr(tmp->str, 1, ft_strlen(tmp->str) - 1);
 		if (tmp->token == word)
 			handle_options(&tmp, env_list);
 		else
@@ -241,13 +245,13 @@ void handel_expanding(t_lexer **lexer, t_env **env_list)
 			tmp->str = ft_strdup("0");
 		if(!tmp->str && tmp->has_quotes == 1)
 			tmp->str = ft_strdup("");
-		else if (!tmp->str || (*tmp->str == '\0' && tmp->token == word))
+		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word && tmp->has_quotes == 0))
 		{
 			i = tmp->i;
 			tmp = tmp->next;
 			ft_lst_remove(lexer, i);
 		}
-		else 
+		else
 			tmp = tmp->next;
 	}
 }

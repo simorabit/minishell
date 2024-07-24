@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_spaces.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 01:27:21 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:44:50 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void	*add_spaces(char *line)
 		return (line);
 	len = ft_strlen(line) + 1 + len;
 	new_value = my_alloc(len * sizeof(char));
-	if (!new_value)
-		allocation_error(line);
 	while (j < len - 1)
 	{
 		if (is_redir_has_found(line[i]))

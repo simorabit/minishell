@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds_op.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:16:43 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 01:28:42 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:39:45 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_simple_cmds	*ft_lstnew_cmd(void)
 	t_simple_cmds	*cmds;
 
 	cmds = (t_simple_cmds *)my_alloc(sizeof(t_simple_cmds));
-	if (!cmds)
-		return (NULL);
 	cmds->next = NULL;
 	cmds->cmd = NULL;
 	return (cmds);

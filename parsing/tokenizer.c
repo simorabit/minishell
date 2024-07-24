@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:19:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/22 05:04:45 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:37:26 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,18 @@ int has_cmd(t_lexer *node)
 	}
 	return 0;
 }
+void found_pipe( t_lexer **node, int **is_hdc, int **is_file)
+{
+		(*node)->token = mpipe;
+		*is_hdc = 0;
+		*is_file = 0;
+}
 void check_redir(char *res, t_lexer *node, int *is_hdc, int *is_file)
 {
 	if (!ft_strcmp(res, ">>"))
 		node->token = redirect_app;
 	else if (!ft_strcmp(res, "|"))
-	{
-		node->token = mpipe;
-		*is_hdc = 0;
-		*is_file = 0;
-	}
+		found_pipe(&node, &is_hdc, &is_file);
 	else if (!ft_strcmp(res, ">"))
 		node->token = redirect_out;
 	else if (!ft_strcmp(res, "<"))
@@ -49,11 +51,9 @@ void check_redir(char *res, t_lexer *node, int *is_hdc, int *is_file)
 	else if (*is_file)
 	{
 		node->token = file;
-		if(!has_cmd(node))
+		if (!has_cmd(node))
 			*is_file = 0;
 	}
-	else if (node->prev && node->prev->token == file)
-		node->token = word;
 	else
 		node->token = word;
 }

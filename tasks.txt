@@ -3,19 +3,13 @@ TODO for soulaiman
 # 2- normitte
 # 3- exit status
 bash: export: `a++=++1': not a valid identifier
-
+echo "sd\nfds"
 5 echo a > file
 
 ///////////////////////
 
 TODO - for simo
 # addspaces
-# signals cat minishell : minishell :  fixed 
-# getenv    fixed
-# cmd ; export ab="ls -l" $ab fixed
-# segfault here : echo $ac ="ls -l"
-# export a="main.c minishell.h"
 # kill -11 0
-echo $a  a= "a    b    c" 
-"$a"
-#minishell : $454-45
+echo "sd\nfds"
+$dsfgdf+- segfault

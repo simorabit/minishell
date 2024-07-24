@@ -6,12 +6,26 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/22 06:05:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:50:54 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void check_quote(int *i, char *line, int q, int *flag)
+{
+	(*i)++;
+	*flag = 0;
+	while (line[*i])
+	{
+		if(line[*i] == q)
+		{
+			*flag = 1;
+			break;	
+		}
+		(*i)++;
+	}
+}
 
 int	check_quotes(char *line)
 {
@@ -23,36 +37,14 @@ int	check_quotes(char *line)
 	while (line[i])
 	{
 		if(line[i] == DOUBLE_QUOTE)
-		{
-			i++;
-			flag = 0;
-			while (line[i])
-			{
-				if(line[i] == DOUBLE_QUOTE)
-				{
-					flag = 1;
-					break;	
-				}
-				i++;
-			}
-		}else if(line[i] == SINGLE_QUOTE)
-		{
-				i++;
-			flag = 0;
-			while (line[i])
-			{
-				if(line[i] == SINGLE_QUOTE)
-				{
-					flag = 1;
-					break;	
-				}
-				i++;
-			}
-		}
+			check_quote(&i, line, DOUBLE_QUOTE, &flag);
+		else if(line[i] == SINGLE_QUOTE)
+			check_quote(&i, line, SINGLE_QUOTE, &flag);	
 		i++;
 	}
 	return flag;
 }
+
 int	handel_quotes(char *line)
 {
 	if(!check_quotes(line))

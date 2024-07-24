@@ -6,49 +6,55 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 10:12:01 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:44:00 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int handel_heredoc(char *del)
+void read_herdoc(char *del, char *line, int fd_in)
 {
-    int fd_in;
-    char *line;
-    int pid;
-    int exit_status;
-
-    fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
-    pid = fork();
-    if (pid == -1)
-        return (perror("Error forking process"), -1);
-    else if (pid == 0)
-	{ 
-        signal(SIGINT, SIG_DFL);
-		rl_catch_signals = 1; 
-        while (1)
+	while (1)
+	{
+		line = readline(">");
+		if (!line || ft_strcmp(line, del) == 0)
 		{
-            line = readline(">");
-            if (!line || ft_strcmp(line, del) == 0) {
-                free(line);
-                break;
-            }
-            ft_putstr_fd(line, fd_in);
-            free(line);
-        }
-        close(fd_in);
-        exit(0); // Child process exits
-    } 
-	else
-	{ 
-		wait(&exit_status); 
-        if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
-			return -2;
-    }
-    return fd_in;
+			free(line);
+			break;
+		}
+		ft_putstr_fd(line, fd_in);
+		free(line);
+	}
 }
 
+int handel_heredoc(char *del)
+{
+	int fd_in;
+	char *line;
+	int pid;
+	int exit_status;
+
+	line = NULL;
+	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
+	pid = fork();
+	if (pid == -1)
+		return (perror("Error forking process"), -1);
+	else if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		rl_catch_signals = 1;
+		read_herdoc(del, line, fd_in);
+		close(fd_in);
+		exit(0); 
+	}
+	else
+	{
+		wait(&exit_status);
+		if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+			return -2;
+	}
+	return fd_in;
+}
 
 int save_heredoc(t_lexer **lexer)
 {
