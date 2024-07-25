@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:15:50 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/25 02:48:02 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ft_check(char *cmd, char **env)
 	x = 0;
 	if (ft_strchr(cmd, '/'))
 	{
+		is_error(cmd);
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 		if (!path)
 			return ;
@@ -107,7 +108,7 @@ void	ft_check(char *cmd, char **env)
 		}
 		if (j)
 			return ;
-		is_error(cmd);
+		
 	}
 }
 

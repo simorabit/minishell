@@ -31,7 +31,7 @@ static char	*my_word(char *s, char c, char **arr, int ind)
 	j = 0;
 	while (s[i] && s[i] != c)
 		i++;
-	output = (char *)malloc(sizeof(char) * (i + 1));
+	output = (char *)my_alloc(sizeof(char) * (i + 1));
 	if (!output)
 	{
 		while (j < ind)
@@ -56,7 +56,7 @@ char	**my_split(char const *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)malloc((count_words((char *)s, c) + 1) * sizeof(char *));
+	array = (char **)my_alloc((count_words((char *)s, c) + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
 	while (*s)

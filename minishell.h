@@ -46,6 +46,14 @@ struct s_c_addresses
     struct s_c_addresses    *next;
 };
 
+typedef struct s_util
+{
+	int	i;
+	int	check;
+	int	len;
+	int	hold;
+}		t_util;
+
 typedef enum s_token
 {
 	word,
@@ -197,7 +205,7 @@ void	putstr(char *str, int i);
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
 void	echo(char **cmd, t_simple_cmds *cmds);
-void	classification_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
+void	execut_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
 void	ft_exec(char **cmd, char **env);
 void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);
@@ -224,7 +232,7 @@ char	*ft_find_path(char **env, char *var, int j);
 void	ft_find_pwd(void);
 t_env	*get_env(char **env);
 void	get_cd(char *cmd);
-void	export_exe(char **cmd, t_env *list_env);
+int		export_exe(char **cmd, t_env *list_env);
 void	write_env(t_env *env, char **arg);
 char	**change_list_to_env(t_env *list_env);
 int		ft_lstsize_env(t_env *lst);
@@ -258,7 +266,7 @@ int		print_error(char *cmd, char *type);
 int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
 
 void	*my_alloc(size_t size);
-void	builtins_print_error(char *cmd, char *type);
+int		builtins_print_error(char *cmd, char *type);
 
 #endif
 // #endif

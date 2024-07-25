@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 08:04:23 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/25 02:24:28 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	if_var_exist_return(char *cmd, t_env *list_env)
 	return (0);
 }
 
-void	export_exe(char **cmd, t_env *list_env)
+int	export_exe(char **cmd, t_env *list_env)
 {
 	int		i;
 	int		x;
@@ -132,13 +132,15 @@ void	export_exe(char **cmd, t_env *list_env)
 	i = 1;
 	x = ft_lstsize_env(list_env);
 	if (cmd [0] == NULL || cmd == NULL)
-		return ;
+		return (0);
 	while (cmd[i])
 	{
 		if (!ft_strchr(cmd[i], '='))
 			if (if_var_exist_return(cmd[i], list_env))
-				return ;
+				return (0);
 		error = check_for_plus_and_eq(cmd[i], 1);
+		if (error == -1)
+			return (1);
 		if (error && error != -1 && !check_for_first_char(get_env_eq(cmd[i])))
 			add_var_exist(cmd[i], list_env, error);
 		else if (!check_arg_is_valide(get_env_eq(cmd[i]))
@@ -150,4 +152,5 @@ void	export_exe(char **cmd, t_env *list_env)
 	}
 	if (!ft_strcmp(cmd[0], "export") && !cmd[1])
 		print_export(list_env);
+	return (0);
 }
