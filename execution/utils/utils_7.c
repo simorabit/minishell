@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:20:37 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:50:28 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,37 @@ int	len_of_arg(char **arg)
 	return (i + 1);
 }
 
+char	**creat_a_cmd(char *cmd)
+{
+	char	**cmmd;
+	char	**cmmd_1;
+	char	*join;
+	int		i;
+
+	i = 0;
+	cmmd_1 = ft_split_exe(cmd, ' ');
+	cmmd = my_alloc(sizeof(char *) * (len_of_arg(cmmd_1) + 1));
+	join = NULL;
+	while (cmmd_1[i] != NULL)
+	{
+		if (len_of_arg(cmmd_1) == 2)
+		{
+			cmmd[0] = ft_strjoin(cmmd_1[0], cmmd_1[1]);
+			break ;
+		}
+		if (cmmd[0])
+			join = ft_strjoin(cmmd[0], " ");
+		cmmd[0] = ft_strjoin(join, cmmd_1[i]);
+		i++;
+	}
+	return (cmmd);
+}
+
 char	**join_cmd_arg(char *cmd, char **arg)
 {
 	int		i;
 	int		j;
 	char	**ptr;
-
 	ptr = NULL;
 	i = 0;
 	j = 0;
@@ -36,7 +61,7 @@ char	**join_cmd_arg(char *cmd, char **arg)
 	else if (cmd == NULL)
 		return (arg);
 	else if (arg == NULL)
-		return (ft_split_exe(cmd, ' '));
+		return (creat_a_cmd(cmd));
 	ptr = my_alloc(sizeof(char *) * (len_of_arg(arg) + 1));
 	ptr[0] = cmd;
 	i++;

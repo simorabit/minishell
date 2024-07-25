@@ -46,6 +46,14 @@ struct s_c_addresses
     struct s_c_addresses    *next;
 };
 
+typedef struct s_util
+{
+	int	i;
+	int	check;
+	int	len;
+	int	hold;
+}		t_util;
+
 typedef enum s_token
 {
 	word,
@@ -196,7 +204,7 @@ void	putstr(char *str, int i);
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
 void	echo(char **cmd, t_simple_cmds *cmds);
-void	classification_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
+void	execut_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
 void	ft_exec(char **cmd, char **env);
 void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);

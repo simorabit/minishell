@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/24 10:04:37 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/25 02:05:24 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -157,7 +157,7 @@ RESET   = \033[0m
 # cat < Makefile > sssss
 # dakchi nadii
 # cat < Makefile | exit
-# 88
+# 99
 # echo LLL | cat
 # error !!: Invalid argument
 # singl cmd builtins
