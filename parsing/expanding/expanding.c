@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 13:10:09 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:30:59 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ char *m_get_env(char *str, t_env **env_list)
 {
 	t_env *env;
 	char *res;
-
+	
 	env = *env_list;
+	res = NULL;
 	while (env)
 	{
 		if (!ft_strncmp(env->content, str, ft_strlen(str)) &&
@@ -37,6 +38,7 @@ char *alloc_exp(char *str, int *pos, t_env **env_list)
 
 	len_env = 0;
 	i = 0;
+	reset = NULL;
 	while (is_real_char(str[i++]))
 		len_env++;
 	new_s = ft_strncpy(str, len_env);
@@ -49,9 +51,9 @@ char *alloc_exp(char *str, int *pos, t_env **env_list)
 	if (!*reset)
 		reset = NULL;
 	res = ft_strjoin(m_get_env(new_s, env_list), reset);
+	// free(reset);
 	if(res == NULL)
 		return ft_strdup("");
-	free(reset);
 	return (res);
 }
 
@@ -78,13 +80,19 @@ char *expand_str(char *s, t_env **env_list)
 	counter = 0;
 	result = NULL;
 	i = 0;
+	if(!ft_strcmp(s, "$"))
+		return ft_strdup("$");
 	while (s[i] && s[i] != '$')
 		i++;
 	befor_dollar = ft_substr(s, 0, i);
 	while (s[i])
 	{
 		if (s[i] == '$' && !counter)
+		{
 			result = ft_strjoin(befor_dollar, alloc_exp(s + (++i), &i, env_list));
+			printf("%s", result);
+			exit(0);
+		}
 		else if (s[i] == '$' && counter)
 			result = ft_strjoin(result, alloc_exp(s + (++i), &i, env_list));
 		if (s[i] && s[i] != '$')
@@ -117,18 +125,17 @@ char *expand_str2(t_lexer **tmp, t_env **env_list)
 		}
 		else if (s[i] == SINGLE_QUOTE)
 			result = handel_singleq(result, s, &i, &j);
-		else if (s[i] == '$')
+		else if (s[i] == '$' && ft_strcmp(s, "$"))
 		{
 			result = ft_strjoin(result, alloc_exp(s + (++i), &i, env_list));
 			i--;
 		}
 		else
 			result = ft_strjoin(result, ft_substr(&s[i], 0, 1));
-		// if (result == NULL)
-		// 	return (ft_strdup(""));
+		if (result == NULL)
+			return (ft_strdup(""));
 		i++;
 	}
-	// printf("look %s", result);
 	// exit(0);
 	return (result);
 }

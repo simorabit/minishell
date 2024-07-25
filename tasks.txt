@@ -3,8 +3,9 @@ TODO for soulaiman
 # 2- normitte
 # 3- exit status
 bash: export: `a++=++1': not a valid identifier
-echo "sd\nfds"
 5 echo a > file
+
+6 - echo "sd\nfds"
 
 ///////////////////////
 

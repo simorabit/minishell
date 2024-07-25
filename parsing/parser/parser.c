@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 01:27:57 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:41:33 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	handel_files(t_lexer **tmp, t_simple_cmds *cmds)
 		cmds->out_file = open_files(tmp, redirect_out);
 	else if (*tmp && (*tmp)->token == heredoc)
 	{
-		res = save_heredoc(tmp);
+		res = save_heredoc(tmp, &cmds);
 		if (res == -2)
 			return (-1);
 		cmds->heredoc = res;

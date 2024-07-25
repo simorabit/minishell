@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 10:44:00 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:51:44 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void read_herdoc(char *del, char *line, int fd_in)
 	}
 }
 
-int handel_heredoc(char *del)
+int handel_heredoc(char *del, t_simple_cmds **cmds)
 {
 	int fd_in;
 	char *line;
@@ -51,12 +51,16 @@ int handel_heredoc(char *del)
 	{
 		wait(&exit_status);
 		if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+		{
+			(*cmds)->stop_ex = 0;
+			printf("%d", (*cmds)->stop_ex);
 			return -2;
+		}
 	}
 	return fd_in;
 }
 
-int save_heredoc(t_lexer **lexer)
+int save_heredoc(t_lexer **lexer, t_simple_cmds **cmds)
 {
 	int len;
 	char *del;
@@ -71,7 +75,7 @@ int save_heredoc(t_lexer **lexer)
 		if ((*lexer)->token == delimiter)
 		{
 			del = ft_strdup((*lexer)->str);
-			fd = handel_heredoc(del);
+			fd = handel_heredoc(del, cmds);
 		}
 		(*lexer) = (*lexer)->next;
 	}

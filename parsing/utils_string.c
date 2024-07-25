@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:25:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 01:28:34 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:37:28 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ char	*ft_strjoin(char  *s1, char  *s2)
 	
 	if(!s1 && !s2)
 		return NULL;
-	if (!s1)
+	else if (s1 == NULL)
 		return (s2);
-	if(!s2)
+	else if (s2 == NULL)
 		return (s1);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);

@@ -84,7 +84,8 @@ typedef struct s_simple_cmds
     int		in_file;
     int		out_file;
     int		aout_file;
-    int		heredoc;	
+    int		heredoc;
+	int		stop_ex;
 	struct s_simple_cmds *next;
 }			t_simple_cmds; 
 
@@ -150,7 +151,7 @@ char	**my_split(char const *s, char c);
 
 //syntax error
 int		syntax_error(t_lexer **lexer);
-void handel_herdoc_err(t_lexer **lexer);
+void handel_herdoc_err(t_lexer **lexer, t_simple_cmds **cmds);
 
 // utils_split
 char	*ft_word(char *s, char **arr, char ind, char quotes);
@@ -165,11 +166,11 @@ t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds);
 
 int		get_lcmd(t_lexer *lexer);
 int		open_files(t_lexer **lexer, t_token token);
-int		save_heredoc(t_lexer **lexer);
+int		save_heredoc(t_lexer **lexer, t_simple_cmds **cmds);
 void	save_heredoc2(t_lexer **lexer);
 void 	init_arrays(t_simple_cmds *cmds);
 void 	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len);
-int 	handel_heredoc(char *del);
+int		handel_heredoc(char *del, t_simple_cmds **cmds);
 
 //expanding
 void	handel_expanding(t_lexer **lexer, t_env **env_list);
