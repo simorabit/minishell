@@ -3,18 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
+#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/07/25 10:40:00 by mal-mora         ###   ########.fr        #
-=======
-#    Updated: 2024/07/25 02:05:24 by souaouri         ###   ########.fr        #
->>>>>>> e5e092ff5a8df4a1284f4bb7f1e2e278c61a769f
+#    Updated: 2024/07/25 19:40:44 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC 				=	cc
 # -fsanitize=address -g
 CC				+=	-Wall -Wextra -Werror 
 NAME 			=	minishell
