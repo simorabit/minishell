@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/25 11:50:01 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:36:37 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	handel_input(char *line, t_env **env_list)
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	print_cmd(&cmds);
-	if(cmds && cmds->stop_ex == 0)
-	{
-		printf("%d", cmds->stop_ex);
-		return ;
-	}
+	// if(cmds && cmds->stop_ex == 0)
+	// {
+	// 	printf("%d", cmds->stop_ex);
+	// 	return ;
+	// }
 	initialize_files(cmds);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
