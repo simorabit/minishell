@@ -7,6 +7,7 @@ bash: export: `a++=++1': not a valid identifier
 5 echo a > file
 =======
 echo "sd\nfds"
+echo "lllll" | cat -e
 null in args
 ls | exit 44
 >>>>>>> e5e092ff5a8df4a1284f4bb7f1e2e278c61a769f

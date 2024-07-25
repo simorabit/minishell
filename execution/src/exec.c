@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:53:05 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/25 23:51:21 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,6 +308,13 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	{
 		p_in = dup (0);
 		p_out = dup (1);
+		// while (list)
+		// {
+		// 	change_list(list);
+		// 	// printf ("---> %s\n", list->args[0]);
+		// 	printf ("cmd : %s | {{{%s}}} | infile : %d | outfile : %d\n", list->cmd, list->args[0], list->in_file, list->out_file);
+		// 	list = list->next;
+		// }
 		Reducing(list, &hold_fd_in);
 		int	check = check_is_biltus(list->cmmd[0]);
 		if (len > 1 || !check)
@@ -338,8 +345,6 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 		 	exit(0);
 	}
 	wait_func(exit_status, env_list, i);
-	//
-	//
 }
 	/*
 	while (head)

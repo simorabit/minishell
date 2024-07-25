@@ -54,6 +54,18 @@ typedef struct s_util
 	int	hold;
 }		t_util;
 
+typedef struct s_var
+{
+	int		exit_status;
+	int		hold_fd_in;
+	int		pid;
+	int		p_in ;
+	int		p_out;
+	int		i;
+	int		check;
+	t_util	*util;
+}		t_var;
+
 typedef enum s_token
 {
 	word,
