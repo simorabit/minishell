@@ -4,6 +4,7 @@ TODO for soulaiman
 # 3- exit status
 echo "sd\nfds"
 null in args
+ls | exit 44
 
 ///////////////////////
 

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:05:06 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/25 02:53:05 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,57 +131,45 @@ int	check_is_biltus(char *cmd)
 
 int	run_built_1(t_env **list_env, char **nood, t_simple_cmds *cmds)
 {
+	int exit_status;
+	
+	exit_status = 0;
 	if (!ft_strcmp("export", nood[0]))
-	{
-		export_exe(nood, *list_env);
-		return (1);
-	}
+		exit_status = export_exe(nood, *list_env);
 	if (!ft_strcmp("echo", nood[0]))
-	{
 		echo(nood, cmds);
-		return (1);
-	}
 	if (!ft_strcmp("pwd", nood[0]))
-	{
 		ft_find_pwd();
-		return (1);
-	}
 	if (!ft_strcmp("env", nood[0]))
-	{
 		write_env(*list_env, nood);
-		return (1);
-	}
-	return(0);
+	return(exit_status);
 }
 
 int	run_built_2(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 {
 	int	i;
+	int	exit_status;
 
 	i = -1;
+	exit_status = 0;
 	if (!ft_strcmp("cd", nood[0]))
-	{
-		cd_exec(cmds, *list_env);
-		return (1);
-	}
+		exit_status = cd_exec(cmds, *list_env);
 	if (!ft_strcmp("exit", nood[0]))
-	{
 		exit_builtins(cmds, nood, len);
-		return (1);
-	}
 	if (!ft_strcmp("unset", nood[0]))
 	{
 		while (nood[++i])
 			unset(list_env, nood[i]);
 		return (1);
 	}
-	return(0);
+	return(exit_status);
 }
 
 int	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 {
 	char	*pwd;
 	char	**env;
+	int		exit_status;
 
 	pwd = NULL;
 	env = change_list_to_env(*list_env);
@@ -192,13 +180,10 @@ int	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 		print_error(nood[0], "no_such_file");
 		return (127);
 	}
-	if (run_built_1(list_env, nood, cmds))
-		return (1);
-	if (run_built_2(list_env, nood, cmds, len))
-		return (1);
-	return (0);
+	exit_status = run_built_1(list_env, nood, cmds);
+	exit_status = run_built_2(list_env, nood, cmds, len);
+	return (exit_status);
 }
-
 
 void	multiple_cmd_util_1(int in_file, int *hold_fd_in)
 {
@@ -288,8 +273,14 @@ void	run_cmd(t_env **env_list, t_simple_cmds *list, t_util *util)
 	}
 }
 
-void	wait_func(int exit_status, t_env **env_list)
+void	wait_func(int exit_status, t_env **env_list, int i)
 {
+	if (i)
+	{
+		char *ex_st = ft_strjoin("?=", ft_itoa(exit_status));
+		add_variable(*env_list, ex_st, 1);
+		return ;
+	}
 	while (wait(&exit_status) != -1)
 		;
 	exit_status = WEXITSTATUS(exit_status);
@@ -323,7 +314,7 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 			pid = fork();
 		if (len == 1 && check)
 		{
-			run_built(env_list, list->cmmd, list, len);
+			exit_status = run_built(env_list, list->cmmd, list, len);
 			i = 1;
 		}
 		if (pid == 0)
@@ -346,7 +337,8 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 		if (pid == 0 && len != 1)
 		 	exit(0);
 	}
-	wait_func(exit_status, env_list);
+	wait_func(exit_status, env_list, i);
+	//
 	//
 }
 	/*

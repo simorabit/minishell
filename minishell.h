@@ -231,7 +231,7 @@ char	*ft_find_path(char **env, char *var, int j);
 void	ft_find_pwd(void);
 t_env	*get_env(char **env);
 void	get_cd(char *cmd);
-void	export_exe(char **cmd, t_env *list_env);
+int		export_exe(char **cmd, t_env *list_env);
 void	write_env(t_env *env, char **arg);
 char	**change_list_to_env(t_env *list_env);
 int		ft_lstsize_env(t_env *lst);
@@ -265,7 +265,7 @@ int		print_error(char *cmd, char *type);
 int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
 
 void	*my_alloc(size_t size);
-void	builtins_print_error(char *cmd, char *type);
+int		builtins_print_error(char *cmd, char *type);
 
 #endif
 // #endif
