@@ -12,7 +12,12 @@ null in args
 ls | exit 44
 >>>>>>> e5e092ff5a8df4a1284f4bb7f1e2e278c61a769f
 
+
 export ="dsf"
+"    ls"
+"ls -l"
+echo $?
+
 ///////////////////////
 
 TODO - for simo
@@ -20,3 +25,7 @@ TODO - for simo
 # kill -11 0
 echo "sd\nfds"
 $dsfgdf+- segfault
+
+
+//check leaks
+while true; do leaks minishell; done;

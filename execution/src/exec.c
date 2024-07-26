@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/26 07:12:49 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:48:49 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ int	check_is_biltus(char *cmd)
 	int	i;
 
 	i = 0;
-
-	if (!cmd)
+	if (cmd == NULL || *cmd == '\0')
 		return (0);
 	if (!ft_strncmp("export", cmd, 6))
 		i++;

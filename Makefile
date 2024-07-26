@@ -6,12 +6,12 @@
 #    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/26 06:56:43 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/26 15:45:09 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror -fsanitize=address -g
+CC				+=	-Wall -Wextra -Werror #-fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
@@ -30,7 +30,8 @@ SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		execution/builtins/export.c execution/builtins/unset.c execution/utils/utils_1.c \
 		execution/utils/utils_2.c execution/utils/utils_3.c execution/utils/utils_4.c \
 		execution/utils/utils_5.c execution/utils/utils_6.c \
-		execution/utils/utils_7.c execution/utils/utils_8.c debugging.c parsing/my_split.c
+		execution/utils/utils_7.c execution/utils/utils_8.c debugging.c parsing/my_split.c \
+		parsing/parser/herdoc.c parsing/expanding/expanding_utils.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -62,90 +63,6 @@ BLUE    = \033[34m
 MAGENTA = \033[35m
 CYAN    = \033[36m
 RESET   = \033[0m
-
-# CC 				=	cc -fsanitize=address -g
-# CC				+=	-Wall -Wextra -Werror
-# NAME 			=	minishell
-# HEADER 			=	minishell.h
-# DIR				=	.object_files
-
-# SRC_FILES		=	exec.c
-# BUILTS_FILES	=	cd.c			echo.c			pwd.c		\
-# 					env.c			env_utile.c		export.c
-# UTILS_FILES		=	utils_1.c 		utils_2.c 		utils_3.c 	\
-# 					utils_4.c 		utils_5.c 		utils_6.c	\
-# 					utils_7.c		utils_8.c
-# VUR_FILES		=	list.c
-
-
-# EXPAND_FILES	= 	expanding.c quotes_expanding.c utils.c 
-# GET_NEXT_LINE 	= 	get_next_line.c get_next_line_utils.c 
-# PARSER 			= 	cmds_op.c parser.c parser_files.c utils.c 
-# OTHER_FILES 	= 	main.c lexer_list.c utils_string.c ft_split.c \
-# 					tokenizer.c utils_free.c quotes_spaces.c utils_quotes_spaces.c \
-# 					syntax_error.c utils_split.c
-
-
-# EXPAND_SRC			=	$(addprefix parsing/expanding/,$(EXPAND_FILES))
-# GET_NEXT_LINE_SRC	=	$(addprefix parsing/get_next_line/,$(GET_NEXT_LINE))
-# PARSER_SRC			=	$(addprefix parsing/parser/,$(PARSER))
-# OTHER_FILES_SRC		=	$(addprefix parsing/,$(OTHER_FILES))
-
-# SRC_SRC			=	$(addprefix execution/src/,$(SRC_FILES))
-# BUILTS_SRC		=	$(addprefix execution/builtins/,$(BUILTS_FILES))
-# UTILS_SRC		=	$(addprefix execution/utils/,$(UTILS_FILES))
-# VUR_SRC			=	$(addprefix execution/virtual/,$(VUR_FILES))
-
-
-# EXPAND_OBJ			=	$(addprefix $(DIR)/,$(EXPAND_SRC:.c=.o))
-# GET_NEXT_LINE_OBJ	=	$(addprefix $(DIR)/,$(GET_NEXT_LINE_SRC:.c=.o))
-# PARSER_OBJ			=	$(addprefix $(DIR)/,$(PARSER_SRC:.c=.o))
-# OTHER_FILES_OBJ		=	$(addprefix $(DIR)/,$(OTHER_FILES_SRC:.c=.o))
-
-# SRC_OBJ			=	$(addprefix $(DIR)/,$(SRC_SRC:.c=.o))
-# BUILTS_OBJ		=	$(addprefix $(DIR)/,$(BUILTS_SRC:.c=.o))
-# UTILS_OBJ		=	$(addprefix $(DIR)/,$(UTILS_SRC:.c=.o))
-# VUR_OBJ			=	$(addprefix $(DIR)/,$(VUR_SRC:.c=.o))
-
-# OBJ_FILES		=	$(SRC_OBJ)	$(BUILTS_OBJ)	$(UTILS_OBJ)	\
-# 					$(VUR_OBJ) $(parsing) $(GET_NEXT_LINE_OBJ) \
-# 					$(PARSER_OBJ) $(OTHER_FILES_OBJ)
-
-# all : $(NAME)
-
-# $(NAME) : $(OBJ_FILES)
-# 	@$(CC) -lreadline -o $@ $^
-# 	@echo "✅ \033[1;32mCompilation Completed Successfully!\033[0;m"
-
-# $(DIR)/src/%.o : src/%.c
-# 	@mkdir -p $(dir $@)
-# 	@$(CC) -c $< -o $@
-# 	@echo "\033[1;30mObject files generated Successfully! $@ \033[0;m"
-
-# $(DIR)/builtins/%.o : builtins/%.c
-# 	@mkdir -p $(dir $@)
-# 	@$(CC) -c $< -o $@
-# 	@echo "\033[1;30mObject files generated Successfully! $@ \033[0;m"
-
-# $(DIR)/utils/%.o : utils/%.c
-# 	@mkdir -p $(dir $@)
-# 	@$(CC) -c $< -o $@
-# 	@echo "\033[1;30mObject files generated Successfully! $@ \033[0;m"
-
-# $(DIR)/virtual/%.o : virtual/%.c
-# 	@mkdir -p $(dir $@)
-# 	@$(CC) -c $< -o $@
-# 	@echo "\033[1;30mObject files generated Successfully! $@ \033[0;m"
-
-# clean :
-# 	@rm -rf $(DIR)
-# 	@echo "\033[31mObject files has been removed Successfully! ✅\033[0;m"
-
-# fclean : clean
-# 	@rm -f $(NAME)
-# 	@echo "\033[31mExecutable file has been removed Successfully! ✅\033[0;m"
-
-# re : fclean all
 
 # export > solimi | cat | cat | cat > solimi
 # message error in parc and exec stop cmd to run becose infile=-1;

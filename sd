@@ -1,0 +1,13 @@
+Makefile
+addresses_collector.c
+addresses_collector.o
+debugging.c
+debugging.o
+execution
+main.c
+main.o
+minishell
+minishell.h
+parsing
+sd
+tasks.txt

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 07:10:57 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:34:28 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ void	handel_input(char *line, t_env **env_list)
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	// print_cmd(&cmds);
-	// if(cmds && cmds->stop_ex == 0)
-	// {
-	// 	printf("%d", cmds->stop_ex);
-	// 	return ;
-	// }
+	// exit(0);
 	initialize_files(cmds);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
@@ -71,6 +67,7 @@ void	read_input(char **env)
 	else
 		env_list = get_env(env);
 	signal(SIGINT, sighandler);
+	signal(SIGQUIT, sighandler);
 	while (1)
 	{
 		line = readline("minishell : ");
@@ -85,11 +82,15 @@ void	read_input(char **env)
 		free(line); // be aware of this
 	}
 }
-
+// void lleaks()
+// {
+// 	system("leaks minishell");
+// }
 int	main(int arc, char *arv[], char **env)
 {
 	(void)arv;
-	rl_catch_signals = 0; // 
+	// atexit(lleaks);
+	rl_catch_signals = 0;
 	if (arc != 1)
 		(printf("InputError"), exit(0));
 	read_input(env);

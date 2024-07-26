@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:20:48 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:16:24 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:58:03 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static int	count_word(const char *s, char c)
 		while (s[i] && s[i] != c)
 			i++;
 	}
+	if (s && !s[0])
+		j = 1;
 	return (j);
 }
 
@@ -105,6 +107,11 @@ char	**ft_split_exe(char *s, char c)
 			return (free_double_ptr(ptr), NULL);
 		j += count_len(&s[j], c);
 		i++;
+	}
+	if (size == 1)
+	{
+		ptr[0] = ft_strdup("");
+		i =1;
 	}
 	ptr[i] = NULL;
 	return (ptr);

@@ -200,11 +200,18 @@ int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);
 char 	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list);
 char 	*handel_singleq(char *result, char *s, int *i, int *j);
-char	*alloc_exp(char *str, int *pos, t_env **env_list);
+char	*al_exp(char *str, int *pos, t_env **env_list);
 int		get_len_ep(char *s);
-int		end_of_proccessing(char c);
-int		is_real_char(char c);
-char *expand_str2(t_lexer **tmp, t_env **env_list);
+int		end_of_proccessing(char *s, int i);
+int		is_real_char(char *s, int i);
+char 	*expanding_str(t_lexer **tmp, t_env **env_list);
+
+//expand utils
+void expanding_cases(t_lexer **tmp, t_env **env_list);
+void *find_dollar(char *result, char *s, int *i);
+char *m_get_env(char *str, t_env **env_list);
+int check_if_noexpand(t_lexer **tmp);
+int	init_expand(char *s, int *i);
 
 //debugging
 void	print_cmd(t_simple_cmds **cmds);

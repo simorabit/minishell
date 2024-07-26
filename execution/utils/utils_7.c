@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/26 07:15:01 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:54:10 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	**creat_a_cmd(char *cmd)
 		if (len_of_arg(cmmd_1) == 2)
 		{
 			cmmd[0] = ft_strjoin(cmmd_1[0], cmmd_1[1]);
+			cmmd[2] = NULL;
 			break ;
 		}
 		if (cmmd[0])
@@ -45,7 +46,7 @@ char	**creat_a_cmd(char *cmd)
 		cmmd[0] = ft_strjoin(join, cmmd_1[i]);
 		i++;
 	}
-	cmmd[1] = NULL; //TODO - check if ther is one elements
+	cmmd[1] = NULL;
 	return (cmmd);
 }
 
