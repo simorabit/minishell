@@ -12,8 +12,7 @@ null in args
 ls | exit 44
 >>>>>>> e5e092ff5a8df4a1284f4bb7f1e2e278c61a769f
 
-6 - echo "sd\nfds"
-
+export ="dsf"
 ///////////////////////
 
 TODO - for simo

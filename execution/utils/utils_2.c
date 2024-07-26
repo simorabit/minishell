@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:48:02 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/26 06:58:32 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	ft_exec(char **cmd, char **env)
 	if (execve(path, cmd, env) == -1)
 	{
 		print_error(cmd[0], "cmd_not_found");
-		free_double_ptr(cmd);
+		// free_double_ptr(cmd); //TODO - check this
 		exit (127);
 	}
 	free (path);

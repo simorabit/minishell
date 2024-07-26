@@ -6,12 +6,12 @@
 #    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/25 19:40:44 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/26 06:56:43 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror 
+CC				+=	-Wall -Wextra -Werror -fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
