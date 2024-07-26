@@ -6,32 +6,34 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:19:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 10:37:26 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:49:26 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int has_cmd(t_lexer *node)
+int	has_cmd(t_lexer *node)
 {
-	t_lexer *newnode;
+	t_lexer	*newnode;
 
 	newnode = node;
 	while (newnode)
 	{
 		if (node->token == word)
-			return 1;
+			return (1);
 		newnode = node->prev;
 	}
-	return 0;
+	return (0);
 }
-void found_pipe( t_lexer **node, int **is_hdc, int **is_file)
+
+void	found_pipe( t_lexer **node, int **is_hdc, int **is_file)
 {
-		(*node)->token = mpipe;
-		*is_hdc = 0;
-		*is_file = 0;
+	(*node)->token = mpipe;
+	*is_hdc = 0;
+	*is_file = 0;
 }
-void check_redir(char *res, t_lexer *node, int *is_hdc, int *is_file)
+
+void	check_redir(char *res, t_lexer *node, int *is_hdc, int *is_file)
 {
 	if (!ft_strcmp(res, ">>"))
 		node->token = redirect_app;
@@ -58,12 +60,12 @@ void check_redir(char *res, t_lexer *node, int *is_hdc, int *is_file)
 		node->token = word;
 }
 
-void tokenizer(char **res, t_lexer **lexer)
+void	tokenizer(char **res, t_lexer **lexer)
 {
-	int i;
-	int is_heredoc;
-	int is_file;
-	t_lexer *node;
+	int		i;
+	int		is_heredoc;
+	int		is_file;
+	t_lexer	*node;
 
 	is_heredoc = 0;
 	is_file = 0;
@@ -72,7 +74,7 @@ void tokenizer(char **res, t_lexer **lexer)
 	{
 		node = ft_lstnew(i);
 		check_redir(res[i], node, &is_heredoc, &is_file);
-		if ((!ft_strcmp(res[i], "<")) || (!ft_strcmp(res[i], ">")) ||
+		if ((!ft_strcmp(res[i], "<")) || (!ft_strcmp(res[i], ">")) || \
 			(!ft_strcmp(res[i], ">>")))
 			is_file = 1;
 		node->str = res[i];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 01:26:54 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:19:23 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ void	ft_lstadd_back(t_lexer **lexer, t_lexer *new)
 	else
 		*lexer = new;
 }
-void ft_lst_remove(t_lexer **lexer, int index)
+
+void	ft_lst_remove(t_lexer **lexer, int index)
 {
-	t_lexer *tmp;
-	t_lexer *tmp2;
-	
+	t_lexer	*tmp;
+	t_lexer	*tmp2;
+
 	tmp = *lexer;
 	if (!lexer)
 		return ;
@@ -76,15 +77,15 @@ void ft_lst_remove(t_lexer **lexer, int index)
 	{
 		if (tmp->i == index)
 		{
-			if(tmp->prev)
+			if (tmp->prev)
 				tmp->prev->next = tmp->next;
-			if(tmp->next)
+			if (tmp->next)
 				tmp->next->prev = tmp->prev;
 			tmp2 = tmp->next;
-			if(tmp->i == 0 && ft_lstsize(*lexer) >= 1)
+			if (tmp->i == 0 && ft_lstsize(*lexer) >= 1)
 				*lexer = tmp->next;
 			free(tmp);
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 	}

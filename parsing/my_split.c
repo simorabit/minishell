@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 14:21:22 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/07/26 14:40:50 by mal-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	count_words(char *s, char c)
@@ -67,7 +79,7 @@ char	**my_split(char const *s, char c)
 		{
 			array[j] = my_word((char *)s, c, array, j);
 			if (array[j] == NULL)
-				(free(array), (void)NULL);
+				(free(array), (void) NULL);
 			j++;
 		}
 		while (*s && *s != c)

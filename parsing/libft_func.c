@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_func.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 14:20:08 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/07/26 14:21:03 by mal-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*ft_strdup(const char *s1)
@@ -18,14 +30,14 @@ char	*ft_strdup(const char *s1)
 	return (new_value);
 }
 
-char *ft_strncpy(char *s, int len)
+char	*ft_strncpy(char *s, int len)
 {
-	char *new_s;
-	int i;
+	char	*new_s;
+	int		i;
 
 	i = 0;
-	if(!s)
-		return NULL;
+	if (!s)
+		return (NULL);
 	new_s = my_alloc(len + 1);
 	if (!new_s)
 		return (NULL);
@@ -35,7 +47,7 @@ char *ft_strncpy(char *s, int len)
 		i++;
 	}
 	new_s[i] = '\0';
-	return new_s;
+	return (new_s);
 }
 
 int	str_chr(char *s, char c)
@@ -43,8 +55,8 @@ int	str_chr(char *s, char c)
 	int	i;
 
 	i = 0;
-	if(s == NULL)
-		return -1;
+	if (s == NULL)
+		return (-1);
 	while (s[i])
 	{
 		if (s[i] == c)

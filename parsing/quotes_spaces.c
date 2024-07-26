@@ -6,12 +6,11 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 10:44:50 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:42:42 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int	count_redir(char *line)
 {
@@ -26,11 +25,9 @@ int	count_redir(char *line)
 		{
 			if (i != 0 && !is_withspaces(line[i - 1]))
 				counter++;
-			if (is_redir_has_found(line[i + 1]) && line[i] == line[i + 1] 
+			if (is_redir_has_found(line[i + 1]) && line[i] == line[i + 1] \
 				&& (line[i] == '>' || line[i] == '<'))
 				i++;
-			else
-				counter++;
 			if (line[i + 1] && !is_withspaces(line[i + 1]))
 				counter++;
 		}

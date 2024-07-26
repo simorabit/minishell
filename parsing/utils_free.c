@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:59:50 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/06/12 22:03:26 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:50:34 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	allocation_error(char *s)
 void	error_msg(char *s)
 {
 	printf("%s\n", s);
-    // exit(0);
+	exit(0);
 }
 
 void	free_list(char **list)

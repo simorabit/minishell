@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:08:16 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/23 14:40:53 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:14:07 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ char	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list)
 {
 	int		k;
 	char	*res;
+	char	*str;
 
+	str = s;
 	k = ++(*i);
 	while (s[*i])
 	{

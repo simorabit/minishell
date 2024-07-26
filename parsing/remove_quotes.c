@@ -1,45 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 14:42:57 by mal-mora          #+#    #+#             */
+/*   Updated: 2024/07/26 14:45:44 by mal-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int get_mlen(char *s, char q)
+int	get_mlen(char *s, char q)
 {
-    int i;
-    int len;
+	int	i;
+	int	len;
 
-    len = 0;
-    i = 0;
-    while (s[i])
+	len = 0;
+	i = 0;
+	while (s[i])
 	{
 		if (s[i] != q)
 			len++;
 		i++;
 	}
-    return len;
+	return (len);
 }
-void *remove_each_one(char *s, char q)
+
+void	*remove_each_one(char *s, char q)
 {
-	int len;
-	int i;
-	char *new_s;
-	int j;
+	int		len;
+	int		i;
+	char	*new_s;
+	int		j;
 
 	j = 0;
 	i = 0;
 	len = get_mlen(s, q);
 	new_s = my_alloc(len + 1);
 	i = 0;
-	while(s[i] && j < len)
-    {
-        if(s[i]!= q)
+	while (s[i] && j < len)
+	{
+		if (s[i] != q)
 			new_s[j++] = s[i];
-        i++;
-    }
+		i++;
+	}
 	new_s[j] = '\0';
-	return new_s;
+	return (new_s);
 }
 
-void remove_quotes(t_lexer **lexer)
+void	remove_quotes(t_lexer **lexer)
 {
-	t_lexer *tmp;
+	t_lexer	*tmp;
 
 	tmp = *lexer;
 	while (tmp)

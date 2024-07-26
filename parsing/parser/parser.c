@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/25 11:41:33 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:58:43 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	handel_files(t_lexer **tmp, t_simple_cmds *cmds)
 
 void	*handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
 {
-	if ((*j == 0 && (*tmp)->token == word) || 
+	if ((*j == 0 && (*tmp)->token == word) || \
 		((*tmp)->token == word && (*tmp)->prev->token != word))
 	{
 		cmds->cmd = ft_strdup((*tmp)->str);
@@ -86,7 +86,7 @@ t_simple_cmds	*get_node_parse(t_lexer **tmp)
 	j = 0;
 	node = ft_lstnew_cmd();
 	init_arrays(node);
-	while (*tmp && (*tmp)->token != mpipe)
+	while (tmp && *tmp && (*tmp)->token != mpipe)
 	{
 		if (!handel_cmd(tmp, node, &j))
 			return (NULL);

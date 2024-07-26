@@ -6,22 +6,22 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:14:39 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/24 10:50:54 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:53:42 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void check_quote(int *i, char *line, int q, int *flag)
+void	check_quote(int *i, char *line, int q, int *flag)
 {
 	(*i)++;
 	*flag = 0;
 	while (line[*i])
 	{
-		if(line[*i] == q)
+		if (line[*i] == q)
 		{
 			*flag = 1;
-			break;	
+			break ;
 		}
 		(*i)++;
 	}
@@ -29,28 +29,31 @@ void check_quote(int *i, char *line, int q, int *flag)
 
 int	check_quotes(char *line)
 {
-	int i;
-	int flag;
-	
+	int	i;
+	int	flag;
+
 	i = 0;
 	flag = 1;
 	while (line[i])
 	{
-		if(line[i] == DOUBLE_QUOTE)
+		if (line[i] == DOUBLE_QUOTE)
 			check_quote(&i, line, DOUBLE_QUOTE, &flag);
-		else if(line[i] == SINGLE_QUOTE)
-			check_quote(&i, line, SINGLE_QUOTE, &flag);	
+		else if (line[i] == SINGLE_QUOTE)
+			check_quote(&i, line, SINGLE_QUOTE, &flag);
+		if (!line[i])
+			break ;
 		i++;
 	}
-	return flag;
+	return (flag);
 }
 
 int	handel_quotes(char *line)
 {
-	if(!check_quotes(line))
-		return 0;
-	return 1;
+	if (!check_quotes(line))
+		return (0);
+	return (1);
 }
+
 int	is_redir_has_found(char c)
 {
 	if (c == '<' || c == '>' || c == '|')
