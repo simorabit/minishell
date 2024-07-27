@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 19:23:25 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 00:32:50 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,28 +56,28 @@ void	ft_check(char *cmd, char **env)
 {
 	int		i;
 	int		j;
-	int		x;
 	char	**path;
 
 	i = 0;
 	j = 0;
-	x = 0;
-	// if (!ft_strncmp(cmd, "./", 2))
 	if (ft_strchr(cmd, '/'))
 	{
-		is_error(cmd);
+		if (check_is_dir(cmd) != 1)
+			is_error(cmd);
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 		if (!path)
 			return ;
 		while (path[i])
 		{
-			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i]))
-				&& ft_strcmp(cmd, path[i]))
-				j += 1;
+			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])))
+			{
+				j++;
+				break ;
+			}
 			i++;
 		}
-		if (j)
-			return ;
+		if (!j)
+			is_error(cmd);
 	}
 }
 
@@ -92,8 +92,6 @@ char	*ft_get_path(char *cmd, char **env)
 	all_path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 	if (all_path == NULL)
 		return (NULL);
-	if (access(cmd, X_OK | F_OK) == 0)
-		return (cmd);
 	while (all_path[i])
 	{
 		one_path = ft_strjoin(all_path[i], "/");

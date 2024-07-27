@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 19:22:25 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 00:19:23 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	handel_input(char *line, t_env **env_list)
 	// print_lexer(lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	initialize_files(cmds);
-	// print_cmd(&cmds);
-	// exit(0);
+	print_cmd(&cmds);
+	exit(0);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
 }
@@ -95,9 +95,15 @@ void	read_input(char **env)
 	}
 }
 
+// void	ss(void)
+// {
+// 	system ("leaks minishell");
+// }
+
 int	main(int arc, char *arv[], char **env)
 {
 	(void)arv;
+	// atexit(ss);
 	rl_catch_signals = 0;
 	if (arc != 1)
 		(printf("InputError"), exit(0));

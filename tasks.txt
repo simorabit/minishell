@@ -15,8 +15,8 @@ ls | exit 44
 
 exit status mat9oooooooooba
 file mkitranawch
-ls >> file /// append makhdamach rk nsiti ma handlitihach
-/bin/ls: Permission denied
+ls >> file /// append makhdamach rk nsiti ma handlitihach ✅
+/bin/ls: Permission denied ✅
 pwd: No such file or directory  
 ///////////////////////
 
@@ -32,3 +32,4 @@ minishell : ls << dsd << <d
 syntax error near unexpected token `newline'
 >^C
 [1]    69415 segmentation fault  ./minishell
+" cdijfd  &&hd  uhfudh--- >>> <<<< >><<.. Jii $$$ ###### 2251 ...,,,,->"

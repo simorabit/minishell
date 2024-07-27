@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/27 13:20:41 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/28 00:08:03 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ RESET   = \033[0m
 # cat < Makefile > sssss
 # dakchi nadii
 # cat < Makefile | exit
-# 99
+# 00
 # echo LLL | cat
 # error !!: Invalid argument
 # singl cmd builtins
@@ -92,5 +92,7 @@ RESET   = \033[0m
 # addspaces
 # signals cat minishell : minishell : 
 # getenv
+# minishell : << "a" cat
+# ls > 1 >> 2 >> 3 > 4 >> 5 >> 6 > 7
 
 
