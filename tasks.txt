@@ -17,13 +17,13 @@ export ="dsf"
 "ls -l"
 echo $?
 
+/bin/ls: Permission denied
 ///////////////////////
 
 TODO - for simo
 # addspaces
 # kill -11 0
 echo "sd\nfds"
-$dsfgdf+- segfault
 echo "abc" | cat -e --> katsift lia space f lakheer dial string ila kant pipe
 
 //check leaks

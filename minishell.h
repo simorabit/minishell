@@ -37,7 +37,6 @@
 #define CYAN    "\x1b[36m"
 #define RESET   "\x1b[0m"
 
-
 typedef struct s_c_addresses t_c_addresses;
 
 struct s_c_addresses
