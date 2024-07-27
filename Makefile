@@ -6,12 +6,12 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/27 02:21:36 by souaouri         ###   ########.fr        #
+#    Updated: 2024/07/27 05:02:20 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror #-fsanitize=address -g
+CC				+=	-Wall -Wextra -Werror -fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
@@ -85,13 +85,12 @@ RESET   = \033[0m
 # Tasks for soulaiman
 # # 1- malloc
 # 2- normitte
-# 3- exit
-# #  4- unset PATH | "env No such file or directory" add this
 # # Tasks
+#cd -
 
 # tasks for me
 # addspaces
 # signals cat minishell : minishell : 
 # getenv
-# cmd ; export ab="ls -l"
+
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   function_devision_2.c                              :+:      :+:    :+:   */
+/*   utile.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:28:03 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 01:33:52 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 03:39:19 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	multiple_cmd_util_6(int p_in, int p_out)
 	close (p_out);
 }
 
-void	Reducing(t_simple_cmds *list, int *hold_fd_in)
+void	reducing(t_simple_cmds *list, int *hold_fd_in)
 {
 	change_list(list);
 	multiple_cmd_util_1(list->in_file, hold_fd_in);

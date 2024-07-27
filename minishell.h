@@ -220,7 +220,6 @@ void 	printf_int(int d);
 void	print_lexer(t_lexer *lexer);
 
 //execution
-void	putstr(char *str, int i);
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
 void	echo(char **cmd, t_simple_cmds *cmds);
@@ -286,6 +285,7 @@ int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
 
 void	*my_alloc(size_t size);
 int		builtins_print_error(char *cmd, char *type);
+char	*change_path_cd(t_tools *tools);
 
 //src
 void	multiple_cmd_util_0(t_var **var, t_simple_cmds *list, t_env **env_list, int len);
@@ -297,9 +297,19 @@ int		print_error(char *cmd, char *type);
 int		check_is_biltus(char *cmd);
 int		run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
 void	multiple_cmd_util_5(t_simple_cmds *list, int p_in, int p_out);
-void	Reducing(t_simple_cmds *list, int *hold_fd_in);
+void	reducing(t_simple_cmds *list, int *hold_fd_in);
 void	initialize_var(t_var **var);
 void	multiple_cmd_util_7(t_var **var, t_simple_cmds **list, int len);
+int		check_is_dir(char *cmd);
+
+//builtins
+int		check_to_print_exit(int len);
+int		check_for_errors(char *arg, int i, int *error);
+int		_remove_var(t_env *temp, char *new);
+int		preparing_var(t_env *list_env, char *new);
+void	add_variable(t_env *list_env, char *new, int error);
+void	is_error(char *cmd);
+int		ft_isdigit(int c);
 
 #endif
 // #endif

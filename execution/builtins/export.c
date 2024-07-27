@@ -6,78 +6,11 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 02:51:56 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:24:14 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	_remove_var(t_env *temp, char *new)
-{
-	char	*ptr;
-
-	while (temp)
-	{
-		ptr = ft_strjoin(get_env_eq(new), "=");
-		if (!ft_strncmp(temp->content, ptr, ft_strlen(ptr))
-			|| !ft_strcmp(temp->content, get_env_eq(new)))
-		{
-			// free(temp->content);
-			temp->content = ft_strdup(new);
-			free(ptr);
-			return (1);
-		}
-		free(ptr);
-		temp = temp->next;
-	}
-	return (0);
-}
-
-int	preparing_var(t_env *list_env, char *new)
-{
-	char	*join;
-	char	*join_1;
-	char	*ptr;
-
-	while (list_env)
-	{
-		ptr = get_var_from_beg_to_eq(new);
-		if (!ft_strncmp(list_env->content, ptr, ft_strlen(ptr)))
-		{
-			if (!ft_strchr(list_env->content, '='))
-			{
-				join = ft_strjoin(list_env->content, "=");
-				list_env->content = ft_strjoin(join, get_eq_to_fin(new));
-			}
-			else
-			{
-				join_1 = get_eq_to_fin(new);
-				list_env->content = ft_strjoin(list_env->content, join_1);
-			}
-			return (1);
-		}
-		list_env = list_env->next;
-	}
-	return (0);
-}
-
-void	add_variable(t_env *list_env, char *new, int error)
-{
-	t_env	*var;
-	t_env	*temp;
-
-	temp = list_env;
-	if (check_for_plus_and_eq(new, 0))
-		if (preparing_var(list_env, new))
-			return ;
-	if (_remove_var(temp, new))
-		return ;
-	if (error != -1)
-	{
-		var = ft_lstnew_env(new);
-		ft_lstadd_back_env(&list_env, var);
-	}
-}
 
 void	print_export(t_env *list_env)
 {
@@ -123,11 +56,24 @@ int	if_var_exist_return(char *cmd, t_env *list_env)
 	return (0);
 }
 
+int	add(t_env *list_env, char *cmd, int error)
+{
+	if (error && error != -1 && !check_for_first_char(get_env_eq(cmd)))
+		add_var_exist(cmd, list_env, error);
+	else if (!check_arg_is_valide(get_env_eq(cmd))
+		&& !check_for_first_char(get_env_eq(cmd)))
+		add_variable(list_env, cmd, error);
+	else if (error != -1)
+		return (builtins_print_error(cmd, "pars_export"));
+	return (0);
+}
+
 int	export_exe(char **cmd, t_env *list_env)
 {
 	int		i;
 	int		x;
 	int		error;
+	int		re;
 
 	i = 1;
 	x = ft_lstsize_env(list_env);
@@ -141,13 +87,9 @@ int	export_exe(char **cmd, t_env *list_env)
 		error = check_for_plus_and_eq(cmd[i], 1);
 		if (error == -1)
 			return (1);
-		if (error && error != -1 && !check_for_first_char(get_env_eq(cmd[i])))
-			add_var_exist(cmd[i], list_env, error);
-		else if (!check_arg_is_valide(get_env_eq(cmd[i]))
-			&& !check_for_first_char(get_env_eq(cmd[i])))
-			add_variable(list_env, cmd[i], error);
-		else if (error != -1)
-			return(builtins_print_error(cmd[i], "pars_export"));
+		re = add(list_env, cmd[i], error);
+		if (re)
+			return (re);
 		i++;
 	}
 	if (!ft_strcmp(cmd[0], "export") && !cmd[1])

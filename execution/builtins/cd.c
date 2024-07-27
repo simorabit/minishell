@@ -6,23 +6,11 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 02:23:17 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 05:00:42 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char	*change_path(t_tools *tools)
-{
-	char	*tmp;
-
-	tmp = ft_strdup(tools->pwd);
-	free(tools->old_pwd);
-	tools->old_pwd = tmp;
-	free(tools->pwd);
-	tools->pwd = getcwd(NULL, sizeof(NULL));
-	return (tools->pwd);
-}
 
 char	*find_path_ret(char *str, t_env *list_env)
 {
@@ -57,7 +45,7 @@ int	specific_path(t_env *list_env, char *str)
 	return (ret);
 }
 
-void	add_path_to_env(t_tools *tools, t_env *list_env)
+void	add_path_to_env(t_tools *tools, t_env *list_env, char **env)
 {
 	int		i;
 	char	*tmp;
@@ -65,6 +53,7 @@ void	add_path_to_env(t_tools *tools, t_env *list_env)
 
 	i = 0;
 	temp = list_env;
+	tools->pwd = ft_find_path(env, "PWD=", 4);
 	while (temp)
 	{
 		if (!ft_strncmp(temp->content, "PWD=", 4))
@@ -83,34 +72,16 @@ void	add_path_to_env(t_tools *tools, t_env *list_env)
 	}
 }
 
-int	builtins_print_error(char *cmd, char *type)
-{
-	if (!ft_strcmp(type, "pars_export"))
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (1);
-	}
-	else if (!ft_strcmp(type, "no_such_file"))
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
-	return (0);
-}
-
-int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
+int	mini_cd(t_tools *tools, t_simple_cmds *s_cmd, t_env *list_env, char **env)
 {
 	int		ret;
 	char	*free_one;
 
-	if (!simple_cmd->cmmd[1] || !ft_strcmp(simple_cmd->cmmd[1], "--")
-		|| !ft_strcmp(simple_cmd->cmmd[1], "~") || !ft_strcmp(simple_cmd->cmmd[1], "~/"))
+	if (!s_cmd->cmmd[1] || !ft_strcmp(s_cmd->cmmd[1], "--")
+		|| !ft_strcmp(s_cmd->cmmd[1], "~")
+		|| !ft_strcmp(s_cmd->cmmd[1], "~/"))
 		ret = specific_path(list_env, "HOME=");
-	else if (ft_strcmp(simple_cmd->cmmd[1], "-") == 0)
+	else if (ft_strcmp(s_cmd->cmmd[1], "-") == 0)
 	{
 		ret = specific_path(list_env, "OLDPWD=");
 		ft_putstr_fd(tools->old_pwd, 1);
@@ -118,15 +89,15 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
 	}
 	else
 	{
-		ret = chdir(simple_cmd->cmmd[1]);
+		ret = chdir(s_cmd->cmmd[1]);
 		if (ret != 0)
-			return (builtins_print_error(simple_cmd->cmmd[1], "no_such_file"));
+			return (builtins_print_error(s_cmd->cmmd[1], "no_such_file"));
 	}
 	if (ret != 0)
 		return (EXIT_FAILURE);
-	free_one = change_path(tools);
+	free_one = change_path_cd(tools);
 	free (free_one);
-	add_path_to_env(tools, list_env);
+	add_path_to_env(tools, list_env, env);
 	return (EXIT_SUCCESS);
 }
 
@@ -139,11 +110,10 @@ int	cd_exec(t_simple_cmds *cmds, t_env *list_env)
 	tools = my_alloc(sizeof(t_tools));
 	if (tools == NULL)
 		return (0);
-	
 	env = change_list_to_env(list_env);
 	tools->pwd = ft_find_path(env, "PWD=", 4);
 	tools->old_pwd = ft_find_path(env, "OLDPWD=", 7);
-	re = mini_cd(tools, cmds, list_env);
+	re = mini_cd(tools, cmds, list_env, env);
 	free(tools);
 	return (re);
 }

@@ -6,26 +6,11 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:47 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 02:01:09 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:33:14 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	ft_lstsize_env(t_env *lst)
-{
-	int	i;
-
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst != NULL)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
 
 char	*print_quotes(char *var, int i, int size)
 {
@@ -119,14 +104,6 @@ char	*get_var_from_beg_to_eq(char *var)
 	if (ft_strchr(var, '+'))
 	{
 		while (var[i] && var[i + 1] != '=')
-		{
-			ptr[i] = var[i];
-			i++;
-		}
-	}
-	else
-	{
-		while (var[i] && var[i] != '=')
 		{
 			ptr[i] = var[i];
 			i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:20:48 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/26 09:58:03 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:17:32 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ char	**ft_split_exe(char *s, char c)
 			return (free_double_ptr(ptr), NULL);
 		j += count_len(&s[j], c);
 		i++;
-	}
-	if (size == 1)
-	{
-		ptr[0] = ft_strdup("");
-		i =1;
 	}
 	ptr[i] = NULL;
 	return (ptr);

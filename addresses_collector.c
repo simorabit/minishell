@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 20:26:41 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:05:24 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:55:18 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*my_alloc(size_t size)
 {
 	static t_c_addresses	*gooper;
 	t_c_addresses			*node;
-	void				*address;
+	void					*address;
 
 	address = malloc(size);
 	if (!address)

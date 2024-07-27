@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 02:48:20 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 03:36:28 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	check_is_biltus(char *cmd)
 
 int	run_built_1(t_env **list_env, char **nood, t_simple_cmds *cmds)
 {
-	int exit_status;
-	
+	int	exit_status;
+
 	exit_status = 0;
 	if (!ft_strcmp("export", nood[0]))
 		exit_status = export_exe(nood, *list_env);
@@ -51,7 +51,7 @@ int	run_built_1(t_env **list_env, char **nood, t_simple_cmds *cmds)
 		write_env(*list_env, nood);
 	else
 		return (-1);
-	return(exit_status);
+	return (exit_status);
 }
 
 int	run_built_2(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
@@ -71,7 +71,7 @@ int	run_built_2(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 			unset(list_env, nood[i]);
 		return (1);
 	}
-	return(exit_status);
+	return (exit_status);
 }
 
 int	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)

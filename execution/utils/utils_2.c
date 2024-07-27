@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/26 06:58:32 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:29:31 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	putstr(char *str, int i)
-{
-	int	j;
-
-	j = 0;
-	while (j < i)
-	{
-		write (1, &str[j], 1);
-		j++;
-	}
-}
 
 char	*ft_find_path(char **env, char *var, int j)
 {
@@ -64,25 +52,6 @@ int	check_is_dir(char *cmd)
 	return (-1);
 }
 
-void	is_error(char *cmd)
-{
-	if (check_is_dir(cmd) == 2)
-	{
-		print_error(cmd, "is_a_direc");
-		exit (126);
-	}
-	if (check_is_dir(cmd) == 1)
-	{
-		print_error(cmd, "Per_denied");
-		exit (126);
-	}
-	if (check_is_dir(cmd) == -1)
-	{
-		print_error(cmd, "no_such_file");
-		exit (127);
-	}
-}
-
 void	ft_check(char *cmd, char **env)
 {
 	int		i;
@@ -108,7 +77,6 @@ void	ft_check(char *cmd, char **env)
 		}
 		if (j)
 			return ;
-		
 	}
 }
 
@@ -158,7 +126,7 @@ void	ft_exec(char **cmd, char **env)
 	if (execve(path, cmd, env) == -1)
 	{
 		print_error(cmd[0], "cmd_not_found");
-		// free_double_ptr(cmd); //TODO - check this
+		free_double_ptr(cmd);
 		exit (127);
 	}
 	free (path);

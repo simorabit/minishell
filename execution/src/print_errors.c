@@ -6,12 +6,11 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:29:04 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 01:42:20 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:27:42 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 
 void	print_file_and_directory_errors(char *cmd, char *type)
 {
@@ -35,11 +34,11 @@ void	print_file_and_directory_errors(char *cmd, char *type)
 	}
 }
 
-int	 print_error(char *cmd, char *type)
+int	print_error(char *cmd, char *type)
 {
 	if (!ft_strcmp(type, "cmd_not_found"))
 	{
-		ft_putstr_fd("minishell: ", 2);;
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		return (127);
@@ -58,4 +57,67 @@ int	 print_error(char *cmd, char *type)
 	else
 		print_file_and_directory_errors(cmd, type);
 	return (0);
+}
+
+int	builtins_print_error(char *cmd, char *type)
+{
+	if (!ft_strcmp(type, "pars_export"))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	else if (!ft_strcmp(type, "no_such_file"))
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
+int	check_for_errors(char *arg, int i, int *error)
+{
+	while (arg[i])
+	{
+		if ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
+		{
+			while (arg[i])
+			{
+				if (arg[i] != 32)
+				{
+					*error = 1;
+					break ;
+				}
+				*error = 0;
+				i++;
+			}
+			break ;
+		}
+		if (!ft_isdigit(arg[i]))
+			*error = 1;
+		i++;
+	}
+	return (0);
+}
+
+void	is_error(char *cmd)
+{
+	if (check_is_dir(cmd) == 2)
+	{
+		print_error(cmd, "is_a_direc");
+		exit (126);
+	}
+	if (check_is_dir(cmd) == 1)
+	{
+		print_error(cmd, "Per_denied");
+		exit (126);
+	}
+	if (check_is_dir(cmd) == -1)
+	{
+		print_error(cmd, "no_such_file");
+		exit (127);
+	}
 }

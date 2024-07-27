@@ -39,7 +39,6 @@ void	echo(char **cmd, t_simple_cmds *cmds)
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], 1);
-		
 		if (cmd[i + 1])
 			ft_putstr_fd(" ", 1);
 		i++;

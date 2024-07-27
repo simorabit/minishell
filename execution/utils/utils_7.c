@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 00:28:54 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:51:10 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	**change_a_sto_d_ptr(char *cmd)
 	int		len;
 
 	len = ft_strlen(cmd);
-	ptr = (char **)malloc(2 * sizeof(char *));
-	ptr[0] = (char *)malloc(len + 1);
+	ptr = (char **)my_alloc(2 * sizeof(char *));
+	ptr[0] = (char *)my_alloc(len + 1);
 	ft_strlcpy(ptr[0], cmd, len);
 	ptr[0][len] = '\0';
 	ptr[1] = NULL;
@@ -60,6 +60,7 @@ char	**join_cmd_arg(char *cmd, char **arg)
 	int		i;
 	int		j;
 	char	**ptr;
+
 	ptr = NULL;
 	i = 0;
 	j = 0;

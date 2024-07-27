@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:46:38 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:40:16 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:22:59 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,6 @@ unsigned long long	ft_atoi_long(char *str, int *error)
 	return (num * sign);
 }
 
-int	check_for_errors(char *arg, int i, int *error)
-{
-	while (arg[i])
-	{
-		if ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
-		{
-			while (arg[i])
-			{
-				if (arg[i] != 32)
-				{
-					*error = 1;
-					break ;
-				}
-				*error = 0;
-				i++;
-			}
-			break ;
-		}
-		if (!ft_isdigit(arg[i]))
-			*error = 1;
-		i++;
-	}
-	return (0);
-}
-
 int	get_exit_code(char *arg, int *error)
 {
 	unsigned long long	i;
@@ -100,14 +75,6 @@ int	get_exit_code(char *arg, int *error)
 	check_for_errors(arg, i, error);
 	i = ft_atoi_long(arg, error);
 	return (i % 256);
-}
-
-int	check_to_print_exit(int len)
-{
-	if (len > 1)
-		return (1);
-	else
-		return (0);
 }
 
 int	exit_builtins(t_simple_cmds *cmd, char **args, int len)

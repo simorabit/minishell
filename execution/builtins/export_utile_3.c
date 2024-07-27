@@ -6,11 +6,26 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:16:49 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:26:27 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	ft_lstsize_env(t_env *lst)
+{
+	int	i;
+
+	i = 0;
+	if (!lst)
+		return (0);
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
 
 static	int	is_valid(char *arg)
 {

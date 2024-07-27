@@ -6,12 +6,11 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 02:52:56 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:50:48 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 
 int	ft_len(int n)
 {
@@ -60,27 +59,28 @@ char	*ft_itoa(int n)
 
 void	wait_func(int exit_status, t_env **env_list, int i)
 {
+	char	*ex_st;
+
 	if (i)
 	{
-		char *ex_st = ft_strjoin("?=", ft_itoa(exit_status));
+		ex_st = ft_strjoin("?=", ft_itoa(exit_status));
 		add_variable(*env_list, ex_st, 1);
 		return ;
 	}
 	while (wait(&exit_status) != -1)
 		;
 	exit_status = WEXITSTATUS(exit_status);
-	char *ex_st = ft_strjoin("?=", ft_itoa(exit_status));
+	ex_st = ft_strjoin("?=", ft_itoa(exit_status));
 	add_variable(*env_list, ex_st, 1);
 }
 
 void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 {
-	t_var *var = malloc(sizeof(t_var));
+	t_var	*var;
 
+	var = my_alloc(sizeof(t_var));
 	if (!list || !list->cmd)
 		return ;
-	// printf ("%s\n", get_var_from_beg_to_eq("salm+=vbbb"));
-	// exit (0);
 	initialize_var(&var);
 	while (list)
 	{
@@ -88,7 +88,8 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 		if (var->pid == 0)
 		{
 			multiple_cmd_util_5(list, var->p_in, var->p_out);
-			if (list->in_file != -1 && list->out_file != -1 && !var->i && var->check)
+			if (list->in_file != -1 && list->out_file != -1 && !var->i
+				&& var->check)
 				var->exit_status = run_built(env_list, list->cmmd, list, len);
 			if (list->in_file != -1 && list->out_file != -1 && !var->check)
 			{
@@ -96,7 +97,7 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 					close (var->hold_fd_in);
 				execut_cmd(env_list, list->cmmd, list, len);
 			}
-		}//
+		}
 		multiple_cmd_util_7(&var, &list, len);
 	}
 	wait_func(var->exit_status, env_list, var->i);
