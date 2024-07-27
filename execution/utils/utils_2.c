@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 15:29:35 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:23:25 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	ft_check(char *cmd, char **env)
 	i = 0;
 	j = 0;
 	x = 0;
-	if (!ft_strncmp(cmd, "./", 2))
+	// if (!ft_strncmp(cmd, "./", 2))
+	if (ft_strchr(cmd, '/'))
 	{
 		is_error(cmd);
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');

@@ -264,7 +264,7 @@ void	unset(t_env **list_env, char *arg);
 char	*get_env_eq(char *new);
 
 // export
-
+char	*ft_itoa(int n); ////
 char	*add_double_quotes(char *var);
 void	ft_sort_env(t_env *env);
 char	*get_var_from_beg_to_eq(char *var);

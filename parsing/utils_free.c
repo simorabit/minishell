@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:59:50 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 13:27:31 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:15:35 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	allocation_error(char *s)
 
 void	error_msg(char *s)
 {
-	printf("%s\n", s);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("\n", 2);
 	// exit(0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 14:23:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:22:25 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	handel_input(char *line, t_env **env_list)
 	lexer = NULL;
 	cmds = NULL;
 	if (!handel_quotes(line))
+	{
+		char *ex_st = ft_strjoin("?=", ft_itoa(258));
+		add_variable(*env_list, ex_st, 1);
 		return (error_msg(SYNTAX_ERROR));
+	}
 	line = add_spaces(line);
 	if (!line)
 		return ;
@@ -31,7 +35,11 @@ void	handel_input(char *line, t_env **env_list)
 		return ;
 	tokenizer(res, &lexer);
 	if (!syntax_error(&lexer))
+	{
+		char *ex_st = ft_strjoin("?=", ft_itoa(258));
+		add_variable(*env_list, ex_st, 1);
 		return (handel_herdoc_err(&lexer, &cmds));
+	}
 	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
 	// print_lexer(lexer);
@@ -62,8 +70,10 @@ void	sighandler(int sig)
 void	read_input(char **env)
 {
 	char	*line;
+	int		exit_status;
 	t_env	*env_list;
 
+	exit_status = 0;
 	if (!env || !env[0])
 		add_emergency_env(&env_list);
 	else

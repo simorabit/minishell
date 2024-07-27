@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 15:39:27 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:29:05 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	show_file_error(int fd, t_token token, char *str)
 	{
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": Error in open file", 2);
+		ft_putstr_fd("\n", 2);
 	}
 	else if (fd == -1 && token == redirect_in)
 	{
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": No such file or directory", 2);
+		ft_putstr_fd("\n", 2);
 	}
 }
 
