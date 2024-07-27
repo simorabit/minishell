@@ -3,8 +3,7 @@ TODO for soulaiman
 # 2- normitte
 # 3- exit status
 <<<<<<< HEAD
-bash: export: `a++=++1': not a valid identifier
-5 echo a > file
+
 =======
 echo "sd\nfds"
 echo "lllll" | cat -e

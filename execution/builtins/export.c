@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:24:28 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 02:51:56 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ void	print_export(t_env *list_env)
 	head = copy_env;
 	while (head)
 	{
-		// if (!ft_strchr(get_env_eq(head->content), '?'))
-		// {
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(add_double_quotes(head->content), 1);
-		ft_putstr_fd("\n", 1);
-		// }
+		if (!ft_strchr(get_env_eq(head->content), '?'))
+		{
+			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd(add_double_quotes(head->content), 1);
+			ft_putstr_fd("\n", 1);
+		}
 		head = head->next;
 	}
 }
@@ -147,7 +147,7 @@ int	export_exe(char **cmd, t_env *list_env)
 			&& !check_for_first_char(get_env_eq(cmd[i])))
 			add_variable(list_env, cmd[i], error);
 		else if (error != -1)
-			builtins_print_error(cmd[i], "pars_export");
+			return(builtins_print_error(cmd[i], "pars_export"));
 		i++;
 	}
 	if (!ft_strcmp(cmd[0], "export") && !cmd[1])

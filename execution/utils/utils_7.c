@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_7.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/26 09:54:10 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:28:54 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,37 @@ int	len_of_arg(char **arg)
 	return (i + 1);
 }
 
-char	**creat_a_cmd(char *cmd)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	char	**cmmd;
-	char	**cmmd_1;
-	char	*join;
-	int		i;
+	size_t	i;
+	size_t	j;
 
+	j = ft_strlen(src);
 	i = 0;
-	cmmd_1 = ft_split_exe(cmd, ' ');
-	cmmd = my_alloc(sizeof(char *) * (len_of_arg(cmmd_1) + 1));
-	join = NULL;
-	while (cmmd_1[i] != NULL)
+	if (dstsize != 0)
 	{
-		if (len_of_arg(cmmd_1) == 2)
+		while (src[i] && --dstsize >= 0)
 		{
-			cmmd[0] = ft_strjoin(cmmd_1[0], cmmd_1[1]);
-			cmmd[2] = NULL;
-			break ;
+			dst[i] = src[i];
+			i++;
 		}
-		if (cmmd[0])
-			join = ft_strjoin(cmmd[0], " ");
-		cmmd[0] = ft_strjoin(join, cmmd_1[i]);
-		i++;
+		dst[i] = '\0';
 	}
-	cmmd[1] = NULL;
-	return (cmmd);
+	return (j);
+}
+
+char	**change_a_sto_d_ptr(char *cmd)
+{
+	char	**ptr;
+	int		len;
+
+	len = ft_strlen(cmd);
+	ptr = (char **)malloc(2 * sizeof(char *));
+	ptr[0] = (char *)malloc(len + 1);
+	ft_strlcpy(ptr[0], cmd, len);
+	ptr[0][len] = '\0';
+	ptr[1] = NULL;
+	return (ptr);
 }
 
 char	**join_cmd_arg(char *cmd, char **arg)
@@ -63,7 +68,7 @@ char	**join_cmd_arg(char *cmd, char **arg)
 	else if (cmd == NULL)
 		return (arg);
 	else if (arg == NULL)
-		return (creat_a_cmd(cmd));
+		return (change_a_sto_d_ptr(cmd));
 	ptr = my_alloc(sizeof(char *) * (len_of_arg(arg) + 1));
 	ptr[0] = cmd;
 	i++;

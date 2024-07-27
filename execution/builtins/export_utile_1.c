@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:47 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 10:25:40 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 02:01:09 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,23 @@ char	*get_var_from_beg_to_eq(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	ptr = my_alloc(i + 1);
+	ptr = (char *)my_alloc(i + 1);
 	i = 0;
-	while (var[i] && var[i + 1] != '=')
+	if (ft_strchr(var, '+'))
 	{
-		ptr[i] = var[i];
-		i++;
+		while (var[i] && var[i + 1] != '=')
+		{
+			ptr[i] = var[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (var[i] && var[i] != '=')
+		{
+			ptr[i] = var[i];
+			i++;
+		}
 	}
 	ptr[i] = '\0';
 	return (ptr);

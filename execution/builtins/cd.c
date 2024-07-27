@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 02:23:32 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 02:23:17 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,10 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd, t_env *list_env)
 	int		ret;
 	char	*free_one;
 
-	if (!simple_cmd->cmmd[1])
+	if (!simple_cmd->cmmd[1] || !ft_strcmp(simple_cmd->cmmd[1], "--")
+		|| !ft_strcmp(simple_cmd->cmmd[1], "~") || !ft_strcmp(simple_cmd->cmmd[1], "~/"))
 		ret = specific_path(list_env, "HOME=");
-	else if (ft_strncmp(simple_cmd->cmmd[1], "-", 1) == 0)
+	else if (ft_strcmp(simple_cmd->cmmd[1], "-") == 0)
 	{
 		ret = specific_path(list_env, "OLDPWD=");
 		ft_putstr_fd(tools->old_pwd, 1);
@@ -138,6 +139,7 @@ int	cd_exec(t_simple_cmds *cmds, t_env *list_env)
 	tools = my_alloc(sizeof(t_tools));
 	if (tools == NULL)
 		return (0);
+	
 	env = change_list_to_env(list_env);
 	tools->pwd = ft_find_path(env, "PWD=", 4);
 	tools->old_pwd = ft_find_path(env, "OLDPWD=", 7);

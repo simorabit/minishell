@@ -287,5 +287,19 @@ int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
 void	*my_alloc(size_t size);
 int		builtins_print_error(char *cmd, char *type);
 
+//src
+void	multiple_cmd_util_0(t_var **var, t_simple_cmds *list, t_env **env_list, int len);
+void	multiple_cmd_util_1(int in_file, int *hold_fd_in);
+void	multiple_cmd_util_2(int *hold_fd_in);
+void	multiple_cmd_util_3(t_simple_cmds *list, int *hold_fd_in);
+void	multiple_cmd_util_4(t_simple_cmds *list);
+int		print_error(char *cmd, char *type);
+int		check_is_biltus(char *cmd);
+int		run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
+void	multiple_cmd_util_5(t_simple_cmds *list, int p_in, int p_out);
+void	Reducing(t_simple_cmds *list, int *hold_fd_in);
+void	initialize_var(t_var **var);
+void	multiple_cmd_util_7(t_var **var, t_simple_cmds **list, int len);
+
 #endif
 // #endif
