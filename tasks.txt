@@ -24,7 +24,7 @@ TODO - for simo
 # kill -11 0
 echo "sd\nfds"
 $dsfgdf+- segfault
-
+echo "abc" | cat -e --> katsift lia space f lakheer dial string ila kant pipe
 
 //check leaks
 while true; do leaks minishell; done;
