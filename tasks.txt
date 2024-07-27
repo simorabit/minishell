@@ -12,19 +12,23 @@ ls | exit 44
 >>>>>>> e5e092ff5a8df4a1284f4bb7f1e2e278c61a769f
 
 
-export ="dsf"
-"    ls"
-"ls -l"
-echo $?
 
+exit status mat9oooooooooba
+file mkitranawch
+ls >> file /// append makhdamach rk nsiti ma handlitihach
 /bin/ls: Permission denied
+pwd: No such file or directory  
 ///////////////////////
 
+
+
 TODO - for simo
-# addspaces
-# kill -11 0
-echo "sd\nfds"
-echo "abc" | cat -e --> katsift lia space f lakheer dial string ila kant pipe
 
 //check leaks
 while true; do leaks minishell; done;
+ << ls cat
+
+minishell : ls << dsd << <d 
+syntax error near unexpected token `newline'
+>^C
+[1]    69415 segmentation fault  ./minishell

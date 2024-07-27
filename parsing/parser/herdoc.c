@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 13:52:00 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/27 14:45:28 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	handel_heredoc(char *del, t_simple_cmds **cmds)
 		wait(&exit_status);
 		if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
 		{
-			(*cmds)->stop_ex = 0;
+			if(cmds && *cmds)
+				(*cmds)->stop_ex = 0;
 			return (-2);
 		}
 	}

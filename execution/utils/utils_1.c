@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:20:28 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/27 13:53:39 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	initialize_files(t_simple_cmds	*list)
 		return ;
 	if (list->in_file == -2)
 		list->in_file = 0;
-	if (list->out_file == -2)
+	if (list->out_file == -2 && list->aout_file == -2)
 		list->out_file = 1;
 }
