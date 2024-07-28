@@ -6,13 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 13:53:39 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 14:10:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	check_to_print_exit(int len)
+int check_to_print_exit(int len)
 {
 	if (len > 1)
 		return (1);
@@ -20,12 +20,19 @@ int	check_to_print_exit(int len)
 		return (0);
 }
 
-void	initialize_files(t_simple_cmds	*list)
+void initialize_files(t_simple_cmds **list)
 {
-	if (list == NULL)
-		return ;
-	if (list->in_file == -2)
-		list->in_file = 0;
-	if (list->out_file == -2 && list->aout_file == -2)
-		list->out_file = 1;
+	t_simple_cmds *tmp;
+
+	tmp = *list;
+	while (tmp)
+	{
+		if (tmp == NULL)
+			return;
+		if (tmp->in_file == -2)
+			tmp->in_file = 0;
+		if (tmp->out_file == -2 && tmp->aout_file == -2)
+			tmp->out_file = 1;
+		tmp = tmp->next;
+	}
 }

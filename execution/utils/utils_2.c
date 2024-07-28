@@ -6,17 +6,17 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 19:23:25 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 11:24:00 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*ft_find_path(char **env, char *var, int j)
+char *ft_find_path(char **env, char *var, int j)
 {
-	int		i;
-	int		x;
-	char	*ptr;
+	int i;
+	int x;
+	char *ptr;
 
 	ptr = (char *)my_alloc(sizeof(char *) * 1337);
 	i = 0;
@@ -35,10 +35,10 @@ char	*ft_find_path(char **env, char *var, int j)
 	return (ptr);
 }
 
-int	check_is_dir(char *cmd)
+int check_is_dir(char *cmd)
 {
-	int			re;
-	struct stat	st;
+	int re;
+	struct stat st;
 
 	re = stat(cmd, &st);
 	if (!re)
@@ -52,48 +52,58 @@ int	check_is_dir(char *cmd)
 	return (-1);
 }
 
-void	ft_check(char *cmd, char **env)
+int check_file(char *cmd)
 {
-	int		i;
-	int		j;
-	int		x;
-	char	**path;
+	struct stat st;
+	int re;
+
+	re = stat(cmd, &st);
+	if (access(cmd, X_OK | F_OK) != 0 && S_ISDIR(st.st_mode))
+		return -1;
+	if (access(cmd, X_OK | F_OK) == 0 && S_ISREG(st.st_mode))
+		return -1;
+	return 0;
+}
+void ft_check(char *cmd, char **env)
+{
+	int i;
+	int j;
+	int x;
+	char **path;
 
 	i = 0;
 	j = 0;
 	x = 0;
-	// if (!ft_strncmp(cmd, "./", 2))
 	if (ft_strchr(cmd, '/'))
 	{
+		if (check_file(cmd) == -1)
+			return;
 		is_error(cmd);
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 		if (!path)
-			return ;
+			return;
 		while (path[i])
 		{
-			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i]))
-				&& ft_strcmp(cmd, path[i]))
+			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])) && ft_strcmp(cmd, path[i]))
 				j += 1;
 			i++;
 		}
 		if (j)
-			return ;
+			return;
 	}
 }
 
-char	*ft_get_path(char *cmd, char **env)
+char *ft_get_path(char *cmd, char **env)
 {
-	int		i;
-	char	**all_path;
-	char	*one_path;
-	char	*cmd_with_path;
+	int i;
+	char **all_path;
+	char *one_path;
+	char *cmd_with_path;
 
 	i = 0;
 	all_path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 	if (all_path == NULL)
 		return (NULL);
-	if (access(cmd, X_OK | F_OK) == 0)
-		return (cmd);
 	while (all_path[i])
 	{
 		one_path = ft_strjoin(all_path[i], "/");
@@ -112,10 +122,10 @@ char	*ft_get_path(char *cmd, char **env)
 	return (ft_strdup(cmd));
 }
 
-void	ft_exec(char **cmd, char **env)
+void ft_exec(char **cmd, char **env)
 {
-	int		i;
-	char	*path;
+	int i;
+	char *path;
 
 	i = 0;
 	ft_check(cmd[0], env);
@@ -124,14 +134,14 @@ void	ft_exec(char **cmd, char **env)
 	{
 		is_error(cmd[0]);
 		print_error(cmd[0], "no_such_file");
-		exit (127);
+		exit(127);
 	}
 	if (execve(path, cmd, env) == -1)
 	{
 		print_error(cmd[0], "cmd_not_found");
 		free_double_ptr(cmd);
-		exit (127);
+		exit(127);
 	}
-	free (path);
+	free(path);
 	free_double_ptr(cmd);
 }

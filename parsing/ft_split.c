@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 08:10:26 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 10:13:27 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ char	**ft_split(char *s)
 		}
 		wait_till_end(&s);
 	}
-	array[j] = 0;
+	array[j] = NULL;
 	return (array);
 }

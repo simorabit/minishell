@@ -1,13 +1,13 @@
+=*
 Makefile
 addresses_collector.c
 addresses_collector.o
+cc
 dd
 debugging.c
 debugging.o
-dsf
+df
 execution
-ff
-ll
 main.c
 main.o
 minishell
@@ -18,3 +18,4 @@ tasks.txt
 tes
 test_files
 tester.py
+xcd

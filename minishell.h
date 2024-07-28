@@ -28,7 +28,7 @@
 # define ERROR_IN_ALLOCATION	"Error In Allocation"
 # define SINGLE_QUOTE			'\'' 
 # define DOUBLE_QUOTE			'\"' 
-
+#define  AMBIGUOUS_REDIRECT "ambiguous redirect"
 #define RED     "\x1b[31m"
 #define GREEN   "\x1b[32m"
 #define YELLOW  "\x1b[33m"
@@ -36,7 +36,6 @@
 #define MAGENTA "\x1b[35m"
 #define CYAN    "\x1b[36m"
 #define RESET   "\x1b[0m"
-
 typedef struct s_c_addresses t_c_addresses;
 
 struct s_c_addresses
@@ -105,6 +104,7 @@ typedef struct s_simple_cmds
     int		aout_file;
     int		heredoc;
 	int		stop_ex;
+	int		is_ambugious;
 	struct s_simple_cmds *next;
 }			t_simple_cmds; 
 
@@ -156,7 +156,7 @@ char	**ft_split(char *s);
 //utils_free
 void	free_list(char **list);
 void	allocation_error(char *s);
-void	error_msg(char *s);
+void	error_msg(char *s, t_env **env_list);
 void	free_lexer(t_lexer *lexer);
 
 //utils_quotes_spaces
@@ -169,7 +169,7 @@ int		quotes(char *line, char q);
 char	**my_split(char const *s, char c);
 
 //syntax error
-int	syntax_error(t_lexer **lexer);
+int	syntax_error(t_lexer **lexer, t_env **env);
 void handel_herdoc_err(t_lexer **lexer, t_simple_cmds **cmds);
 
 // utils_split
@@ -184,11 +184,12 @@ void	ft_lstadd_back_cmd(t_simple_cmds **cmds, t_simple_cmds *new);
 t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds);
 
 int		get_lcmd(t_lexer *lexer);
-int	open_files(t_lexer **lexer, t_token token);
+int		open_files(t_lexer **lexer, t_token token, t_simple_cmds **cmd, t_env **env);
 int		save_heredoc(t_lexer **lexer, t_simple_cmds **cmds);
 void	save_heredoc2(t_lexer **lexer);
+void 	modify_exit_status(int nbr, t_env **env_list);
 void 	init_arrays(t_simple_cmds *cmds);
-void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len);
+void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len, t_env **env);
 int		handel_heredoc(char *del, t_simple_cmds **cmds);
 
 //expanding
@@ -257,7 +258,7 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len);
 t_env	*ft_lstnew_env(char *line);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	change_list(t_simple_cmds *list);
-void	initialize_files(t_simple_cmds	*list);
+void	initialize_files(t_simple_cmds	**list);
 char	**join_cmd_arg(char *cmd, char **arg);
 void	add_emergency_env(t_env **env);
 void	unset(t_env **list_env, char *arg);

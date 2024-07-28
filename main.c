@@ -6,11 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 19:22:25 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:00:22 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_exit_s = 0;
 
 void	handel_input(char *line, t_env **env_list)
 {
@@ -22,11 +24,7 @@ void	handel_input(char *line, t_env **env_list)
 	lexer = NULL;
 	cmds = NULL;
 	if (!handel_quotes(line))
-	{
-		char *ex_st = ft_strjoin("?=", ft_itoa(258));
-		add_variable(*env_list, ex_st, 1);
-		return (error_msg(SYNTAX_ERROR));
-	}
+		return (error_msg(SYNTAX_ERROR, env_list));
 	line = add_spaces(line);
 	if (!line)
 		return ;
@@ -34,17 +32,14 @@ void	handel_input(char *line, t_env **env_list)
 	if (!res)
 		return ;
 	tokenizer(res, &lexer);
-	if (!syntax_error(&lexer))
-	{
-		char *ex_st = ft_strjoin("?=", ft_itoa(258));
-		add_variable(*env_list, ex_st, 1);
+	if (!syntax_error(&lexer, env_list))
 		return (handel_herdoc_err(&lexer, &cmds));
-	}
+	print_lexer(lexer);
+	exit(0);
 	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
-	// print_lexer(lexer);
-	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
-	initialize_files(cmds);
+	cmds = parser(&lexer, &cmds, get_lcmd(lexer), env_list);
+	initialize_files(&cmds);
 	// print_cmd(&cmds);
 	// exit(0);
 	len = ft_lstsize_cmd(cmds);
@@ -55,6 +50,7 @@ void	sighandler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_exit_s = 1;
 		if (waitpid(-1, NULL, WNOHANG) == 0)
 		{
 			printf("\n");
@@ -83,6 +79,11 @@ void	read_input(char **env)
 	while (1)
 	{
 		line = readline("minishell : ");
+		if (g_exit_s == 1)
+		{
+			modify_exit_status(1, &env_list);
+			g_exit_s = 0;
+		}
 		if (!line)
 		{
 			printf("exit\n");

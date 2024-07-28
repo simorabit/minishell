@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 13:29:24 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 13:40:29 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ void	*save_args(t_lexer **lexer, t_simple_cmds *cmds)
 	return (lexer);
 }
 
-int	handel_files(t_lexer **tmp, t_simple_cmds *cmds)
+int	handel_files(t_lexer **tmp, t_simple_cmds *cmds, t_env **env)
 {
 	int	res;
 
 	res = 0;
 	if (*tmp && (*tmp)->token == redirect_in)
-		cmds->in_file = open_files(tmp, redirect_in);
+		cmds->in_file = open_files(tmp, redirect_in, &cmds, env);
 	else if (*tmp && (*tmp)->token == redirect_out)
-		cmds->out_file = open_files(tmp, redirect_out);
+		cmds->out_file = open_files(tmp, redirect_out, &cmds, env);
 	else if (*tmp && (*tmp)->token == heredoc)
 	{
 		res = save_heredoc(tmp, &cmds);
@@ -56,7 +56,7 @@ int	handel_files(t_lexer **tmp, t_simple_cmds *cmds)
 		cmds->heredoc = res;
 	}
 	else if (*tmp && (*tmp)->token == redirect_app)
-		cmds->aout_file = open_files(tmp, redirect_app);
+		cmds->aout_file = open_files(tmp, redirect_app, &cmds, env);
 	return (res);
 }
 
@@ -78,19 +78,20 @@ void	*handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
 	return (cmds);
 }
 
-t_simple_cmds	*get_node_parse(t_lexer **tmp)
+t_simple_cmds	*get_node_parse(t_lexer **tmp, t_env **env)
 {
 	int				j;
 	t_simple_cmds	*node;
 
 	j = 0;
 	node = ft_lstnew_cmd();
+	node->is_ambugious = 0;
 	init_arrays(node);
 	while (tmp && *tmp && (*tmp)->token != mpipe)
 	{
 		if (!handel_cmd(tmp, node, &j))
 			return (NULL);
-		if (handel_files(tmp, node) == -1)
+		if (handel_files(tmp, node, env) == -1)
 			return (NULL);
 		if (*tmp && (*tmp)->token == mpipe)
 		{
@@ -102,7 +103,7 @@ t_simple_cmds	*get_node_parse(t_lexer **tmp)
 	return (node);
 }
 
-void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len)
+void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len, t_env **env)
 {
 	int				i;
 	t_lexer			*tmp;
@@ -113,7 +114,7 @@ void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len)
 	i = 0;
 	while (tmp && i <= len)
 	{
-		node = get_node_parse(&tmp);
+		node = get_node_parse(&tmp, env);
 		if (!node)
 			return (NULL);
 		ft_lstadd_back_cmd(cmds, node);

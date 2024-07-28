@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function_devision.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:25:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 03:42:49 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/28 14:40:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ void	multiple_cmd_util_4(t_simple_cmds *list)
 		dup2(list->out_file, 1);
 		close (list->out_file);
 	}
+	// if (list->aout_file > 1)
+	// {
+	// 	dup2(list->aout_file, 1);
+	// 	close (list->aout_file);
+	// }
 }

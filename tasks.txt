@@ -17,7 +17,9 @@ exit status mat9oooooooooba
 file mkitranawch
 ls >> file /// append makhdamach rk nsiti ma handlitihach
 /bin/ls: Permission denied
-pwd: No such file or directory  
+pwd: No such file or directory 
+echo dcvdfhello >> dfg
+ls >>./test_files/invalid_permission >>./outfiles/outfile01 
 ///////////////////////
 
 
