@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/28 15:20:46 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:56:03 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,72 @@ int check_file(char *cmd)
 		return -1;
 	return 0;
 }
+
 void ft_check(char *cmd, char **env)
 {
-	int i;
-	int j;
-	int x;
-	char **path;
+		int		i;
+	int		j;
+	int		x;
+	char	**path;
 
 	i = 0;
 	j = 0;
 	x = 0;
+	// if (!ft_strncmp(cmd, "./", 2))
 	if (ft_strchr(cmd, '/'))
 	{
-		if (check_file(cmd) == -1)
-			return;
 		is_error(cmd);
+		if (check_is_dir(cmd) != 1)
+			is_error(cmd);
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 		if (!path)
-			return;
+			return ;
 		while (path[i])
 		{
-			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])) && ft_strcmp(cmd, path[i]))
+			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i]))
+				&& ft_strcmp(cmd, path[i]))
 				j += 1;
+			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])))
+			{
+				j++;
+				break ;
+			}
 			i++;
 		}
 		if (j)
-			return;
+			return ;
+		if (!j)
+			is_error(cmd);
 	}
 }
+// void ft_check(char *cmd, char **env)
+// {
+// 	int i;
+// 	int j;
+// 	int x;
+// 	char **path;
+
+// 	i = 0;
+// 	j = 0;
+// 	x = 0;
+// 	if (ft_strchr(cmd, '/'))
+// 	{
+// 		if (check_file(cmd) == -1)
+// 			return;
+// 		is_error(cmd);
+// 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
+// 		if (!path)
+// 			return;
+// 		while (path[i])
+// 		{
+// 			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])) && ft_strcmp(cmd, path[i]))
+// 				j += 1;
+// 			i++;
+// 		}
+// 		if (j)
+// 			return;
+// 	}
+// }
 
 char *ft_get_path(char *cmd, char **env)
 {

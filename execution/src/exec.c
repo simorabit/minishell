@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/28 02:43:38 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:27:59 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	initialize_var(&var);
 	while (list)
 	{
+		if (list->is_ambugious == 1)
+		{
+			list = list->next;
+			continue;
+		}
 		multiple_cmd_util_0(&var, list, env_list, len);
 		if (var->pid == 0)
 		{

@@ -23,6 +23,7 @@
 # include <fcntl.h>
 #include <sys/stat.h>
 
+
 # define SYNTAX_ERROR			"syntax error near unexpected token `newline'"
 # define INPUT_ERROR			"Please Enter Valid Argument\n"
 # define ERROR_IN_ALLOCATION	"Error In Allocation"

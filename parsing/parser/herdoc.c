@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 14:45:28 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:24:39 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	read_herdoc(char *del, char *line, int fd_in)
 			break ;
 		}
 		ft_putstr_fd(line, fd_in);
+		ft_putstr_fd("\n", fd_in);
 		free(line);
 	}
 }
@@ -43,7 +44,7 @@ int	handel_heredoc(char *del, t_simple_cmds **cmds)
 	int		exit_status;
 
 	line = NULL;
-	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
+	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	pid = fork();
 	if (pid == -1)
 		return (perror("Error forking process"), -1);
@@ -59,6 +60,8 @@ int	handel_heredoc(char *del, t_simple_cmds **cmds)
 			return (-2);
 		}
 	}
+	close(fd_in);
+	fd_in = open("/tmp/test.txt", O_RDONLY, 0644);
 	return (fd_in);
 }
 

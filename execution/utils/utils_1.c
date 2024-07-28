@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/28 15:20:28 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:15:48 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ int check_to_print_exit(int len)
 
 void initialize_files(t_simple_cmds **list)
 {
-	t_simple_cmds *tmp;
 
-	tmp = *list;
-	while (tmp)
-	{
-		if (tmp == NULL)
-			return;
-		if (tmp->in_file == -2)
-			tmp->in_file = 0;
-		if (tmp->out_file == -2 && tmp->aout_file == -2)
-			tmp->out_file = 1;
-		tmp = tmp->next;
-	}
+	t_simple_cmds *tmp = *list;
+	if (tmp == NULL)
+	return ;
+	if (tmp->heredoc > 2)
+		tmp->in_file = tmp->heredoc;
+	if (tmp->in_file == -2)
+		tmp->in_file = 0;
+	if (tmp->aout_file > tmp->out_file)
+		tmp->out_file = tmp->aout_file;
+	if (tmp->out_file == -2 && tmp->aout_file == -2)
+		tmp->out_file = 1;
 }
