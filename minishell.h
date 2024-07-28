@@ -70,6 +70,7 @@ typedef enum s_token
 	mpipe,
 	redirect_in	,
 	redirect_out,
+	//append_out,
 	heredoc,
 	redirect_app,
 	delimiter,

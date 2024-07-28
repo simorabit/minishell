@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/28 13:42:14 by mal-mora         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/27 20:00:31 by souaouri         ###   ########.fr       */
+>>>>>>> origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +57,18 @@ int	open_files(t_lexer **lexer, t_token token, t_simple_cmds **cmds, t_env **env
 		(*lexer) = (*lexer)->next;
 	}
 	if (mfile && !*mfile)
+<<<<<<< HEAD
 	{
 		(*cmds)->is_ambugious = 1;
 		return (error_msg(AMBIGUOUS_REDIRECT, env), -1);
 	}
+=======
+		return (error_msg("ambiguous redirect"), -1);
+	//if (token fih >> )
+		//fd = open(mfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	// else if (token == redirect_out)
+		//fd = open(mfile, O_CREAT | O_WRONLY, 0644);
+>>>>>>> origin/master
 	if (token == redirect_out)
 		fd = open(mfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (token == redirect_in)

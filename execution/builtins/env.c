@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:44:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 19:01:47 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 00:15:48 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	write_env(t_env *env, char **arg)
 	}
 	while (env && size--)
 	{
-		if (ft_strchr(env->content, '='))// && ft_strncmp(env->content, "?", 1))
+		if (ft_strchr(env->content, '=') && ft_strncmp(env->content, "?", 1))
 		{
 			ft_putstr_fd(env->content, 1);
 			ft_putstr_fd("\n", 1);
