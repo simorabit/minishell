@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 00:19:23 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/28 02:16:56 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	handel_input(char *line, t_env **env_list)
 	// print_lexer(lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer));
 	initialize_files(cmds);
-	print_cmd(&cmds);
-	exit(0);
+	// print_cmd(&cmds);
+	// exit(0);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
 }

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 23:58:26 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/28 02:18:03 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	initialize_files(t_simple_cmds	*list)
 {
 	if (list == NULL)
 		return ;
+	if (list->heredoc > 2)
+		list->in_file = list->heredoc;
 	if (list->in_file == -2)
 		list->in_file = 0;
 	if (list->aout_file > list->out_file)
