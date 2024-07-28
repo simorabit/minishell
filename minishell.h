@@ -303,6 +303,7 @@ void	reducing(t_simple_cmds *list, int *hold_fd_in);
 void	initialize_var(t_var **var);
 void	multiple_cmd_util_7(t_var **var, t_simple_cmds **list, int len);
 int		check_is_dir(char *cmd);
+int		ft_strncmp_file(const char *s1, const char *s2, unsigned int n);
 
 //builtins
 int		check_to_print_exit(int len);
