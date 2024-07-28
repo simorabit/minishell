@@ -1,0 +1,13 @@
+Makefile
+addresses_collector.c
+debugging.c
+dsf
+dsgf
+execution
+file
+main.c
+minishell.h
+parsing
+tasks.txt
+test_files
+tester.py

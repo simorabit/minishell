@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/28 14:10:20 by mal-mora         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/28 02:18:03 by souaouri         ###   ########.fr       */
->>>>>>> origin/master
+/*   Updated: 2024/07/28 15:20:28 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +22,6 @@ int check_to_print_exit(int len)
 
 void initialize_files(t_simple_cmds **list)
 {
-<<<<<<< HEAD
 	t_simple_cmds *tmp;
 
 	tmp = *list;
@@ -40,16 +35,4 @@ void initialize_files(t_simple_cmds **list)
 			tmp->out_file = 1;
 		tmp = tmp->next;
 	}
-=======
-	if (list == NULL)
-		return ;
-	if (list->heredoc > 2)
-		list->in_file = list->heredoc;
-	if (list->in_file == -2)
-		list->in_file = 0;
-	if (list->aout_file > list->out_file)
-		list->out_file = list->aout_file;
-	if (list->out_file == -2 && list->aout_file == -2)
-		list->out_file = 1;
->>>>>>> origin/master
 }

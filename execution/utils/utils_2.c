@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/28 11:24:00 by mal-mora         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/28 00:32:50 by souaouri         ###   ########.fr       */
->>>>>>> origin/master
+/*   Updated: 2024/07/28 15:20:46 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +54,6 @@ int check_is_dir(char *cmd)
 
 int check_file(char *cmd)
 {
-<<<<<<< HEAD
 	struct stat st;
 	int re;
 
@@ -84,41 +79,17 @@ void ft_check(char *cmd, char **env)
 		if (check_file(cmd) == -1)
 			return;
 		is_error(cmd);
-=======
-	int		i;
-	int		j;
-	char	**path;
-
-	i = 0;
-	j = 0;
-	if (ft_strchr(cmd, '/'))
-	{
-		if (check_is_dir(cmd) != 1)
-			is_error(cmd);
->>>>>>> origin/master
 		path = ft_split_exe(ft_find_path(env, "PATH=", 5), ':');
 		if (!path)
 			return;
 		while (path[i])
 		{
-<<<<<<< HEAD
 			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])) && ft_strcmp(cmd, path[i]))
 				j += 1;
 			i++;
 		}
 		if (j)
 			return;
-=======
-			if (!ft_strncmp(cmd, path[i], ft_strlen(path[i])))
-			{
-				j++;
-				break ;
-			}
-			i++;
-		}
-		if (!j)
-			is_error(cmd);
->>>>>>> origin/master
 	}
 }
 

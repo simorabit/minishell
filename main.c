@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/28 15:00:22 by mal-mora         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/28 02:16:56 by souaouri         ###   ########.fr       */
->>>>>>> origin/master
+/*   Updated: 2024/07/28 15:21:14 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +34,6 @@ void	handel_input(char *line, t_env **env_list)
 	tokenizer(res, &lexer);
 	if (!syntax_error(&lexer, env_list))
 		return (handel_herdoc_err(&lexer, &cmds));
-	print_lexer(lexer);
-	exit(0);
 	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer), env_list);

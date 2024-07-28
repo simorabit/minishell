@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 14:23:41 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:16:32 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,20 @@ char	*expand_str(char *s, t_env **env_list)
 	befor_dollar = ft_substr(s, 0, i);
 	while (s[i])
 	{
-		if (s[i] == '$' && !counter)
+		if(s[i] == '$' && !is_real_char(s, i + 1))
+		{
+			result = ft_strjoin(befor_dollar, ft_substr(&s[i++], 0, 1));
+			continue;
+		}
+		if ((s[i] == '$' && (!is_withspaces(s[i + 1]) && !is_quotes(s[i + 1]))) && !counter)
 			result = ft_strjoin(befor_dollar, al_exp(s + (++i), &i, env_list));
-		else if (s[i] == '$' && counter)
+		else if(s[i] == '$' && !counter && (is_withspaces(s[i + 1]) || is_quotes(s[i + 1])))
+			result = ft_strjoin(befor_dollar, ft_substr(&s[i++], 0, 1));
+		if ((s[i] == '$' && (!is_withspaces(s[i + 1]) && !is_quotes(s[i + 1]))) && counter)
 			result = ft_strjoin(result, al_exp(s + (++i), &i, env_list));
-		if (s[i] && s[i] != '$')
+		else if(s[i] == '$' && counter && (is_withspaces(s[i + 1] || is_quotes(s[i + 1]))))
+			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
+		else if(s[i] != '$')
 			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
 		if (!result)
 			return (NULL);
@@ -85,7 +94,9 @@ char	*expanding_str(t_lexer **tmp, t_env **env)
 					(*tmp)->has_quotes = 1);
 		else if (s[i] == SINGLE_QUOTE)
 			res = handel_singleq(res, s, &i, &j);
-		else if (s[i] == '$' && ft_strcmp(s, "$"))
+		else if(s[i] == '$' && (!s[i + 1] || (!is_real_char(s, i + 1) && !is_quotes(s[i + 1]))))
+			res = ft_strjoin(res, ft_substr(&s[i], 0, 1));
+		else if (s[i] == '$')
 			(1) && (res = ft_strjoin(res, al_exp(s + (++i), &i, env)), i--);
 		else
 			res = ft_strjoin(res, ft_substr(&s[i], 0, 1));
