@@ -249,7 +249,7 @@ int is_number (char c);
 void	ft_check(char *cmd, char **env);
 char	*ft_strchr(char *s, int c);
 char	*ft_find_path(char **env, char *var, int j);
-void	ft_find_pwd(void);
+void	ft_find_pwd(t_env *list_env);
 t_env	*get_env(char **env);
 void	get_cd(char *cmd);
 int		export_exe(char **cmd, t_env *list_env);

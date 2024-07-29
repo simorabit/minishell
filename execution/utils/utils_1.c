@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/28 20:15:48 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 01:43:30 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int check_to_print_exit(int len)
+int	check_to_print_exit(int len)
 {
 	if (len > 1)
 		return (1);
@@ -20,12 +20,13 @@ int check_to_print_exit(int len)
 		return (0);
 }
 
-void initialize_files(t_simple_cmds **list)
+void	initialize_files(t_simple_cmds **list)
 {
+	t_simple_cmds	*tmp;
 
-	t_simple_cmds *tmp = *list;
+	tmp = *list;
 	if (tmp == NULL)
-	return ;
+		return ;
 	if (tmp->heredoc > 2)
 		tmp->in_file = tmp->heredoc;
 	if (tmp->in_file == -2)

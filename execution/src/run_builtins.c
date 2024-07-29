@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 03:36:28 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 01:28:51 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	run_built_1(t_env **list_env, char **nood, t_simple_cmds *cmds)
 	else if (!ft_strcmp("echo", nood[0]))
 		echo(nood, cmds);
 	else if (!ft_strcmp("pwd", nood[0]))
-		ft_find_pwd();
+		ft_find_pwd(*list_env);
 	else if (!ft_strcmp("env", nood[0]))
 		write_env(*list_env, nood);
 	else

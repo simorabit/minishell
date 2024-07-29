@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 03:24:53 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 01:43:51 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,23 @@ char	*change_path_cd(t_tools *tools)
 	return (tools->pwd);
 }
 
-void	ft_find_pwd(void)
+void	ft_find_pwd(t_env *list_env)
 {
 	char	*pwd;
+	char	**env;
 
+	env = change_list_to_env(list_env);
 	pwd = getcwd(NULL, 0);
-	ft_putstr_fd(pwd, 1);
-	ft_putstr_fd("\n", 1);
+	if (!pwd)
+	{
+		ft_putstr_fd("minishell: ", 1);
+		ft_putstr_fd("OLDPWD not set", 1);
+		ft_putstr_fd("\n", 1);
+	}
+	else
+	{
+		ft_putstr_fd(pwd, 1);
+		ft_putstr_fd("\n", 1);
+	}
 	free (pwd);
 }
