@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:28:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:43:30 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	check_to_print_exit(int len)
 		return (0);
 }
 
-void	initialize_files(t_simple_cmds **list)
+void	initialize_files(t_cmds **list)
 {
-	t_simple_cmds	*tmp;
+	t_cmds	*tmp;
 
 	tmp = *list;
 	if (tmp == NULL)

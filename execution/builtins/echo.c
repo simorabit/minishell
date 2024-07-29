@@ -22,7 +22,7 @@ static	int	check_arg_is_null(char *cmd)
 	return (1);
 }
 
-void	echo(char **cmd, t_simple_cmds *cmds)
+void	echo(char **cmd, t_cmds *cmds)
 {
 	int	i;
 	int	v;

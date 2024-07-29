@@ -36,8 +36,15 @@ TODO - for simo
 while true; do leaks minishell; done;
  << ls cat
 
-minishell : ls << dsd << <d 
-syntax error near unexpected token `newline'
->^C
-[1]    69415 segmentation fault  ./minishell
-" cdijfd  &&hd  uhfudh--- >>> <<<< >><<.. Jii $$$ ###### 2251 ...,,,,->"
+
+
+
+minishell : << a cat
+
+
+./minishell
+
+unset PWD OLDPWD
+cd .
+
+here_doc fd leaks

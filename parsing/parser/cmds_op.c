@@ -6,13 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:16:43 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/25 11:40:09 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds)
+t_cmds	*ft_lstlast_cmd(t_cmds *cmds)
 {
 	while (cmds)
 	{
@@ -23,18 +23,18 @@ t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds)
 	return (cmds);
 }
 
-t_simple_cmds	*ft_lstnew_cmd(void)
+t_cmds	*ft_lstnew_cmd(void)
 {
-	t_simple_cmds	*cmds;
+	t_cmds	*cmds;
 
-	cmds = (t_simple_cmds *)my_alloc(sizeof(t_simple_cmds));
+	cmds = (t_cmds *)my_alloc(sizeof(t_cmds));
 	cmds->next = NULL;
 	cmds->cmd = NULL;
 	cmds->stop_ex = -1;
 	return (cmds);
 }
 
-int	ft_lstsize_cmd(t_simple_cmds *lst)
+int	ft_lstsize_cmd(t_cmds *lst)
 {
 	int	i;
 
@@ -47,9 +47,9 @@ int	ft_lstsize_cmd(t_simple_cmds *lst)
 	return (i);
 }
 
-void	ft_lstadd_back_cmd(t_simple_cmds **cmds, t_simple_cmds *new)
+void	ft_lstadd_back_cmd(t_cmds **cmds, t_cmds *new)
 {
-	t_simple_cmds	*last;
+	t_cmds	*last;
 
 	if (!cmds)
 		return ;

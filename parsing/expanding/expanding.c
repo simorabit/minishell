@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 18:16:32 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:07:23 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ char	*al_exp(char *str, int *pos, t_env **env_list)
 char	*expand_str(char *s, t_env **env_list)
 {
 	int		i;
-	int		counter;
+	int		cnt;
 	char	*result;
 	char	*befor_dollar;
 
-	counter = 0;
+	cnt = 0;
 	result = NULL;
 	i = 0;
 	if (!init_expand(s, &i))
@@ -53,24 +53,18 @@ char	*expand_str(char *s, t_env **env_list)
 	befor_dollar = ft_substr(s, 0, i);
 	while (s[i])
 	{
-		if(s[i] == '$' && !is_real_char(s, i + 1))
+		if (s[i] == '$' && !is_real_char(s, i + 1))
 		{
 			result = ft_strjoin(befor_dollar, ft_substr(&s[i++], 0, 1));
-			continue;
+			continue ;
 		}
-		if ((s[i] == '$' && (!is_withspaces(s[i + 1]) && !is_quotes(s[i + 1]))) && !counter)
+		if (s[i] == '$' && !is_q_withspaces(s[i + 1]) && !cnt)
 			result = ft_strjoin(befor_dollar, al_exp(s + (++i), &i, env_list));
-		else if(s[i] == '$' && !counter && (is_withspaces(s[i + 1]) || is_quotes(s[i + 1])))
+		else if (s[i] == '$' && !(cnt) && is_q_withspaces(s[i + 1]))
 			result = ft_strjoin(befor_dollar, ft_substr(&s[i++], 0, 1));
-		if ((s[i] == '$' && (!is_withspaces(s[i + 1]) && !is_quotes(s[i + 1]))) && counter)
-			result = ft_strjoin(result, al_exp(s + (++i), &i, env_list));
-		else if(s[i] == '$' && counter && (is_withspaces(s[i + 1] || is_quotes(s[i + 1]))))
-			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
-		else if(s[i] != '$')
-			result = ft_strjoin(result, ft_substr(&s[i++], 0, 1));
+		(1) && (result = handel_other_cases(s, &result, &i, env_list), cnt++);
 		if (!result)
 			return (NULL);
-		counter++;
 	}
 	free(befor_dollar);
 	return (result);
@@ -78,31 +72,29 @@ char	*expand_str(char *s, t_env **env_list)
 
 char	*expanding_str(t_lexer **tmp, t_env **env)
 {
-	int		i;
-	int		j;
 	char	*res;
 	char	*s;
+	t_int	*ints;
 
+	ints = init_ints();
 	s = (*tmp)->str;
-	i = 0;
 	res = NULL;
-	while (s[i])
+	while (s[ints->i])
 	{
-		j = 0;
-		if (s[i] == DOUBLE_QUOTE)
-			(1) && (res = handel_double_q(res, s, &i, &j, env),
-					(*tmp)->has_quotes = 1);
-		else if (s[i] == SINGLE_QUOTE)
-			res = handel_singleq(res, s, &i, &j);
-		else if(s[i] == '$' && (!s[i + 1] || (!is_real_char(s, i + 1) && !is_quotes(s[i + 1]))))
-			res = ft_strjoin(res, ft_substr(&s[i], 0, 1));
-		else if (s[i] == '$')
-			(1) && (res = ft_strjoin(res, al_exp(s + (++i), &i, env)), i--);
+		ints->j = 0;
+		if (is_quotes(s[ints->i]))
+			res = handel_expand_quotes(ints, tmp, &res, env);
+		else if (s[ints->i] == '$' && (!s[ints->i + 1] || \
+		(!is_real_char(s, ints->i + 1) && !is_quotes(s[ints->i + 1]))))
+			res = ft_strjoin(res, ft_substr(&s[ints->i], 0, 1));
+		else if (s[ints->i] == '$')
+			(1) && (res = ft_strjoin(res, al_exp(s + (++(ints->i)),
+			&ints->i, env)), ints->i--);
 		else
-			res = ft_strjoin(res, ft_substr(&s[i], 0, 1));
+			res = ft_strjoin(res, ft_substr(&s[ints->i], 0, 1));
 		if (res == NULL)
 			return (ft_strdup(""));
-		i++;
+		ints->i++;
 	}
 	return (res);
 }
@@ -119,7 +111,7 @@ char	*m_get_env(char *str, t_env **env_list)
 	while (env)
 	{
 		if (!ft_strncmp(env->content, str, ft_strlen(str)) && \
-			env->content[ft_strlen(str)] == '=')
+		env->content[ft_strlen(str)] == '=')
 			res = get_eq_to_fin(env->content);
 		env = env->next;
 	}

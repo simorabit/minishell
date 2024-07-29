@@ -10,7 +10,7 @@ void printf_str(char *s)
 	printf("debug >> [%s]\n", s);
 	exit(0);
 }
-void print_cmd(t_simple_cmds **cmds)
+void print_cmd(t_cmds **cmds)
 {
 	while (cmds && *cmds)
 	{

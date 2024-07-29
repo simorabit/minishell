@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 00:35:27 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/25 01:34:48 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	execut_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
+void	execut_cmd(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	char	**env;
 

@@ -45,6 +45,8 @@ struct s_c_addresses
     struct s_c_addresses    *next;
 };
 
+
+
 typedef struct s_util
 {
 	int	i;
@@ -108,7 +110,7 @@ typedef struct s_simple_cmds
 	int		stop_ex;
 	int		is_ambugious;
 	struct s_simple_cmds *next;
-}			t_simple_cmds; 
+}			t_cmds; 
 
 typedef struct env
 {
@@ -122,6 +124,17 @@ typedef struct tools
 	char	*old_pwd;
 }
 			t_tools;
+
+typedef struct env_test
+{
+	char	**res;
+	t_env	**env;
+} t_en_test;
+
+typedef struct int_t{
+	int i;
+	int j;
+} t_int;
 
 void sighandler(int sig);
 
@@ -137,8 +150,12 @@ int		ft_lstsize(t_lexer *lst);
 void	ft_lstadd_back(t_lexer **lexer, t_lexer *new);
 void ft_lst_remove(t_lexer **lexer, int index);
 
+//signals
+void	sighandler(int sig);
+
 //main
 int		handel_quotes(char *line);
+void	notify_signals();
 
 //remove quotes
 void remove_quotes(t_lexer **lexer);
@@ -156,7 +173,6 @@ char	*ft_strjoin(char *s1, char *s2);
 char	**ft_split(char *s);
 
 //utils_free
-void	free_list(char **list);
 void	allocation_error(char *s);
 void	error_msg(char *s, t_env **env_list);
 void	free_lexer(t_lexer *lexer);
@@ -172,7 +188,7 @@ char	**my_split(char const *s, char c);
 
 //syntax error
 int	syntax_error(t_lexer **lexer, t_env **env);
-void handel_herdoc_err(t_lexer **lexer, t_simple_cmds **cmds);
+void handel_herdoc_err(t_lexer **lexer, t_cmds **cmds);
 
 // utils_split
 char	*ft_word(char *s, char **arr, char ind, char quotes);
@@ -180,27 +196,30 @@ void	wait_till_end(char **s);
 void count_if_char(char *s, int *i);
 
 //parser
-t_simple_cmds	*ft_lstnew_cmd(void);
-int	ft_lstsize_cmd(t_simple_cmds *lst);
-void	ft_lstadd_back_cmd(t_simple_cmds **cmds, t_simple_cmds *new);
-t_simple_cmds	*ft_lstlast_cmd(t_simple_cmds *cmds);
+t_cmds	*ft_lstnew_cmd(void);
+int	ft_lstsize_cmd(t_cmds *lst);
+void	ft_lstadd_back_cmd(t_cmds **cmds, t_cmds *new);
+t_cmds	*ft_lstlast_cmd(t_cmds *cmds);
 
 int		get_lcmd(t_lexer *lexer);
-int		open_files(t_lexer **lexer, t_token token, t_simple_cmds **cmd, t_env **env);
-int		save_heredoc(t_lexer **lexer, t_simple_cmds **cmds);
+int		open_files(t_lexer **lexer, t_token token, t_cmds **cmd, t_env **env);
+int		save_heredoc(t_lexer **lexer, t_cmds **cmds);
 void	save_heredoc2(t_lexer **lexer);
 void 	modify_exit_status(int nbr, t_env **env_list);
-void 	init_arrays(t_simple_cmds *cmds);
-void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len, t_env **env);
-int		handel_heredoc(char *del, t_simple_cmds **cmds);
+void 	init_arrays(t_cmds *cmds);
+void	*parser(t_lexer **lexer, t_cmds **cmds, int len, t_env **env);
+int		handel_heredoc(char *del, t_cmds **cmds);
 
 //expanding
+
 void	handel_expanding(t_lexer **lexer, t_env **env_list);
 char 	*expand_str(char *s, t_env **env_list);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);
-char 	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list);
+// char 	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list);
+char	*handel_double_q(char *result, char *s, t_int *sin_t, t_env **env_list);
+// char	*handel_double_q(char *result, char **s, int *j, t_env **env_list);
 char 	*handel_singleq(char *result, char *s, int *i, int *j);
 char	*al_exp(char *str, int *pos, t_env **env_list);
 int		get_len_ep(char *s);
@@ -214,9 +233,13 @@ void *find_dollar(char *result, char *s, int *i);
 char *m_get_env(char *str, t_env **env_list);
 int check_if_noexpand(t_lexer **tmp);
 int	init_expand(char *s, int *i);
+char * handel_other_cases(char *s, char **result, int *i, t_env **env);
+int is_q_withspaces(char c);
+char *handel_expand_quotes(t_int *ints, t_lexer **tmp, char **res, t_env **env);
+t_int *init_ints();
 
 //debugging
-void	print_cmd(t_simple_cmds **cmds);
+void	print_cmd(t_cmds **cmds);
 void 	printf_str(char *s);
 void 	printf_int(int d);
 void	print_lexer(t_lexer *lexer);
@@ -224,8 +247,8 @@ void	print_lexer(t_lexer *lexer);
 //execution
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
-void	echo(char **cmd, t_simple_cmds *cmds);
-void	execut_cmd(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
+void	echo(char **cmd, t_cmds *cmds);
+void	execut_cmd(t_env **list_env, char **nood, t_cmds *cmds, int len);
 void	ft_exec(char **cmd, char **env);
 void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);
@@ -256,11 +279,11 @@ int		export_exe(char **cmd, t_env *list_env);
 void	write_env(t_env *env, char **arg);
 char	**change_list_to_env(t_env *list_env);
 int		ft_lstsize_env(t_env *lst);
-void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len);
+void	multiple_cmd(t_env **env_list, t_cmds *list, int len);
 t_env	*ft_lstnew_env(char *line);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
-void	change_list(t_simple_cmds *list);
-void	initialize_files(t_simple_cmds	**list);
+void	change_list(t_cmds *list);
+void	initialize_files(t_cmds	**list);
 char	**join_cmd_arg(char *cmd, char **arg);
 void	add_emergency_env(t_env **env);
 void	unset(t_env **list_env, char *arg);
@@ -281,27 +304,27 @@ t_env	*env_dup(t_env *list);
 int		check_for_plus_and_eq(char *arg, int w);
 char	*remove_plus(char *new);
 void	add_variable(t_env *list_env, char *new, int error);
-int		exit_builtins(t_simple_cmds *cmd, char **args, int len);
+int		exit_builtins(t_cmds *cmd, char **args, int len);
 int		print_error(char *cmd, char *type);
-int		cd_exec(t_simple_cmds *cmds, t_env *list_env);
+int		cd_exec(t_cmds *cmds, t_env *list_env);
 
 void	*my_alloc(size_t size);
 int		builtins_print_error(char *cmd, char *type);
 char	*change_path_cd(t_tools *tools);
 
 //src
-void	multiple_cmd_util_0(t_var **var, t_simple_cmds *list, t_env **env_list, int len);
+void	multiple_cmd_util_0(t_var **var, t_cmds *list, t_env **env_list, int len);
 void	multiple_cmd_util_1(int in_file, int *hold_fd_in);
 void	multiple_cmd_util_2(int *hold_fd_in);
-void	multiple_cmd_util_3(t_simple_cmds *list, int *hold_fd_in);
-void	multiple_cmd_util_4(t_simple_cmds *list);
+void	multiple_cmd_util_3(t_cmds *list, int *hold_fd_in);
+void	multiple_cmd_util_4(t_cmds *list);
 int		print_error(char *cmd, char *type);
 int		check_is_biltus(char *cmd);
-int		run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len);
-void	multiple_cmd_util_5(t_simple_cmds *list, int p_in, int p_out);
-void	reducing(t_simple_cmds *list, int *hold_fd_in);
+int		run_built(t_env **list_env, char **nood, t_cmds *cmds, int len);
+void	multiple_cmd_util_5(t_cmds *list, int p_in, int p_out);
+void	reducing(t_cmds *list, int *hold_fd_in);
 void	initialize_var(t_var **var);
-void	multiple_cmd_util_7(t_var **var, t_simple_cmds **list, int len);
+void	multiple_cmd_util_7(t_var **var, t_cmds **list, int len);
 int		check_is_dir(char *cmd);
 int		ft_strncmp_file(const char *s1, const char *s2, unsigned int n);
 

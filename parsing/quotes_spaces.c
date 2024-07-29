@@ -6,14 +6,15 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 18:21:55 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:31:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-int each_quotes(char *s, int i, int *j, char q)
+
+int	each_quotes(char *s, int i, int *j, char q)
 {
-	int num;
+	int	num;
 
 	num = 1;
 	(*j)++;
@@ -25,9 +26,11 @@ int each_quotes(char *s, int i, int *j, char q)
 	}
 	return (num % 2 == 0);
 }
-int found_quotes(char *s, int i)
+
+int	found_quotes(char *s, int i)
 {
-	int j;
+	int	j;
+
 	j = 0;
 	while (s[j] && j < i)
 	{
@@ -37,12 +40,13 @@ int found_quotes(char *s, int i)
 			return (each_quotes(s, i, &j, SINGLE_QUOTE));
 		j++;
 	}
-	return 1;
+	return (1);
 }
-int count_redir(char *line)
+
+int	count_redir(char *line)
 {
-	int i;
-	int counter;
+	int	i;
+	int	counter;
 
 	counter = 0;
 	i = 0;
@@ -52,7 +56,8 @@ int count_redir(char *line)
 		{
 			if (i != 0 && !is_withspaces(line[i - 1]))
 				counter++;
-			if (is_redir_has_found(line[i + 1]) && line[i] == line[i + 1] && (line[i] == '>' || line[i] == '<'))
+			if (is_redir_has_found(line[i + 1]) && line[i] == line[i + 1] && \
+				(line[i] == '>' || line[i] == '<'))
 				i++;
 			if (line[i + 1] && !is_withspaces(line[i + 1]))
 				counter++;
@@ -62,9 +67,9 @@ int count_redir(char *line)
 	return (counter);
 }
 
-void redir_founded(char *line, char *new_value, int *i, int *j)
+void	redir_founded(char *line, char *new_value, int *i, int *j)
 {
-	int need_space;
+	int	need_space;
 
 	need_space = 0;
 	if (*i != 0 && !is_withspaces(line[*i - 1]))
@@ -89,13 +94,12 @@ void redir_founded(char *line, char *new_value, int *i, int *j)
 		new_value[*j] = line[*i];
 }
 
-
-void *add_spaces(char *line)
+void	*add_spaces(char *line)
 {
-	int i;
-	int j;
-	int len;
-	char *new_value;
+	int		i;
+	int		j;
+	int		len;
+	char	*new_value;
 
 	i = 0;
 	j = 0;

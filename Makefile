@@ -6,12 +6,12 @@
 #    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/07/28 15:20:10 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/07/29 17:05:21 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror 
+CC				+=	-Wall -Wextra -Werror -fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
@@ -30,9 +30,9 @@ SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		execution/builtins/export_utile_4.c execution/builtins/env.c execution/builtins/env_utile.c execution/builtins/exit.c \
 		execution/builtins/export.c execution/builtins/unset.c execution/utils/utils_1.c \
 		execution/utils/utils_2.c execution/utils/utils_3.c execution/utils/utils_4.c \
-		execution/utils/utils_5.c execution/utils/utils_6.c \
+		execution/utils/utils_5.c execution/utils/utils_6.c signals.c \
 		execution/utils/utils_7.c execution/utils/utils_8.c debugging.c parsing/my_split.c \
-		parsing/parser/herdoc.c parsing/expanding/expanding_utils.c
+		parsing/parser/herdoc.c parsing/expanding/expanding_utils.c parsing/expanding/expand_utils.c
 
 OBJ = $(SRC:.c=.o)
 

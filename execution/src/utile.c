@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utile.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:28:03 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 03:39:19 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	multiple_cmd_util_5(t_simple_cmds *list, int p_in, int p_out)
+void	multiple_cmd_util_5(t_cmds *list, int p_in, int p_out)
 {
 	if (list->in_file == 0)
 		close (p_in);
@@ -28,7 +28,7 @@ void	multiple_cmd_util_6(int p_in, int p_out)
 	close (p_out);
 }
 
-void	reducing(t_simple_cmds *list, int *hold_fd_in)
+void	reducing(t_cmds *list, int *hold_fd_in)
 {
 	change_list(list);
 	multiple_cmd_util_1(list->in_file, hold_fd_in);
@@ -46,7 +46,7 @@ void	initialize_var(t_var **var)
 	(*var)->pid = 1;
 }
 
-void	multiple_cmd_util_7(t_var **var, t_simple_cmds **list, int len)
+void	multiple_cmd_util_7(t_var **var, t_cmds **list, int len)
 {
 	if ((*var)->pid < 0)
 		print_error(NULL, "fork");

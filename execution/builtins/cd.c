@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 02:19:53 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:34:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	specific_path(t_env *list_env, char *str)
 		str = ft_substr(str, 0, ft_strlen(str) - 1);
 		ft_putstr_fd(str, 2);
 		free(str);
-		ft_putstr_fd(" not set\n", 2);
+		ft_putstr_fd(" not set", 2);
 	}
 	return (ret);
 }
@@ -72,7 +72,7 @@ void	add_path_to_env(t_tools *tools, t_env *list_env, char **env)
 	}
 }
 
-int	mini_cd(t_tools *tools, t_simple_cmds *s_cmd, t_env *list_env, char **env)
+int	mini_cd(t_tools *tools, t_cmds *s_cmd, t_env *list_env, char **env)
 {
 	int		ret;
 	char	*free_one;
@@ -101,7 +101,7 @@ int	mini_cd(t_tools *tools, t_simple_cmds *s_cmd, t_env *list_env, char **env)
 	return (EXIT_SUCCESS);
 }
 
-int	cd_exec(t_simple_cmds *cmds, t_env *list_env)
+int	cd_exec(t_cmds *cmds, t_env *list_env)
 {
 	t_tools	*tools;
 	char	**env;
@@ -112,7 +112,15 @@ int	cd_exec(t_simple_cmds *cmds, t_env *list_env)
 		return (0);
 	env = change_list_to_env(list_env);
 	tools->pwd = ft_find_path(env, "PWD=", 4);
+	
+	// if(tools->pwd == NULL)
+	// {
+	// 	ft_putstr_fd("PWD not set\n", 2);
+	// 	return (1);
+	// }
 	tools->old_pwd = ft_find_path(env, "OLDPWD=", 7);
+	
+	
 	re = mini_cd(tools, cmds, list_env, env);
 	free(tools);
 	return (re);

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 01:53:52 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:06:46 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_exit_s = 0;
+int	g_exit_s = 0;
 
 void	handel_input(char *line, t_env **env_list)
 {
 	t_lexer			*lexer;
 	char			**res;
-	t_simple_cmds	*cmds;
+	t_cmds	*cmds;
 	int				len;
 
 	lexer = NULL;
@@ -36,28 +36,11 @@ void	handel_input(char *line, t_env **env_list)
 		return (handel_herdoc_err(&lexer, &cmds));
 	handel_expanding(&lexer, env_list);
 	remove_quotes(&lexer);
+	// print_lexer(lexer);
+	// return;
 	cmds = parser(&lexer, &cmds, get_lcmd(lexer), env_list);
-	// print_cmd(&cmds);
-	// exit(0);
 	len = ft_lstsize_cmd(cmds);
 	multiple_cmd(env_list, cmds, len);
-}
-
-void	sighandler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_exit_s = 1;
-		if (waitpid(-1, NULL, WNOHANG) == 0)
-		{
-			printf("\n");
-			return ;
-		}
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 }
 
 void	read_input(char **env)
@@ -71,19 +54,15 @@ void	read_input(char **env)
 		add_emergency_env(&env_list);
 	else
 		env_list = get_env(env);
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, sighandler);
+	notify_signals();
 	while (1)
 	{
 		line = readline("minishell : ");
 		if (g_exit_s == 1)
-		{
-			modify_exit_status(1, &env_list);
-			g_exit_s = 0;
-		}
+			(1) && (modify_exit_status(1, &env_list), g_exit_s = 0);
 		if (!line)
 		{
-			printf("exit\n");
+			ft_putstr_fd("exit\n", 2);
 			break ;
 		}
 		if (line && *line)
@@ -93,17 +72,12 @@ void	read_input(char **env)
 	}
 }
 
-// void	ss(void)
-// {
-// 	system ("leaks minishell");
-// }
-
 int	main(int arc, char *arv[], char **env)
 {
 	(void)arv;
-	// atexit(ss);
 	rl_catch_signals = 0;
 	if (arc != 1)
 		(printf("InputError"), exit(0));
 	read_input(env);
 }
+

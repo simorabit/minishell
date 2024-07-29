@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:08:16 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 14:14:07 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 13:51:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,17 @@ char	*handel_singleq(char *result, char *s, int *i, int *j)
 	return (result);
 }
 
-char	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list)
+char	*handel_double_q(char *result, char *s, t_int *sin_t, t_env **env_list)
 {
 	int		k;
 	char	*res;
-	char	*str;
 
-	str = s;
-	k = ++(*i);
-	while (s[*i])
+	k = ++(sin_t->i);
+	while (s[sin_t->i])
 	{
-		if (s[*i] == DOUBLE_QUOTE)
+		if (s[sin_t->i] == DOUBLE_QUOTE)
 		{
-			res = ft_substr(s, k, *j);
+			res = ft_substr(s, k, sin_t->j);
 			if (!res)
 				return (NULL);
 			if (str_chr(res, '$') != -1)
@@ -51,8 +49,8 @@ char	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list)
 				result = ft_strjoin(result, res);
 			break ;
 		}
-		(*j)++;
-		(*i)++;
+		(sin_t->j)++;
+		(sin_t->i)++;
 	}
 	return (result);
 }

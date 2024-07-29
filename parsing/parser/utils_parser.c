@@ -6,13 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:53:47 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 13:58:21 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	init_arrays(t_simple_cmds *cmds)
+void	init_arrays(t_cmds *cmds)
 {
 	if (cmds)
 	{

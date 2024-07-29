@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   function_devision.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:25:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:57:58 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	multiple_cmd_util_0(t_var **v, t_simple_cmds *list, t_env **e_l, int l)
+void	multiple_cmd_util_0(t_var **v, t_cmds *list, t_env **e_l, int l)
 {
 	(*v)->p_in = dup (0);
 	(*v)->p_out = dup (1);
@@ -48,7 +48,7 @@ void	multiple_cmd_util_2(int *hold_fd_in)
 	}
 }
 
-void	multiple_cmd_util_3(t_simple_cmds *list, int *hold_fd_in)
+void	multiple_cmd_util_3(t_cmds *list, int *hold_fd_in)
 {
 	int	p_fd[2];
 
@@ -62,7 +62,7 @@ void	multiple_cmd_util_3(t_simple_cmds *list, int *hold_fd_in)
 	}
 }
 
-void	multiple_cmd_util_4(t_simple_cmds *list)
+void	multiple_cmd_util_4(t_cmds *list)
 {
 	if (list->out_file > 1)
 	{

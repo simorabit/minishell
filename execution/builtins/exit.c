@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:46:38 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 11:45:24 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	get_exit_code(char *arg, int *error)
 	return (i % 256);
 }
 
-int	exit_builtins(t_simple_cmds *cmd, char **args, int len)
+int	exit_builtins(t_cmds *cmd, char **args, int len)
 {
 	int		exit_num;
 	int		error;

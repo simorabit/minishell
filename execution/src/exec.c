@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:59:39 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	wait_func(int exit_status, t_env **env_list, int i)
 	add_variable(*env_list, ex_st, 1);
 }
 
-void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
+void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 {
 	t_var	*var;
 
@@ -84,6 +84,11 @@ void	multiple_cmd(t_env **env_list, t_simple_cmds *list, int len)
 	initialize_var(&var);
 	while (list)
 	{
+		if (list->is_ambugious == 1)
+		{
+			list = list->next;
+			continue;
+		}
 		multiple_cmd_util_0(&var, list, env_list, len);
 		if (var->pid == 0)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:43:51 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:39:40 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*change_path_cd(t_tools *tools)
 {
 	char	*tmp;
 
+	if (!tools->pwd || !tools->old_pwd)
+		return (NULL);
 	tmp = ft_strdup(tools->pwd);
 	free(tools->old_pwd);
 	tools->old_pwd = tmp;

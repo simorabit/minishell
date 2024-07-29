@@ -6,13 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 13:40:29 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:44:48 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	*save_args(t_lexer **lexer, t_simple_cmds *cmds)
+void	*save_args(t_lexer **lexer, t_cmds *cmds)
 {
 	t_lexer	*tmp;
 	int		len;
@@ -39,7 +39,7 @@ void	*save_args(t_lexer **lexer, t_simple_cmds *cmds)
 	return (lexer);
 }
 
-int	handel_files(t_lexer **tmp, t_simple_cmds *cmds, t_env **env)
+int	handel_files(t_lexer **tmp, t_cmds *cmds, t_env **env)
 {
 	int	res;
 
@@ -60,7 +60,7 @@ int	handel_files(t_lexer **tmp, t_simple_cmds *cmds, t_env **env)
 	return (res);
 }
 
-void	*handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
+void	*handel_cmd(t_lexer **tmp, t_cmds *cmds, int *j)
 {
 	if ((*j == 0 && (*tmp)->token == word) || \
 		((*tmp)->token == word && (*tmp)->prev->token != word))
@@ -78,10 +78,10 @@ void	*handel_cmd(t_lexer **tmp, t_simple_cmds *cmds, int *j)
 	return (cmds);
 }
 
-t_simple_cmds	*get_node_parse(t_lexer **tmp, t_env **env)
+t_cmds	*get_node_parse(t_lexer **tmp, t_env **env)
 {
-	int				j;
-	t_simple_cmds	*node;
+	int		j;
+	t_cmds	*node;
 
 	j = 0;
 	node = ft_lstnew_cmd();
@@ -103,11 +103,11 @@ t_simple_cmds	*get_node_parse(t_lexer **tmp, t_env **env)
 	return (node);
 }
 
-void	*parser(t_lexer **lexer, t_simple_cmds **cmds, int len, t_env **env)
+void	*parser(t_lexer **lexer, t_cmds **cmds, int len, t_env **env)
 {
-	int				i;
-	t_lexer			*tmp;
-	t_simple_cmds	*node;
+	int		i;
+	t_lexer	*tmp;
+	t_cmds	*node;
 
 	node = *cmds;
 	tmp = *lexer;

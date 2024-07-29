@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 20:24:39 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:46:43 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	handel_heredoc_in_child(char *del, char *line, int fd_in)
 	(close(fd_in), exit(0));
 }
 
-int	handel_heredoc(char *del, t_simple_cmds **cmds)
+int	handel_heredoc(char *del, t_cmds **cmds)
 {
 	int		fd_in;
 	char	*line;
@@ -55,17 +55,17 @@ int	handel_heredoc(char *del, t_simple_cmds **cmds)
 		wait(&exit_status);
 		if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
 		{
-			if(cmds && *cmds)
+			close(fd_in);
+			if (cmds && *cmds)
 				(*cmds)->stop_ex = 0;
 			return (-2);
 		}
 	}
-	close(fd_in);
 	fd_in = open("/tmp/test.txt", O_RDONLY, 0644);
 	return (fd_in);
 }
 
-int	save_heredoc(t_lexer **lexer, t_simple_cmds **cmds)
+int	save_heredoc(t_lexer **lexer, t_cmds **cmds)
 {
 	int		len;
 	char	*del;

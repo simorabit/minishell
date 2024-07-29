@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:28:51 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_is_biltus(char *cmd)
 	return (i);
 }
 
-int	run_built_1(t_env **list_env, char **nood, t_simple_cmds *cmds)
+int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds)
 {
 	int	exit_status;
 
@@ -54,7 +54,7 @@ int	run_built_1(t_env **list_env, char **nood, t_simple_cmds *cmds)
 	return (exit_status);
 }
 
-int	run_built_2(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
+int	run_built_2(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	int	i;
 	int	exit_status;
@@ -74,7 +74,7 @@ int	run_built_2(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
 	return (exit_status);
 }
 
-int	run_built(t_env **list_env, char **nood, t_simple_cmds *cmds, int len)
+int	run_built(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	char	*pwd;
 	char	**env;
