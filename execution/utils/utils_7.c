@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:51:10 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:14:32 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,14 @@ char	**join_cmd_arg(char *cmd, char **arg)
 	}
 	ptr[i] = NULL;
 	return (ptr);
+}
+
+int	ambugious(t_cmds **list)
+{
+	if ((*list)->is_ambugious == 1)
+	{
+		*list = (*list)->next;
+		return (1);
+	}
+	return (0);
 }

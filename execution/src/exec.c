@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:14:49 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,8 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 	initialize_var(&var);
 	while (list)
 	{
-		if (list->is_ambugious == 1)
-		{
-			list = list->next;
-			continue;
-		}
+		if (ambugious(&list) == 1)
+			continue ;
 		multiple_cmd_util_0(&var, list, env_list, len);
 		if (var->pid == 0)
 		{
@@ -97,11 +94,7 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 				&& var->check)
 				var->exit_status = run_built(env_list, list->cmmd, list, len);
 			if (list->in_file != -1 && list->out_file != -1 && !var->check)
-			{
-				if (var->hold_fd_in > 0)
-					close (var->hold_fd_in);
-				execut_cmd(env_list, list->cmmd, list, len);
-			}
+				execut(var, env_list, list);
 		}
 		multiple_cmd_util_7(&var, &list, len);
 	}

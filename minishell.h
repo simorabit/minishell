@@ -248,7 +248,7 @@ void	print_lexer(t_lexer *lexer);
 void	ft_fork(char *nood, t_env *list_env);
 int		ft_strlen_1(char **ptr);
 void	echo(char **cmd, t_cmds *cmds);
-void	execut_cmd(t_env **list_env, char **nood, t_cmds *cmds, int len);
+void	execut_cmd(t_env **list_env, char **nood, t_cmds *cmds);
 void	ft_exec(char **cmd, char **env);
 void	*free_double_ptr(char	**ptr);
 void	child(char *nood, char **env);
@@ -327,6 +327,8 @@ void	initialize_var(t_var **var);
 void	multiple_cmd_util_7(t_var **var, t_cmds **list, int len);
 int		check_is_dir(char *cmd);
 int		ft_strncmp_file(const char *s1, const char *s2, unsigned int n);
+int		ambugious(t_cmds **list);
+void	execut(t_var *var, t_env **env_list, t_cmds *list);
 
 //builtins
 int		check_to_print_exit(int len);

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:44:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/28 00:15:48 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:46:14 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,3 @@ void	write_env(t_env *env, char **arg)
 		env = env->next;
 	}
 }
-
-	// i = 1;
-	// while (arg[i])
-	// {
-	// 	if (ft_strchr(arg[i], '='))
-	// 	{
-	// 		if (ft_strlen(arg[i]) == 1)
-	// 			env_print_error(arg[i], 2);
-	// 		ft_putstr_fd(arg[i], 1);
-	// 		ft_putstr_fd("\n", 1);
-	// 	}
-	// 	i++;
-	// }

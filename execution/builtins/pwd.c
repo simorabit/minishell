@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 16:39:40 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:15:00 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_find_pwd(t_env *list_env)
 	if (!pwd)
 	{
 		ft_putstr_fd("minishell: ", 1);
-		ft_putstr_fd("OLDPWD not set", 1);
+		ft_putstr_fd("PWD not set", 1);
 		ft_putstr_fd("\n", 1);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:24:08 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 02:19:17 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:14:09 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,3 @@ int	check_for_arg_cd(char *cmd)
 		return (1);
 	return (0);
 }
-
-
