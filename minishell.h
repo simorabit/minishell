@@ -313,6 +313,8 @@ int		preparing_var(t_env *list_env, char *new);
 void	add_variable(t_env *list_env, char *new, int error);
 void	is_error(char *cmd);
 int		ft_isdigit(int c);
+void	cd_error(void);
+int		check_for_arg_cd(char *cmd);
 
 #endif
 // #endif

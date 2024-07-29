@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:05:32 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/29 02:19:53 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ int	mini_cd(t_tools *tools, t_simple_cmds *s_cmd, t_env *list_env, char **env)
 	int		ret;
 	char	*free_one;
 
-	if (!s_cmd->cmmd[1] || !ft_strcmp(s_cmd->cmmd[1], "--")
-		|| !ft_strcmp(s_cmd->cmmd[1], "~")
-		|| !ft_strcmp(s_cmd->cmmd[1], "~/"))
+	if(check_for_arg_cd(s_cmd->cmmd[1]))
 		ret = specific_path(list_env, "HOME=");
 	else if (ft_strcmp(s_cmd->cmmd[1], "-") == 0)
 	{
@@ -91,10 +89,7 @@ int	mini_cd(t_tools *tools, t_simple_cmds *s_cmd, t_env *list_env, char **env)
 	{
 		ret = chdir(s_cmd->cmmd[1]);
 		if (!getcwd(NULL, sizeof(NULL)))
-		{
-			ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 2);
-			ft_putstr_fd("cannot access parent directories: No such file or directory\n", 2);
-		}
+			cd_error();
 		if (ret != 0)
 			return (builtins_print_error(s_cmd->cmmd[1], "no_such_file"));
 	}
