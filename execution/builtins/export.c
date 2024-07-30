@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:24:14 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:02:50 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	if_var_exist_return(char *cmd, t_env *list_env)
 {
 	char	*var;
 
-	var = ft_strjoin(get_var_from_beg_to_eq(cmd), "=");
+	var = ft_strjoin(cmd, "="); ////////////////
 	if (find_var(list_env, var))
 		return (1);
 	return (0);
@@ -58,7 +58,7 @@ int	if_var_exist_return(char *cmd, t_env *list_env)
 
 int	add(t_env *list_env, char *cmd, int error)
 {
-	if (error && error != -1 && !check_for_first_char(get_env_eq(cmd)))
+	if (error && error != -1 && !check_for_first_char(get_env_eq(cmd))) /////////////
 		add_var_exist(cmd, list_env, error);
 	else if (!check_arg_is_valide(get_env_eq(cmd))
 		&& !check_for_first_char(get_env_eq(cmd)))
@@ -82,8 +82,10 @@ int	export_exe(char **cmd, t_env *list_env)
 	while (cmd[i])
 	{
 		if (!ft_strchr(cmd[i], '='))
+		{
 			if (if_var_exist_return(cmd[i], list_env))
 				return (0);
+		}
 		error = check_for_plus_and_eq(cmd[i], 1);
 		if (error == -1)
 			return (1);

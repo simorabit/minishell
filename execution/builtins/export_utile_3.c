@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:26:27 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/30 11:59:16 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	check_for_plus_and_eq(char *arg, int w)
 			return (-1);
 		}
 	}
-	i = 0;
 	if (is_valid(arg))
 		return (1);
 	return (0);
