@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:04:10 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 01:32:44 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:03:58 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@ int	unset(t_env **list_env, char *arg)
 	t_env	*tmp;
 	char	*str;
 
-	
 	if (!list_env || !*list_env || !arg)
 		return (0);
-	if((check_arg_is_valide(arg) || check_for_first_char(arg)))
-	{
+	if ((check_arg_is_valide(arg) || check_for_first_char(arg)))
 		return (builtins_print_error(arg, "pars__export"));
-	}
 	tmp = *list_env;
 	str = get_env_eq(tmp->content);
 	if (!ft_strcmp(str, arg))

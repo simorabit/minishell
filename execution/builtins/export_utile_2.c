@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 01:40:39 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:03:04 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,14 @@ char	*get_env_eq(char *new)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+int	check_var(char	*cmd, t_env *list_env)
+{
+	if (!ft_strchr(cmd, '='))
+	{
+		if (if_var_exist_return(cmd, list_env))
+			return (0);
+	}
+	return (1);
 }

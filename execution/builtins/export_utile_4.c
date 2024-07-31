@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:40:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:24:00 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:13:53 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,11 @@ void	add_variable(t_env *list_env, char *new, int error)
 		var = ft_lstnew_env(new);
 		ft_lstadd_back_env(&list_env, var);
 	}
+}
+
+void	add_emergency_pwd(t_tools *tools, t_env *list_env)
+{
+	cd_error();
+	add_path_to_env(tools, list_env);
+	export_exe(ft_split_exe("export PWD+=/..", ' '), list_env);
 }

@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:45:26 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 01:08:58 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:09:35 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*to_lowercase(char *str)
 	}
 	return (str);
 }
+
 int	run_built_mul_cmd_1(t_env **list_env, char **nood, t_cmds *cmds)
 {
 	int	exit_status;
@@ -31,16 +32,17 @@ int	run_built_mul_cmd_1(t_env **list_env, char **nood, t_cmds *cmds)
 	exit_status = 0;
 	if (!ft_strcmp("export", nood[0]))
 		exit_status = export_exe(nood, *list_env);
-	else if (!ft_strcmp("echo", to_lowercase(nood[0])))
+	else if (!ft_strcmp("echo", nood[0]))
 		echo(nood, cmds);
-	else if (!ft_strcmp("pwd", to_lowercase(nood[0])))
+	else if (!ft_strcmp("pwd", nood[0]))
 		ft_find_pwd(*list_env);
-	else if (!ft_strcmp("env", to_lowercase(nood[0])))
+	else if (!ft_strcmp("env", nood[0]))
 		write_env(*list_env, nood);
 	else
 		return (-1);
 	return (exit_status);
 }
+
 int	run_built_mul_cmd_2(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	int	i;
@@ -55,13 +57,13 @@ int	run_built_mul_cmd_2(t_env **list_env, char **nood, t_cmds *cmds, int len)
 	if (!ft_strcmp("unset", nood[0]))
 	{
 		while (nood[++i])
-			unset(list_env, nood[i]);
-		return (1);
+			if (unset(list_env, nood[i]))
+				return (1);
 	}
 	return (exit_status);
 }
 
-int	run_built_mul_cmd(t_env **list_env, char **nood, t_cmds *cmds, int len)
+int	run_bui_p(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	char	*pwd;
 	char	**env;

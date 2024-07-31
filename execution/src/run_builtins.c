@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 01:35:32 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:08:53 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ int	check_is_biltus(char *cmd)
 	i = 0;
 	if (cmd == NULL || *cmd == '\0')
 		return (0);
-	if (!ft_strcmp("export", to_lowercase(cmd)))
+	if (!ft_strcmp("export", cmd))
 		i++;
-	else if (!ft_strcmp("echo", to_lowercase(cmd)))
+	else if (!ft_strcmp("echo", cmd))
 		i++;
-	else if (!ft_strcmp("pwd", to_lowercase(cmd)))
+	else if (!ft_strcmp("pwd", cmd))
 		i++;
-	else if (!ft_strcmp("env", to_lowercase(cmd)))
+	else if (!ft_strcmp("env", cmd))
 		i++;
-	else if (!ft_strcmp("cd", to_lowercase(cmd)))
+	else if (!ft_strcmp("cd", cmd))
 		i++;
-	else if (!ft_strcmp("exit", to_lowercase(cmd)))
+	else if (!ft_strcmp("exit", cmd))
 		i++;
-	else if (!ft_strcmp("unset", to_lowercase(cmd)))
+	else if (!ft_strcmp("unset", cmd))
 		i++;
 	return (i);
 }
@@ -39,20 +39,15 @@ int	check_is_biltus(char *cmd)
 int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds)
 {
 	int	exit_status;
-	char	*commend;
 
-	commend = nood[0];
 	exit_status = 0;
 	if (!ft_strcmp("export", nood[0]))
-	{
-		printf ("LLLL\n");
 		exit_status = export_exe(nood, *list_env);
-	}
-	else if (!ft_strcmp("echo", to_lowercase(nood[0])))
+	else if (!ft_strcmp("echo", nood[0]))
 		echo(nood, cmds);
-	else if (!ft_strcmp("pwd",to_lowercase(nood[0])))
+	else if (!ft_strcmp("pwd", nood[0]))
 		ft_find_pwd(*list_env);
-	else if (!ft_strcmp("env", to_lowercase(nood[0])))
+	else if (!ft_strcmp("env", nood[0]))
 		write_env(*list_env, nood);
 	else
 		return (-1);
@@ -73,7 +68,7 @@ int	run_built_2(t_env **list_env, char **nood, t_cmds *cmds, int len)
 	else if (!ft_strcmp("unset", nood[0]))
 	{
 		while (nood[++i])
-			exit_status= unset(list_env, nood[i]);
+			exit_status = unset(list_env, nood[i]);
 	}
 	else
 		return (-1);

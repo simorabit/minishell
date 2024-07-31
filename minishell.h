@@ -16,35 +16,25 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include <signal.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
 # include <fcntl.h>
-#include <sys/stat.h>
-
+# include <sys/stat.h>
 
 # define SYNTAX_ERROR			"syntax error near unexpected token `newline'"
 # define INPUT_ERROR			"Please Enter Valid Argument\n"
 # define ERROR_IN_ALLOCATION	"Error In Allocation"
 # define SINGLE_QUOTE			'\'' 
 # define DOUBLE_QUOTE			'\"' 
-#define  AMBIGUOUS_REDIRECT "ambiguous redirect"
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define YELLOW  "\x1b[33m"
-#define BLUE    "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
-#define RESET   "\x1b[0m"
+# define AMBIGUOUS_REDIRECT "ambiguous redirect"
 
 typedef struct s_c_addresses
 {
-    void                *adr;
-    struct s_c_addresses    *next;
-}				 t_c_addresses;
-
-
+	void					*adr;
+	struct s_c_addresses	*next;
+}					t_c_addresses;
 
 typedef struct s_util
 {
@@ -70,8 +60,8 @@ typedef enum s_token
 {
 	word,
 	mpipe,
-	redirect_in	,
-	redirect_out, 
+	redirect_in,
+	redirect_out,
 	append_out,
 	heredoc,
 	redirect_app,
@@ -96,21 +86,21 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 	int				has_quotes;
-}	t_lexer;
+}					t_lexer;
 
 typedef struct s_simple_cmds
 {
-    char    *cmd;
-    char    **args;
-	char	**cmmd;
-    int		in_file;
-    int		out_file;
-    int		aout_file;
-    int		heredoc;
-	int		stop_ex;
-	int		is_ambugious;
-	struct s_simple_cmds *next;
-}			t_cmds; 
+	char					*cmd;
+	char					**args;
+	char					**cmmd;
+	int						in_file;
+	int						out_file;
+	int						aout_file;
+	int						heredoc;
+	int						stop_ex;
+	int						is_ambugious;
+	struct s_simple_cmds	*next;
+}							t_cmds;
 
 typedef struct env
 {
@@ -122,29 +112,26 @@ typedef struct tools
 {
 	char	*pwd;
 	char	*old_pwd;
-}
-			t_tools;
+}			t_tools;
 
 typedef struct env_test
 {
 	char	**res;
 	t_env	**env;
-} t_en_test;
+}			t_en_test;
 
-typedef struct int_t{
-	int i;
-	int j;
-} t_int;
+typedef struct int_t
+{
+	int	i;
+	int	j;
+}		t_int;
 
-
-int open_files_in(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env);
-
-
-void sighandler(int sig);
+int		open_files_in(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env);
+void	sighandler(int sig);
 
 //libift func
-char *ft_strncpy(char *s, int len);
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n);
+char	*ft_strncpy(char *s, int len);
+int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 void	ft_putstr_fd(char *str, int fd);
 
 //lexer_list
@@ -152,17 +139,17 @@ t_lexer	*ft_lstlast(t_lexer *lexer);
 t_lexer	*ft_lstnew(int content);
 int		ft_lstsize(t_lexer *lst);
 void	ft_lstadd_back(t_lexer **lexer, t_lexer *new);
-void ft_lst_remove(t_lexer **lexer, int index);
+void	ft_lst_remove(t_lexer **lexer, int index);
 
 //signals
 void	sighandler(int sig);
 
 //main
 int		handel_quotes(char *line);
-void	notify_signals();
+void	notify_signals(void);
 
 //remove quotes
-void remove_quotes(t_lexer **lexer);
+void	remove_quotes(t_lexer **lexer);
 
 //quotes_spaces
 void	*add_spaces(char *line);
@@ -191,61 +178,59 @@ int		quotes(char *line, char q);
 char	**my_split(char const *s, char c);
 
 //syntax error
-int	syntax_error(t_lexer **lexer, t_env **env);
-void handel_herdoc_err(t_lexer **lexer, t_cmds **cmds);
+int		syntax_error(t_lexer **lexer, t_env **env);
+void	handel_herdoc_err(t_lexer **lexer, t_cmds **cmds);
 
 // utils_split
 char	*ft_word(char *s, char **arr, char ind, char quotes);
 void	wait_till_end(char **s);
-void count_if_char(char *s, int *i);
+void	count_if_char(char *s, int *i);
 
 //parser
 t_cmds	*ft_lstnew_cmd(void);
-int	ft_lstsize_cmd(t_cmds *lst);
+int		ft_lstsize_cmd(t_cmds *lst);
 void	ft_lstadd_back_cmd(t_cmds **cmds, t_cmds *new);
 t_cmds	*ft_lstlast_cmd(t_cmds *cmds);
-int handel_if_file(t_lexer ***lexer, int fd);
+int		handel_if_file(t_lexer ***lexer, int fd);
 int		get_lcmd(t_lexer *lexer);
 int		open_files(t_lexer **lexer, t_token token, t_cmds **cmd, t_env **env);
 int		save_heredoc(t_lexer **lexer, t_cmds **cmds);
 void	save_heredoc2(t_lexer **lexer);
-void 	modify_exit_status(int nbr, t_env **env_list);
-void 	init_arrays(t_cmds *cmds);
+void	modify_exit_status(int nbr, t_env **env_list);
+void	init_arrays(t_cmds *cmds);
 void	*parser(t_lexer **lexer, t_cmds **cmds, int len, t_env **env);
 int		handel_heredoc(char *del, t_cmds **cmds);
 
 //expanding
 
 void	handel_expanding(t_lexer **lexer, t_env **env_list);
-char 	*expand_str(char *s, t_env **env_list);
+char	*expand_str(char *s, t_env **env_list);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		str_chr(char *s, char c);
 char	*ft_strdup(const char *s1);
-// char 	*handel_double_q(char *result, char *s, int *i, int *j, t_env **env_list);
 char	*handel_double_q(char *result, char *s, t_int *sin_t, t_env **env_list);
-// char	*handel_double_q(char *result, char **s, int *j, t_env **env_list);
-char 	*handel_singleq(char *result, char *s, int *i, int *j);
+char	*handel_singleq(char *result, char *s, int *i, int *j);
 char	*al_exp(char *str, int *pos, t_env **env_list);
 int		get_len_ep(char *s);
 int		end_of_proccessing(char *s, int i);
 int		is_real_char(char *s, int i);
-char 	*expanding_str(t_lexer **tmp, t_env **env_list);
+char	*expanding_str(t_lexer **tmp, t_env **env_list);
 
 //expand utils
-void expanding_cases(t_lexer **tmp, t_env **env_list);
-void *find_dollar(char *result, char *s, int *i);
-char *m_get_env(char *str, t_env **env_list);
-int check_if_noexpand(t_lexer **tmp);
-int	init_expand(char *s, int *i);
-char * handel_other_cases(char *s, char **result, int *i, t_env **env);
-int is_q_withspaces(char c);
-char *handel_expand_quotes(t_int *ints, t_lexer **tmp, char **res, t_env **env);
-t_int *init_ints();
+void	expanding_cases(t_lexer **tmp, t_env **env_list);
+void	*find_dollar(char *result, char *s, int *i);
+char	*m_get_env(char *str, t_env **env_list);
+int		check_if_noexpand(t_lexer **tmp);
+int		init_expand(char *s, int *i);
+char	*handel_other_cases(char *s, char **result, int *i, t_env **env);
+int		is_q_withspaces(char c);
+char	*handel_expand_quotes(t_int *ints, t_lexer **tmp, char **res, t_env **env);
+t_int	*init_ints(void);
 
 //debugging
 void	print_cmd(t_cmds **cmds);
-void 	printf_str(char *s);
-void 	printf_int(int d);
+void	printf_str(char *s);
+void	printf_int(int d);
 void	print_lexer(t_lexer *lexer);
 
 //execution
@@ -260,17 +245,12 @@ void	parent(char *nood, char **env);
 char	**ft_split_exe(char *s, char c);
 
 //utils
-int	no_quotes(char *line, int i);
-int has_quotes(char *s);
-int	is_quotes(char c);
-int	is_withspaces(char c);
-int	is_redirs(t_lexer *lexer);
-int is_number (char c);
-// typedef struct list
-// {
-// 	t_container	content;
-// 	struct list	*next;
-// }			t_list;
+int		no_quotes(char *line, int i);
+int		has_quotes(char *s);
+int		is_quotes(char c);
+int		is_withspaces(char c);
+int		is_redirs(t_lexer *lexer);
+int		is_number(char c);
 
 // // virtual
 void	ft_check(char *cmd, char **env);
@@ -317,7 +297,7 @@ int		builtins_print_error(char *cmd, char *type);
 char	*change_path_cd(t_tools *tools);
 
 //src
-void	multiple_cmd_util_0(t_var **var, t_cmds *list, t_env **env_list, int len);
+void	multiple_cmd_util_0(t_var **v, t_cmds *list, t_env **e_l, int l);
 void	multiple_cmd_util_1(int in_file, int *hold_fd_in);
 void	multiple_cmd_util_2(int *hold_fd_in);
 void	multiple_cmd_util_3(t_cmds *list, int *hold_fd_in);
@@ -333,7 +313,11 @@ int		check_is_dir(char *cmd);
 int		ft_strncmp_file(const char *s1, const char *s2, unsigned int n);
 int		ambugious(t_cmds **list);
 void	execut(t_var *var, t_env **env_list, t_cmds *list);
-int		run_built_mul_cmd(t_env **list_env, char **nood, t_cmds *cmds, int len);
+int		run_bui_p(t_env **list_env, char **nood, t_cmds *cmds, int len);
+int		ft_atoi(const char	*str);
+int		check_var(char	*cmd, t_env *list_env);
+int		if_var_exist_return(char *cmd, t_env *list_env);
+void	add_path_to_env(t_tools *tools, t_env *list_env);
 
 //builtins
 int		check_to_print_exit(int len);
@@ -346,6 +330,8 @@ int		ft_isdigit(int c);
 void	cd_error(void);
 int		check_for_arg_cd(char *cmd);
 char	*to_lowercase(char *str);
+char	*extract_exit_status(t_env *env_list);
+void	add_emergency_pwd(t_tools *tools, t_env *list_env);
 
 #endif
 // #endif

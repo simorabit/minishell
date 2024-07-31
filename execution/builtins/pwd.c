@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/30 21:01:15 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:03:16 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	ft_find_pwd(t_env *list_env)
 	env = change_list_to_env(list_env);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-	{ 
-		// serch in env "pwd" and jion it with ../ =>>
-		ft_putstr_fd("minishell: ", 1);
-		ft_putstr_fd("PWD not set", 1);
+	{
+		ft_putstr_fd(ft_find_path(env, "PWD=", 4), 1);
 		ft_putstr_fd("\n", 1);
 	}
 	else

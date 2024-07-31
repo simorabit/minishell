@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/30 12:50:20 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:13:42 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	add_path_to_env(t_tools *tools, t_env *list_env)
 {
 	int		i;
 	char	*tmp;
-//	t_env	*temp;
 
 	i = 0;
 	while (list_env)
@@ -81,16 +80,21 @@ int	mini_cd(t_tools *tools, t_cmds *s_cmd, t_env *list_env)
 	{
 		ret = chdir(s_cmd->cmmd[1]);
 		if (!getcwd(NULL, sizeof(NULL)))
-			cd_error();
+		{
+			add_emergency_pwd(tools, list_env);
+			return (0);
+		}
 		if (ret != 0)
 			return (builtins_print_error(s_cmd->cmmd[1], "no_such_file"));
 	}
 	if (ret != 0)
-		return (EXIT_FAILURE); /////////////////
+		return (1);
 	free_one = change_path_cd(tools);
+	if (!free_one)
+		return (free(free_one), 0);
 	add_path_to_env(tools, list_env);
 	free (free_one);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	cd_exec(t_cmds *cmds, t_env *list_env)
