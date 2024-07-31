@@ -35,6 +35,8 @@ TODO - for simo
 while true; do leaks minishell; done;
  << ls cat
 
+ ------->  cat <minishell.h>./outfiles/outfile <<<<<<||||>>>> chof had test 9arno m3a l bash
+
 
 echo fdsf < df
 

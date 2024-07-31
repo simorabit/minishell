@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/31 20:33:15 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 23:51:30 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	loop(t_env *env_list)
 
 	while (1)
 	{
-		line = readline("minishell : ");
+		line = readline("Minishell : ");
 		if (g_exit_s == 1)
 			(1) && (modify_exit_status(1, &env_list), g_exit_s = 0);
 		if (!line)

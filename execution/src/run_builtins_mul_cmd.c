@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:45:26 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 21:09:35 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 00:31:41 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,35 @@
 char	*to_lowercase(char *str)
 {
 	int	i;
+	char	*ptr;
 
+	ptr = ft_strncpy(str, ft_strlen(str));
 	i = -1;
-	while (str[++i])
+	while (ptr[++i])
 	{
-		if (str[i] >= 'A' && str[i] <= 'Z')
-			str[i] += ' ';
+		if (ptr[i] >= 'A' && ptr[i] <= 'Z')
+			ptr[i] += ' ';
 	}
-	return (str);
+	return (ptr);
 }
 
-int	run_built_mul_cmd_1(t_env **list_env, char **nood, t_cmds *cmds)
+int	run_built_mul_cmd_2(t_env **list_env, char **nood, t_cmds *cmds)
 {
 	int	exit_status;
 
 	exit_status = 0;
-	if (!ft_strcmp("export", nood[0]))
-		exit_status = export_exe(nood, *list_env);
-	else if (!ft_strcmp("echo", nood[0]))
+	if (!ft_strcmp("echo", to_lowercase(nood[0])))
 		echo(nood, cmds);
-	else if (!ft_strcmp("pwd", nood[0]))
+	else if (!ft_strcmp("pwd", to_lowercase(nood[0])))
 		ft_find_pwd(*list_env);
-	else if (!ft_strcmp("env", nood[0]))
+	else if (!ft_strcmp("env", to_lowercase(nood[0])))
 		write_env(*list_env, nood);
 	else
 		return (-1);
 	return (exit_status);
 }
 
-int	run_built_mul_cmd_2(t_env **list_env, char **nood, t_cmds *cmds, int len)
+int	run_built_mul_cmd_1(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	int	i;
 	int	exit_status;
@@ -52,14 +52,17 @@ int	run_built_mul_cmd_2(t_env **list_env, char **nood, t_cmds *cmds, int len)
 	exit_status = 0;
 	if (!ft_strcmp("cd", nood[0]))
 		exit_status = cd_exec(cmds, *list_env);
-	if (!ft_strcmp("exit", nood[0]))
+	else if (!ft_strcmp("exit", nood[0]))
 		exit_builtins(cmds, nood, len);
-	if (!ft_strcmp("unset", nood[0]))
+	else if (!ft_strcmp("export", nood[0]))
+		exit_status = export_exe(nood, *list_env);
+	else if (!ft_strcmp("unset", nood[0]))
 	{
 		while (nood[++i])
-			if (unset(list_env, nood[i]))
-				return (1);
+			exit_status = unset(list_env, nood[i]);
 	}
+	else
+		return (-1);
 	return (exit_status);
 }
 
@@ -78,8 +81,10 @@ int	run_bui_p(t_env **list_env, char **nood, t_cmds *cmds, int len)
 		print_error(nood[0], "no_such_file");
 		exit (127);
 	}
-	exit_status = run_built_mul_cmd_1(list_env, nood, cmds);
+	exit_status = run_built_mul_cmd_1(list_env, nood, cmds, len);
 	if (exit_status == -1)
-		exit_status = run_built_mul_cmd_2(list_env, nood, cmds, len);
+		exit_status = run_built_mul_cmd_2(list_env, nood, cmds);
+	if (exit_status == -1 && ft_strcmp(nood[0], "CD"))
+		print_error(nood[0], "cmd_not_found");
 	exit (exit_status);
 }
