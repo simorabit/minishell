@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 01:29:27 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:57:49 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	wait_func(int exit_status, t_env **env_list, int i)
 	}
 	while (wait(&exit_status) != -1)
 		;
+	if (WTERMSIG(exit_status) == SIGINT)
+		printf("\n");
 	exit_status = WEXITSTATUS(exit_status);
 	ex_st = ft_strjoin("?=", ft_itoa(exit_status));
 	add_variable(*env_list, ex_st, 1);
