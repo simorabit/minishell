@@ -71,12 +71,13 @@ typedef enum s_token
 	word,
 	mpipe,
 	redirect_in	,
-	redirect_out,
-	//append_out,
+	redirect_out, 
+	append_out,
 	heredoc,
 	redirect_app,
 	delimiter,
-	file
+	in_file,
+	out_file,
 }	t_token;
 
 typedef enum wquotes
@@ -134,6 +135,10 @@ typedef struct int_t{
 	int i;
 	int j;
 } t_int;
+
+
+int open_files_in(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env);
+
 
 void sighandler(int sig);
 
@@ -199,7 +204,7 @@ t_cmds	*ft_lstnew_cmd(void);
 int	ft_lstsize_cmd(t_cmds *lst);
 void	ft_lstadd_back_cmd(t_cmds **cmds, t_cmds *new);
 t_cmds	*ft_lstlast_cmd(t_cmds *cmds);
-
+int handel_if_file(t_lexer ***lexer, int fd);
 int		get_lcmd(t_lexer *lexer);
 int		open_files(t_lexer **lexer, t_token token, t_cmds **cmd, t_env **env);
 int		save_heredoc(t_lexer **lexer, t_cmds **cmds);

@@ -35,17 +35,11 @@ TODO - for simo
 while true; do leaks minishell; done;
  << ls cat
 
------> echo "$USER"
------> "ls -l" llll
------> echo "" "" "" "" "" "" -n lll <||> f had cmd line makatsift lia walo la f cmd la f args
-------> ls > 1 > 2 > 3 > 4 <||> hna khassek t7al ga3 les file nta kat7al ghir lawel
 
-minishell : << a cat
+echo fdsf < df
 
 
-./minishell
+exit  dd khsha t exiti
+exit 44 dd
 
-unset PWD OLDPWD
-cd .
-
-here_doc fd leaks
+./minishell 

@@ -6,13 +6,13 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 16:46:43 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:39:36 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	read_herdoc(char *del, char *line, int fd_in)
+static void read_herdoc(char *del, char *line, int fd_in)
 {
 	while (1)
 	{
@@ -20,7 +20,7 @@ static void	read_herdoc(char *del, char *line, int fd_in)
 		if (!line || ft_strcmp(line, del) == 0)
 		{
 			free(line);
-			break ;
+			break;
 		}
 		ft_putstr_fd(line, fd_in);
 		ft_putstr_fd("\n", fd_in);
@@ -28,7 +28,7 @@ static void	read_herdoc(char *del, char *line, int fd_in)
 	}
 }
 
-static void	handel_heredoc_in_child(char *del, char *line, int fd_in)
+static void handel_heredoc_in_child(char *del, char *line, int fd_in)
 {
 	signal(SIGINT, SIG_DFL);
 	rl_catch_signals = 1;
@@ -36,12 +36,12 @@ static void	handel_heredoc_in_child(char *del, char *line, int fd_in)
 	(close(fd_in), exit(0));
 }
 
-int	handel_heredoc(char *del, t_cmds **cmds)
+int handel_heredoc(char *del, t_cmds **cmds)
 {
-	int		fd_in;
-	char	*line;
-	int		pid;
-	int		exit_status;
+	int fd_in;
+	char *line;
+	int pid;
+	int exit_status;
 
 	line = NULL;
 	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -65,25 +65,34 @@ int	handel_heredoc(char *del, t_cmds **cmds)
 	return (fd_in);
 }
 
-int	save_heredoc(t_lexer **lexer, t_cmds **cmds)
+int handel_if_file(t_lexer ***lexer, int fd)
 {
-	int		len;
-	char	*del;
-	int		fd;
+	while (**lexer && (**lexer)->token != mpipe)
+		(**lexer) = (**lexer)->next;
+	return (fd);
+}
+
+int save_heredoc(t_lexer **lexer, t_cmds **cmds)
+{
+	int len;
+	char *del;
+	int fd;
 
 	len = 0;
 	del = NULL;
 	(*lexer) = (*lexer)->next;
-	while ((*lexer) && ((*lexer)->token == delimiter || \
-		(*lexer)->token == heredoc))
+	while ((*lexer) && ((*lexer)->token == delimiter ||
+						(*lexer)->token == heredoc || (*lexer)->token == in_file))
 	{
 		if ((*lexer)->token == delimiter)
 		{
 			del = ft_strdup((*lexer)->str);
 			fd = handel_heredoc(del, cmds);
 			if ((*cmds)->stop_ex == 0)
-				break ;
+				break;
 		}
+		if ((*lexer)->token == in_file)
+			return handel_if_file(&lexer, fd);
 		(*lexer) = (*lexer)->next;
 	}
 	return (fd);

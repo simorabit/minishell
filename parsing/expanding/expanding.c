@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 14:07:23 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/31 09:23:34 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*expanding_str(t_lexer **tmp, t_env **env)
 	{
 		ints->j = 0;
 		if (is_quotes(s[ints->i]))
-			res = handel_expand_quotes(ints, tmp, &res, env);
+			(res = handel_expand_quotes(ints, tmp, &res, env), (*tmp)->has_quotes = 1);
 		else if (s[ints->i] == '$' && (!s[ints->i + 1] || \
 		(!is_real_char(s, ints->i + 1) && !is_quotes(s[ints->i + 1]))))
 			res = ft_strjoin(res, ft_substr(&s[ints->i], 0, 1));

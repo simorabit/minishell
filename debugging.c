@@ -28,6 +28,7 @@ void print_cmd(t_cmds **cmds)
 		*cmds = (*cmds)->next;
 		printf("##########################\n");
 	}
+	exit(0);
 }
 void print_lexer(t_lexer *lexer)
 {

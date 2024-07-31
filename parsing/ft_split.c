@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 10:13:27 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:14:02 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void	count_if_quote(char *s, char qoute, int *i, int *counter)
 	(*counter)++;
 	(*i)++;
 	q = 1;
-	while (s[*i] && !(q % 2 == 0 && is_withspaces(s[*i + 1])))
+	if(is_quotes(s[*i]))
+	{
+		(*i)++;
+		return ;
+	}
+	while (s[*i] && !(q % 2 == 0 && is_withspaces(s[*i])))
 	{
 		if (s[*i] == qoute)
 			q++;
@@ -70,15 +75,14 @@ static int	count_words(char *s)
 		while (s[i] && is_withspaces(s[i]))
 			i++;
 		if (s[i] && s[i] == DOUBLE_QUOTE)
-		{
 			count_if_quote(s, DOUBLE_QUOTE, &i, &counter);
-		}
 		else if (s[i] && s[i] == SINGLE_QUOTE)
 			count_if_quote(s, SINGLE_QUOTE, &i, &counter);
-		else if (s[i] && !is_withspaces(s[i]))
+		else if (s[i] && !is_withspaces(s[i]) && !is_quotes(s[i]))
 		{
 			counter++;
 			count_if_char(s, &i);
+			
 		}
 	}
 	return (counter);

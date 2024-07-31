@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 13:53:57 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 14:00:49 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/31 09:23:52 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*handel_other_cases(char *s, char **result, int *i, t_env **env)
 		(*result) = ft_strjoin((*result), al_exp(s + (++(*i)), i, env));
 	else if (s[*i] == '$' && is_q_withspaces(s[*i + 1]))
 		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)++], 0, 1));
-	else if (s[*i] != '$')
-		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)++], 0, 1));
+	else 
+		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)], 0, 1));
 	return (*result);
 }
 
