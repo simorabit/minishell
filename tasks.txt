@@ -13,8 +13,7 @@ ls | exit 44
 
 
 
-exit status mat9oooooooooba
-file mkitranawch
+
 <<<<<<< HEAD
 ls >> file /// append makhdamach rk nsiti ma handlitihach
 /bin/ls: Permission denied
@@ -38,6 +37,8 @@ while true; do leaks minishell; done;
 
 -----> echo "$USER"
 -----> "ls -l" llll
+-----> echo "" "" "" "" "" "" -n lll <||> f had cmd line makatsift lia walo la f cmd la f args
+------> ls > 1 > 2 > 3 > 4 <||> hna khassek t7al ga3 les file nta kat7al ghir lawel
 
 minishell : << a cat
 

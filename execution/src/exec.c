@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/30 11:41:43 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 01:29:27 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 			multiple_cmd_util_5(list, var->p_in, var->p_out);
 			if (list->in_file != -1 && list->out_file != -1 && !var->i
 				&& var->check)
-				var->exit_status = run_built(env_list, list->cmmd, list, len);
+				{
+				var->exit_status = run_built_mul_cmd(env_list, list->cmmd, list, len);
+				}
 			if (list->in_file != -1 && list->out_file != -1 && !var->check)
 				execut(var, env_list, list);
 		}

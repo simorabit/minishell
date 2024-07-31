@@ -37,13 +37,12 @@
 #define MAGENTA "\x1b[35m"
 #define CYAN    "\x1b[36m"
 #define RESET   "\x1b[0m"
-typedef struct s_c_addresses t_c_addresses;
 
-struct s_c_addresses
+typedef struct s_c_addresses
 {
     void                *adr;
     struct s_c_addresses    *next;
-};
+}				 t_c_addresses;
 
 
 
@@ -286,7 +285,7 @@ void	change_list(t_cmds *list);
 void	initialize_files(t_cmds	**list);
 char	**join_cmd_arg(char *cmd, char **arg);
 void	add_emergency_env(t_env **env);
-void	unset(t_env **list_env, char *arg);
+int		unset(t_env **list_env, char *arg);
 char	*get_env_eq(char *new);
 
 // export
@@ -329,6 +328,7 @@ int		check_is_dir(char *cmd);
 int		ft_strncmp_file(const char *s1, const char *s2, unsigned int n);
 int		ambugious(t_cmds **list);
 void	execut(t_var *var, t_env **env_list, t_cmds *list);
+int		run_built_mul_cmd(t_env **list_env, char **nood, t_cmds *cmds, int len);
 
 //builtins
 int		check_to_print_exit(int len);
@@ -340,6 +340,7 @@ void	is_error(char *cmd);
 int		ft_isdigit(int c);
 void	cd_error(void);
 int		check_for_arg_cd(char *cmd);
+char	*to_lowercase(char *str);
 
 #endif
 // #endif

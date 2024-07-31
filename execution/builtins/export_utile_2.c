@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:10:03 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/07/31 01:40:39 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_arg_is_valide(char *arg)
 		if ((arg[i] >= '0' && arg[i] <= '9')
 			|| (arg[i] >= 'a' && arg[i] <= 'z')
 			|| (arg[i] >= 'A' && arg[i] <= 'Z')
-			|| arg[i] == '_' || arg[i] == '=')
+			|| arg[i] == '_')
 			i++;
 		else
 			break ;

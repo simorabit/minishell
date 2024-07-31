@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:29:04 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/28 15:20:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/07/31 01:31:01 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	print_error(char *cmd, char *type)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
-		return (127);
 	}
 	else if (!ft_strcmp(type, "pars_export"))
 	{
@@ -64,6 +63,13 @@ int	builtins_print_error(char *cmd, char *type)
 	if (!ft_strcmp(type, "pars_export"))
 	{
 		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	else if (!ft_strcmp(type, "pars__export"))
+	{
+		ft_putstr_fd("minishell: unset: `", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
