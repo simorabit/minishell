@@ -98,7 +98,9 @@ typedef struct s_simple_cmds
 	int						heredoc;
 	int						stop_ex;
 	int						is_ambugious;
+	int						is_error;
 	struct s_simple_cmds	*next;
+	struct s_simple_cmds	*prev;
 }							t_cmds;
 
 typedef struct env

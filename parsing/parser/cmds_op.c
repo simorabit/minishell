@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:16:43 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:02:28 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_cmds	*ft_lstnew_cmd(void)
 
 	cmds = (t_cmds *)my_alloc(sizeof(t_cmds));
 	cmds->next = NULL;
+	cmds->prev = NULL;
 	cmds->cmd = NULL;
 	cmds->stop_ex = -1;
 	return (cmds);
@@ -57,6 +58,7 @@ void	ft_lstadd_back_cmd(t_cmds **cmds, t_cmds *new)
 	{
 		last = ft_lstlast_cmd(*cmds);
 		last->next = new;
+		new->prev = last;
 	}
 	else
 		*cmds = new;

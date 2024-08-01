@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 19:33:59 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:25:29 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,11 @@ char	*ft_itoa(int n)
 	return (ptr);
 }
 
-void	wait_func(int exit_status, t_env **env_list, int i)
+void	wait_func(int exit_status, t_env **env_list, int i, t_cmds *list)
 {
-	char	*ex_st;
-
 	if (i)
 	{
-		ex_st = ft_strjoin("?=", ft_itoa(exit_status));
-		add_variable(*env_list, ex_st, 1);
+		modify_exit_status(exit_status, env_list);
 		return ;
 	}
 	while (wait(&exit_status) != -1)
@@ -72,32 +69,32 @@ void	wait_func(int exit_status, t_env **env_list, int i)
 	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
 	{
 		printf("\n");
-		ex_st = ft_strjoin("?=", ft_itoa(130));
-		add_variable(*env_list, ex_st, 1);
-		exit(0);
-		return ;
+		modify_exit_status(130, env_list);
 	}
-	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGQUIT)
+	else if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGQUIT)
+		modify_exit_status(131, env_list);
+	if (list && !list->is_error)
 	{
-		ex_st = ft_strjoin("?=", ft_itoa(131));
-		add_variable(*env_list, ex_st, 1);
-		return ;
+		exit_status = WEXITSTATUS(exit_status);
+		modify_exit_status(exit_status, env_list);
 	}
-	exit_status = WEXITSTATUS(exit_status);
-	ex_st = ft_strjoin("?=", ft_itoa(exit_status));
-	add_variable(*env_list, ex_st, 1);
+	else
+		modify_exit_status(1, env_list);
 }
 
 void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 {
 	t_var	*var;
-
+	t_cmds *cmd;
+	
 	var = my_alloc(sizeof(t_var));
 	if (!list || !list->cmd)
 		return ;
 	initialize_var(&var);
 	while (list)
 	{
+		if (list->next == NULL)
+			cmd = list;
 		if (ambugious(&list) == 1)
 			continue ;
 		multiple_cmd_util_0(&var, list, env_list, len);
@@ -112,5 +109,5 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 		}
 		multiple_cmd_util_7(&var, &list, len);
 	}
-	wait_func(var->exit_status, env_list, var->i);
+	wait_func(var->exit_status, env_list, var->i, cmd);
 }

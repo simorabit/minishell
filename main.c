@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 20:50:45 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:48:53 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handel_input(char *line, t_env **env_list)
 {
 	t_lexer			*lexer;
 	char			**res;
-	t_cmds	*cmds;
+	t_cmds			*cmds;
 	int				len;
 
 	lexer = NULL;
@@ -58,6 +58,7 @@ void	loop(t_env *env_list)
 			exit_con = extract_exit_status(env_list);
 			exit_status = ft_atoi(exit_con);
 			ft_putstr_fd("exit\n", 2);
+			printf("dgsdsg\n");
 			exit (exit_status);
 		}
 		if (line && *line)

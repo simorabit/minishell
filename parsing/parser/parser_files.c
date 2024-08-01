@@ -6,27 +6,27 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 17:04:03 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:53:59 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	show_file_error(int fd, int to, char *s, t_env **env)
+void	show_file_error(int fd, int to, char *s, t_cmds **cmds)
 {
 	if (fd == -1 && to == redirect_out)
 	{
 		ft_putstr_fd(s, 2);
 		ft_putstr_fd(": Error in open file", 2);
 		ft_putstr_fd("\n", 2);
-		modify_exit_status(1, env);
+		(*cmds)->is_error = 1;
 	}
 	else if (fd == -1 && (to == redirect_in || to == redirect_app))
 	{
 		ft_putstr_fd(s, 2);
 		ft_putstr_fd(": No such file or directory", 2);
 		ft_putstr_fd("\n", 2);
-		modify_exit_status(1, env);
+		(*cmds)->is_error = 1;
 	}
 }
 
@@ -78,6 +78,6 @@ int	open_files(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env)
 	}
 	fd = open_files_after_check(token, mfile);
 	if (!check_files_error(cmds))
-		show_file_error(fd, token, tmp->str, env);
+		show_file_error(fd, token, tmp->str, cmds);
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:53:47 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:52:03 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_arrays(t_cmds *cmds)
 		cmds->out_file = -2;
 		cmds->heredoc = -2;
 		cmds->aout_file = -2;
+		cmds->is_error = 0;
 	}
 }
 
