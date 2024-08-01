@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 17:47:00 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:53:16 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	read_herdoc(char *del, char *line, int fd_in, t_env **env)
 {
+	(void)env;
 	while (1)
 	{
 		line = readline(">");
@@ -22,7 +23,7 @@ static void	read_herdoc(char *del, char *line, int fd_in, t_env **env)
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(expanding_cases, fd_in);
+		ft_putstr_fd(line, fd_in);
 		ft_putstr_fd("\n", fd_in);
 		free(line);
 	}

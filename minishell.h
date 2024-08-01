@@ -178,7 +178,7 @@ char	**my_split(char const *s, char c);
 
 //syntax error
 int		syntax_error(t_lexer **lexer, t_env **env);
-void	handel_herdoc_err(t_lexer **lexer, t_cmds **cmds);
+void	handel_herdoc_err(t_lexer **lexer, t_cmds **cmds, t_env **env);
 
 // utils_split
 char	*ft_word(char *s, char **arr, char ind, char quotes);
