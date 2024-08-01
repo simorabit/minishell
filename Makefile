@@ -6,7 +6,7 @@
 #    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/08/01 17:07:16 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/08/01 19:53:30 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC = 	main.c parsing/lexer_list.c parsing/utils_string.c parsing/ft_split.c \
 		parsing/libft_func.c parsing/expanding/expanding.c parsing/expanding/utils.c \
 		parsing/utils.c parsing/remove_quotes.c parsing/parser/parser.c parsing/parser/utils_parser.c \
 		parsing/parser/parser_files.c parsing/parser/cmds_op.c addresses_collector.c\
+		parsing/parser/expand_heredoc.c \
 		execution/src/exec.c execution/src/function_devision.c execution/src/print_errors.c execution/src/utile.c \
 		execution/src/run_builtins.c execution/src/run_builtins_mul_cmd.c execution/builtins/cd.c execution/builtins/echo.c execution/builtins/pwd.c \
 		execution/builtins/export_utile_1.c execution/builtins/export_utile_2.c execution/builtins/export_utile_3.c \

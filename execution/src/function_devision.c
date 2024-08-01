@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function_devision.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:25:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 00:11:51 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:52:58 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	multiple_cmd_util_0(t_var **v, t_cmds *list, t_env **e_l, int l)
 		(*v)->pid = fork();
 	if (l == 1 && (*v)->check)
 	{
-		(*v)->exit_status = run_built(e_l, list->cmmd, list, l);
+		if (list->in_file != -1 && list->out_file != -1)
+			(*v)->exit_status = run_built(e_l, list->cmmd, list, l);
 		(*v)->i = 1;
 	}
 }

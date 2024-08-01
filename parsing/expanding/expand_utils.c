@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 13:53:57 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/31 09:23:52 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:06:47 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ char	*handel_other_cases(char *s, char **result, int *i, t_env **env)
 	else if (s[*i] == '$' && is_q_withspaces(s[*i + 1]))
 		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)++], 0, 1));
 	else 
-		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)], 0, 1));
+		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)++], 0, 1));
 	return (*result);
 }
 
 char	*handel_expand_quotes(t_int *is, t_lexer **t, char **res, t_env **env)
 {
+	if(!ft_strcmp("\"$\"", (*t)->str))
+		return ft_strdup("$");
 	if ((*t)->str[is->i] == DOUBLE_QUOTE)
 	{
 		*res = handel_double_q(*res, (*t)->str, is, env);

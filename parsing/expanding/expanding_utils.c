@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:07:26 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 10:55:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:02:45 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	expanding_cases(t_lexer **tmp, t_env **env_list)
 	if ((*tmp)->token == word && ((*tmp)->str && (*tmp)->str[0] == '$'))
 		handle_options(&(*tmp), env_list);
 	else
-		(*tmp)->str = expanding_str(&(*tmp), env_list);
+		(*tmp)->str = expanding_str(tmp, env_list);
 	if ((*tmp)->token != word)
 		(*tmp)->str = ft_strdup("");
 	if (!(*tmp)->str && (*tmp)->has_quotes == 1)

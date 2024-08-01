@@ -6,30 +6,31 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 17:53:16 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:07:44 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	read_herdoc(char *del, char *line, int fd_in, t_env **env)
+static void read_herdoc(char *del, char *line, int fd_in, t_env **env)
 {
-	(void)env;
 	while (1)
 	{
 		line = readline(">");
 		if (!line || ft_strcmp(line, del) == 0)
 		{
 			free(line);
-			break ;
+			break;
 		}
+		if (str_chr(line, '$') != -1)
+			line = ft_strdup(expanding_str_here(line, env));
 		ft_putstr_fd(line, fd_in);
 		ft_putstr_fd("\n", fd_in);
 		free(line);
 	}
 }
 
-static void	handel_heredoc_in_child(char *del, char *line, int fd_in, t_env **env)
+static void handel_heredoc_in_child(char *del, char *line, int fd_in, t_env **env)
 {
 	signal(SIGINT, SIG_DFL);
 	rl_catch_signals = 1;
@@ -37,12 +38,12 @@ static void	handel_heredoc_in_child(char *del, char *line, int fd_in, t_env **en
 	(close(fd_in), exit(0));
 }
 
-int	handel_heredoc(char *del, t_cmds **cmds, t_env **env)
+int handel_heredoc(char *del, t_cmds **cmds, t_env **env)
 {
-	int		fd_in;
-	char	*line;
-	int		pid;
-	int		exit_status;
+	int fd_in;
+	char *line;
+	int pid;
+	int exit_status;
 
 	line = NULL;
 	pid = fork();
@@ -55,36 +56,31 @@ int	handel_heredoc(char *del, t_cmds **cmds, t_env **env)
 	{
 		wait(&exit_status);
 		if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
-		{
-			close(fd_in);
-			if (cmds && *cmds)
-				(*cmds)->stop_ex = 0;
-			return (-2);
-		}
+			return (handel_ctr(fd_in, cmds));
 	}
 	close(fd_in);
 	fd_in = open("/tmp/test.txt", O_RDONLY, 0644);
 	return (fd_in);
 }
 
-int	handel_if_file(t_lexer ***lexer, int fd)
+int handel_if_file(t_lexer ***lexer, int fd)
 {
 	while (**lexer && (**lexer)->token != mpipe)
 		(**lexer) = (**lexer)->next;
 	return (fd);
 }
 
-int	save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
+int save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
 {
-	int		len;
-	char	*del;
-	int		fd;
+	int len;
+	char *del;
+	int fd;
 
 	len = 0;
 	del = NULL;
 	(*lexer) = (*lexer)->next;
 	while ((*lexer) && ((*lexer)->token == delimiter ||
-			(*lexer)->token == heredoc || (*lexer)->token == file))
+						(*lexer)->token == heredoc || (*lexer)->token == file))
 	{
 		if ((*lexer)->token == delimiter)
 		{
@@ -93,7 +89,7 @@ int	save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
 			if (!(*cmds)->cmd)
 				close(fd);
 			if ((*cmds)->stop_ex == 0)
-				break ;
+				break;
 		}
 		if ((*lexer)->token == file)
 			return (handel_if_file(&lexer, fd));

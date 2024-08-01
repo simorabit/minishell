@@ -200,6 +200,10 @@ void	init_arrays(t_cmds *cmds);
 void	*parser(t_lexer **lexer, t_cmds **cmds, int len, t_env **env);
 int		handel_heredoc(char *del, t_cmds **cmds, t_env **env);
 
+//expand heredoc
+char	*expanding_str_here(char *s, t_env **env);
+int handel_ctr(int fd_in, t_cmds **cmds);
+
 //expanding
 
 void	handel_expanding(t_lexer **lexer, t_env **env_list);
