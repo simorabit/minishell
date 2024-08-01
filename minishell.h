@@ -66,8 +66,7 @@ typedef enum s_token
 	heredoc,
 	redirect_app,
 	delimiter,
-	in_file,
-	out_file,
+	file,
 }	t_token;
 
 typedef enum wquotes
@@ -194,12 +193,12 @@ t_cmds	*ft_lstlast_cmd(t_cmds *cmds);
 int		handel_if_file(t_lexer ***lexer, int fd);
 int		get_lcmd(t_lexer *lexer);
 int		open_files(t_lexer **lexer, t_token token, t_cmds **cmd, t_env **env);
-int		save_heredoc(t_lexer **lexer, t_cmds **cmds);
+int		save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env);
 void	save_heredoc2(t_lexer **lexer);
 void	modify_exit_status(int nbr, t_env **env_list);
 void	init_arrays(t_cmds *cmds);
 void	*parser(t_lexer **lexer, t_cmds **cmds, int len, t_env **env);
-int		handel_heredoc(char *del, t_cmds **cmds);
+int		handel_heredoc(char *del, t_cmds **cmds, t_env **env);
 
 //expanding
 

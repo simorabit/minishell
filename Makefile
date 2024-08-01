@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
+#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/08/01 16:43:03 by souaouri         ###   ########.fr        #
+#    Updated: 2024/08/01 17:07:16 by mal-mora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -fsanitize=address -g
-CC				+=	-Wall -Wextra -Werror #-fsanitize=address -g
+CC				+=	-Wall -Wextra -Werror -fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 

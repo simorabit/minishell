@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:40:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 21:13:53 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:08:59 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	add_variable(t_env *list_env, char *new, int error)
 {
 	t_env	*var;
 	t_env	*temp;
-
+	
 	temp = list_env;
 	if (check_for_plus_and_eq(new, 0))
 		if (preparing_var(list_env, new))

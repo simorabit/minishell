@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/31 15:42:36 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:43:50 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int	handel_files(t_lexer **tmp, t_cmds *cmds, t_env **env)
 
 	res = 0;
 	if (*tmp && (*tmp)->token == redirect_in)
-		cmds->in_file = open_files_in(tmp, redirect_in, &cmds, env);
+		cmds->in_file = open_files(tmp, redirect_in, &cmds, env);
 	else if (*tmp && (*tmp)->token == redirect_out)
 		cmds->out_file = open_files(tmp, redirect_out, &cmds, env);
 	else if (*tmp && (*tmp)->token == heredoc)
 	{
-		res = save_heredoc(tmp, &cmds);
+		res = save_heredoc(tmp, &cmds, env);
 		if (res == -2)
 			return (-1);
 		cmds->heredoc = res;
@@ -63,7 +63,8 @@ int	handel_files(t_lexer **tmp, t_cmds *cmds, t_env **env)
 void	*handel_cmd(t_lexer **tmp, t_cmds *cmds, int *j)
 {
 	if ((*j == 0 && (*tmp)->token == word) || \
-		((*tmp)->token == word && (*tmp)->prev->token != word))
+		((*tmp)->token == word && (*tmp)->prev->token == mpipe) || \
+			((*tmp)->token == word && cmds->cmd == NULL))
 	{
 		cmds->cmd = ft_strdup((*tmp)->str);
 		if (!cmds->cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 16:41:02 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:11:34 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	wait_func(int exit_status, t_env **env_list, int i)
 		printf("\n");
 		ex_st = ft_strjoin("?=", ft_itoa(130));
 		add_variable(*env_list, ex_st, 1);
+		exit(0);
 		return ;
 	}
 	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGQUIT)

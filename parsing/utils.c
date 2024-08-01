@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:11:06 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 09:09:28 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:31:18 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_redirs(t_lexer *lexer)
 {
-	return (lexer->token >= 2 && lexer->token <= 5);
+	return (lexer->token >= 2 && lexer->token <= 6);
 }
 
 int	is_withspaces(char c)
