@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 12:51:06 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 14:36:16 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:41:57 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ void	sighandler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_exit_s = 1;
 		if (waitpid(-1, NULL, WNOHANG) == 0)
 		{
-			printf("\n");
 			return ;
 		}
+		g_exit_s = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);

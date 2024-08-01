@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 15:00:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:17:14 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	check_is_dir(char *cmd)
 	re = stat(cmd, &st);
 	if (!re)
 	{
-		if (S_ISREG(st.st_mode))
-			return (1);
+		// if (S_ISREG(st.st_mode))
+		// 	return (1);
 		if (S_ISDIR(st.st_mode))
 			return (2);
 		return (0);

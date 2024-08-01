@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 00:18:06 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:41:02 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ void	wait_func(int exit_status, t_env **env_list, int i)
 	}
 	while (wait(&exit_status) != -1)
 		;
+	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+	{
+		printf("\n");
+		ex_st = ft_strjoin("?=", ft_itoa(130));
+		add_variable(*env_list, ex_st, 1);
+		return ;
+	}
+	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGQUIT)
+	{
+		ex_st = ft_strjoin("?=", ft_itoa(131));
+		add_variable(*env_list, ex_st, 1);
+		return ;
+	}
 	exit_status = WEXITSTATUS(exit_status);
 	ex_st = ft_strjoin("?=", ft_itoa(exit_status));
 	add_variable(*env_list, ex_st, 1);

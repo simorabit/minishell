@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/31 21:21:46 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:35:23 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	handel_heredoc(char *del, t_cmds **cmds)
 	int		exit_status;
 
 	line = NULL;
-	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	pid = fork();
+	fd_in = open("/tmp/test.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pid == -1)
 		return (perror("Error forking process"), -1);
 	else if (pid == 0)
@@ -61,6 +61,7 @@ int	handel_heredoc(char *del, t_cmds **cmds)
 			return (-2);
 		}
 	}
+	close(fd_in);
 	fd_in = open("/tmp/test.txt", O_RDONLY, 0644);
 	return (fd_in);
 }
@@ -88,6 +89,10 @@ int	save_heredoc(t_lexer **lexer, t_cmds **cmds)
 		{
 			del = ft_strdup((*lexer)->str);
 			fd = handel_heredoc(del, cmds);
+			// if (!(*cmds)->args || (*cmds)->args[0] == NULL)
+			// {
+			// 	close(fd);
+			// }
 			if ((*cmds)->stop_ex == 0)
 				break ;
 		}
