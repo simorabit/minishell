@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:44:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 20:55:46 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:34:48 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	add_emergency_env(t_env **env)
 	t_env	*path;
 	char	*ptr;
 
-	ptr = ft_strjoin("PATH=/Users/souaouri/.brew/bin:", NULL);
-	ptr = ft_strjoin(ptr, "/usr/local/bin:/usr/bin:/bin");
+	ptr = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	path = ft_lstnew_env(ptr);
 	first_line = ft_lstnew_env("PWD=/Users/souaouri/Desktop/mn_sh");
 	second_line = ft_lstnew_env("SHLVL=1");

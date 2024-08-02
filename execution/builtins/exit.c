@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:46:38 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 14:11:19 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:46:37 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,24 @@ int	get_exit_code(char *arg, int *error)
 	return (i % 256);
 }
 
-int	exit_builtins(t_cmds *cmd, char **args, int len)
+int	exit_builtins(t_cmds *cmd, char **args, int len, t_env *list_env)
 {
 	int		exit_num;
 	int		error;
 	int		checker;
 
-	(void)args;
 	(void)cmd;
 	error = 0;
 	checker = check_to_print_exit(len);
+	
 	if (!checker)
+	{
 		ft_putstr_fd("exit\n", 2);
+		if (!args[1])
+			exit (ft_atoi(extract_exit_status(list_env)));
+	}
 	if (!args[1])
-		exit_num = 0;
+		exit (0);
 	else
 	{
 		exit_num = get_exit_code(cmd->args[0], &error);
@@ -101,7 +105,13 @@ int	exit_builtins(t_cmds *cmd, char **args, int len)
 			ft_putstr_fd(": numeric argument required\n", 2);
 			exit_num = 255;
 		}
+		else if (ft_strlen_1(args) > 2)
+		{
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			return (1);
+		}
+		exit(exit_num);
 	}
-	exit(exit_num);
+	
 	return (0);
 }

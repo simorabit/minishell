@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 21:13:42 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 01:37:58 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,33 @@ int	specific_path(t_env *list_env, char *str)
 	return (ret);
 }
 
+void    set_pwd(t_tools *tools, t_env *list_env)
+{
+	char	*join;
+	char	*g_pwd;
+	(void)tools;
+    if (tools->pwd)
+    {
+		change_path_cd(tools);
+		if (!tools->old_pwd)
+		{
+			g_pwd = getcwd(NULL, 0);
+			join = ft_strjoin("export OLDPWD=", g_pwd);
+        	export_exe(ft_split_exe(join, 32), list_env);
+			free(g_pwd);
+		}
+		else
+		{
+		join = ft_strjoin("export OLDPWD=", tools->old_pwd);
+        export_exe(ft_split_exe(join, 32), list_env);
+		}
+    }
+	g_pwd = getcwd(NULL, 0);
+	join = ft_strjoin("export PWD=", g_pwd);
+    export_exe(ft_split_exe(join, 32), list_env);
+	free (g_pwd);
+}
+
 void	add_path_to_env(t_tools *tools, t_env *list_env)
 {
 	int		i;
@@ -73,17 +100,25 @@ int	mini_cd(t_tools *tools, t_cmds *s_cmd, t_env *list_env)
 {
 	int		ret;
 	char	*free_one;
+	char	*free_two;
 
+	if (!ft_find_path(change_list_to_env(list_env), "PWD=", 4) || !ft_find_path(change_list_to_env(list_env), "OLDPWD=", 4))
+	{
+		printf ("LLL\n");
+		set_pwd(tools, list_env);
+	}
 	if (check_for_arg_cd(s_cmd->cmmd[1]))
 		ret = specific_path(list_env, "HOME=");
 	else
 	{
 		ret = chdir(s_cmd->cmmd[1]);
-		if (!getcwd(NULL, sizeof(NULL)))
+		free_two = getcwd(NULL, sizeof(NULL));
+		if (!free_two)
 		{
 			add_emergency_pwd(tools, list_env);
 			return (0);
 		}
+		free(free_two);
 		if (ret != 0)
 			return (builtins_print_error(s_cmd->cmmd[1], "no_such_file"));
 	}

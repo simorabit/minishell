@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:28:03 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/30 11:41:01 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:55:16 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	multiple_cmd_util_5(t_cmds *list, int p_in, int p_out)
 {
 	if (list->in_file == 0)
-		close (p_in);
+		close(p_in);
 	if (list->out_file == 1)
-		close (p_out);
+		close(p_out);
 }
 
 void	multiple_cmd_util_6(int p_in, int p_out)

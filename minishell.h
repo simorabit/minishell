@@ -293,7 +293,7 @@ t_env	*env_dup(t_env *list);
 int		check_for_plus_and_eq(char *arg, int w);
 char	*remove_plus(char *new);
 void	add_variable(t_env *list_env, char *new, int error);
-int		exit_builtins(t_cmds *cmd, char **args, int len);
+int		exit_builtins(t_cmds *cmd, char **args, int len, t_env *list_env);
 int		print_error(char *cmd, char *type);
 int		cd_exec(t_cmds *cmds, t_env *list_env);
 

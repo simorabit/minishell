@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 16:17:14 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:03:38 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,20 @@ void	ft_exec(char **cmd, char **env)
 	path = ft_get_path(cmd[0], env);
 	if (path == NULL)
 	{
-		is_error(cmd[0]);
-		print_error(cmd[0], "no_such_file");
-		exit (127);
+		if (!ft_strchr(cmd[0], '/'))
+		{
+			print_error(cmd[0], "no_such_file");
+			exit (127);
+		}
 	}
 	if (execve(path, cmd, env) == -1)
 	{
+		if (ft_strchr(cmd[0], '/'))
+		{
+			is_error(cmd[0]);
+			print_error(cmd[0], "Per_denied");
+			exit (126);
+		}
 		print_error(cmd[0], "cmd_not_found");
 		free_double_ptr(cmd);
 		exit (127);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:40:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 17:08:59 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:30:11 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ t_env	*env_dup(t_env *list)
 	return (new_list);
 }
 
-int	_remove_var(t_env *temp, char *new)
+int	_remove_var(t_env *list, char *new)
 {
 	char	*ptr;
+	t_env	*temp;
 
+	temp = list;
 	while (temp)
 	{
 		ptr = ft_strjoin(get_env_eq(new), "=");
@@ -49,12 +51,14 @@ int	_remove_var(t_env *temp, char *new)
 	return (0);
 }
 
-int	preparing_var(t_env *list_env, char *new)
+int	preparing_var(t_env *list, char *new)
 {
 	char	*join;
 	char	*join_1;
 	char	*ptr;
+	t_env	*list_env;
 
+	list_env = list;
 	while (list_env)
 	{
 		ptr = get_var_from_beg_to_eq(new);
@@ -81,7 +85,7 @@ void	add_variable(t_env *list_env, char *new, int error)
 {
 	t_env	*var;
 	t_env	*temp;
-	
+
 	temp = list_env;
 	if (check_for_plus_and_eq(new, 0))
 		if (preparing_var(list_env, new))

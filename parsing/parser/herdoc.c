@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 20:07:44 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 01:01:10 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void read_herdoc(char *del, char *line, int fd_in, t_env **env)
 {
 	while (1)
 	{
-		line = readline(">");
+		line = readline("> ");
 		if (!line || ft_strcmp(line, del) == 0)
 		{
 			free(line);

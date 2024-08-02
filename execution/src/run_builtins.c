@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 00:14:00 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:52:33 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds, int len)
 	if (!ft_strcmp("cd", nood[0]))
 		exit_status = cd_exec(cmds, *list_env);
 	else if (!ft_strcmp("exit", nood[0]))
-		exit_builtins(cmds, nood, len);
+		exit_status = exit_builtins(cmds, nood, len, *list_env);
 	else if (!ft_strcmp("export", nood[0]))
 		exit_status = export_exe(nood, *list_env);
 	else if (!ft_strcmp("unset", nood[0]))
@@ -85,11 +85,6 @@ int	run_built(t_env **list_env, char **nood, t_cmds *cmds, int len)
 	env = change_list_to_env(*list_env);
 	if (nood == NULL)
 		return (0);
-	if (!ft_find_path(env, "PATH=", 5))
-	{
-		print_error(nood[0], "no_such_file");
-		return (127);
-	}
 	exit_status = run_built_1(list_env, nood, cmds, len);
 	if (exit_status == -1)
 		exit_status = run_built_2(list_env, nood, cmds);
