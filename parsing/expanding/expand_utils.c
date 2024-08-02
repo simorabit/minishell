@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 13:53:57 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 21:06:47 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:03:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ char	*handel_other_cases(char *s, char **result, int *i, t_env **env)
 		(*result) = ft_strjoin((*result), al_exp(s + (++(*i)), i, env));
 	else if (s[*i] == '$' && is_q_withspaces(s[*i + 1]))
 		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)++], 0, 1));
-	else 
+	else
 		(*result) = ft_strjoin((*result), ft_substr(&s[(*i)++], 0, 1));
 	return (*result);
 }
 
-char	*handel_expand_quotes(t_int *is, t_lexer **t, char **res, t_env **env)
+char	*handel_ex_q(t_int *is, t_lexer **t, char **res, t_env **env)
 {
-	if(!ft_strcmp("\"$\"", (*t)->str))
-		return ft_strdup("$");
+	if (!ft_strcmp("\"$\"", (*t)->str))
+		return (ft_strdup("$"));
 	if ((*t)->str[is->i] == DOUBLE_QUOTE)
 	{
 		*res = handel_double_q(*res, (*t)->str, is, env);
-		(*t)->has_quotes = 1;
+		(*t)->has_q = 1;
 	}
 	else
 		*res = handel_singleq(*res, (*t)->str, &is->i, &is->j);

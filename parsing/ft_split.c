@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:30:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/31 10:14:02 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:08:58 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	count_if_quote(char *s, char qoute, int *i, int *counter)
 	(*counter)++;
 	(*i)++;
 	q = 1;
-	if(is_quotes(s[*i]))
+	if (is_quotes(s[*i]))
 	{
 		(*i)++;
 		return ;
@@ -82,7 +82,6 @@ static int	count_words(char *s)
 		{
 			counter++;
 			count_if_char(s, &i);
-			
 		}
 	}
 	return (counter);

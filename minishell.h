@@ -84,7 +84,7 @@ typedef struct s_lexer
 	t_wquotes		wquotes;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
-	int				has_quotes;
+	int				has_q;
 }					t_lexer;
 
 typedef struct s_simple_cmds
@@ -127,7 +127,8 @@ typedef struct int_t
 	int	j;
 }		t_int;
 
-int		open_files_in(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env);
+int		open_files_in(t_lexer **lexer, t_token token, \
+	t_cmds **cmds, t_env **env);
 void	sighandler(int sig);
 
 //libift func
@@ -204,8 +205,7 @@ int		handel_heredoc(char *del, t_cmds **cmds, t_env **env);
 
 //expand heredoc
 char	*expanding_str_here(char *s, t_env **env);
-int handel_ctr(int fd_in, t_cmds **cmds);
-
+int		handel_ctr(int fd_in, t_cmds **cmds);
 //expanding
 
 void	handel_expanding(t_lexer **lexer, t_env **env_list);
@@ -226,10 +226,10 @@ void	expanding_cases(t_lexer **tmp, t_env **env_list);
 void	*find_dollar(char *result, char *s, int *i);
 char	*m_get_env(char *str, t_env **env_list);
 int		check_if_noexpand(t_lexer **tmp);
-int		init_expand(char *s, int *i);
+int		init_expand(char *s, int *i, int *cnt);
 char	*handel_other_cases(char *s, char **result, int *i, t_env **env);
 int		is_q_withspaces(char c);
-char	*handel_expand_quotes(t_int *ints, t_lexer **tmp, char **res, t_env **env);
+char	*handel_ex_q(t_int *is, t_lexer **t, char **res, t_env **env);
 t_int	*init_ints(void);
 
 //debugging
@@ -251,7 +251,7 @@ char	**ft_split_exe(char *s, char c);
 
 //utils
 int		no_quotes(char *line, int i);
-int		has_quotes(char *s);
+int		has_q(char *s);
 int		is_quotes(char c);
 int		is_withspaces(char c);
 int		is_redirs(t_lexer *lexer);

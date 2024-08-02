@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:14:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/28 17:28:25 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 09:45:26 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ int	get_len_ep(char *s)
 	return (len);
 }
 
-int	init_expand(char *s, int *i)
+int	init_expand(char *s, int *i, int *cnt)
 {
+	*cnt = 0;
 	if (!ft_strcmp(s, "$"))
 		return (0);
 	while (s[*i] && s[*i] != '$')

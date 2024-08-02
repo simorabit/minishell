@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:11:06 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 17:31:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:03:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_quotes(char c)
 	return (c == DOUBLE_QUOTE || c == SINGLE_QUOTE);
 }
 
-int	has_quotes(char *s)
+int	has_q(char *s)
 {
 	int	i;
 

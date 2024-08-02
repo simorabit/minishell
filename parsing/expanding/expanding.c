@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 21:06:36 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:03:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@ char	*expand_str(char *s, t_env **env_list)
 	char	*result;
 	char	*befor_dollar;
 
-	cnt = 0;
 	result = NULL;
 	i = 0;
-	if (!init_expand(s, &i))
+	if (!init_expand(s, &i, &cnt))
 		return (ft_strdup("$"));
 	befor_dollar = ft_substr(s, 0, i);
 	while (s[i])
@@ -63,8 +62,6 @@ char	*expand_str(char *s, t_env **env_list)
 		else if (s[i] == '$' && !(cnt) && is_q_withspaces(s[i + 1]))
 			result = ft_strjoin(befor_dollar, ft_substr(&s[i++], 0, 1));
 		(1) && (result = handel_other_cases(s, &result, &i, env_list), cnt++);
-		if (!result)
-			return (NULL);
 	}
 	free(befor_dollar);
 	return (result);
@@ -83,7 +80,7 @@ char	*expanding_str(t_lexer **tmp, t_env **env)
 	{
 		ints->j = 0;
 		if (is_quotes(s[ints->i]))
-			(res = handel_expand_quotes(ints, tmp, &res, env), (*tmp)->has_quotes = 1);
+			(1) && (res = handel_ex_q(ints, tmp, &res, env), (*tmp)->has_q = 1);
 		else if (s[ints->i] == '$' && (!s[ints->i + 1] || \
 		(!is_real_char(s, ints->i + 1) && !is_quotes(s[ints->i + 1]))))
 			res = ft_strjoin(res, ft_substr(&s[ints->i], 0, 1));
@@ -133,10 +130,10 @@ void	handel_expanding(t_lexer **lexer, t_env **env_list)
 			continue ;
 		}
 		tmp->expanded = 1;
-		tmp->has_quotes = 0;
+		tmp->has_q = 0;
 		expanding_cases(&tmp, env_list);
 		if (!tmp->str || (*tmp->str == '\0' && tmp->token == word && \
-			tmp->has_quotes == 0))
+			tmp->has_q == 0))
 		{
 			i = tmp->i;
 			tmp = tmp->next;

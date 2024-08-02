@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/02 01:01:10 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:07:49 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void read_herdoc(char *del, char *line, int fd_in, t_env **env)
+static void	read_herdoc(char *del, char *line, int fd_in, t_env **env)
 {
 	while (1)
 	{
@@ -20,7 +20,7 @@ static void read_herdoc(char *del, char *line, int fd_in, t_env **env)
 		if (!line || ft_strcmp(line, del) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		if (str_chr(line, '$') != -1)
 			line = ft_strdup(expanding_str_here(line, env));
@@ -30,7 +30,7 @@ static void read_herdoc(char *del, char *line, int fd_in, t_env **env)
 	}
 }
 
-static void handel_heredoc_in_child(char *del, char *line, int fd_in, t_env **env)
+static void	handel_hd_child(char *del, char *line, int fd_in, t_env **env)
 {
 	signal(SIGINT, SIG_DFL);
 	rl_catch_signals = 1;
@@ -38,12 +38,12 @@ static void handel_heredoc_in_child(char *del, char *line, int fd_in, t_env **en
 	(close(fd_in), exit(0));
 }
 
-int handel_heredoc(char *del, t_cmds **cmds, t_env **env)
+int	handel_heredoc(char *del, t_cmds **cmds, t_env **env)
 {
-	int fd_in;
-	char *line;
-	int pid;
-	int exit_status;
+	int		fd_in;
+	char	*line;
+	int		pid;
+	int		exit_status;
 
 	line = NULL;
 	pid = fork();
@@ -51,7 +51,7 @@ int handel_heredoc(char *del, t_cmds **cmds, t_env **env)
 	if (pid == -1)
 		return (perror("Error forking process"), -1);
 	else if (pid == 0)
-		handel_heredoc_in_child(del, line, fd_in, env);
+		handel_hd_child(del, line, fd_in, env);
 	else
 	{
 		wait(&exit_status);
@@ -63,24 +63,24 @@ int handel_heredoc(char *del, t_cmds **cmds, t_env **env)
 	return (fd_in);
 }
 
-int handel_if_file(t_lexer ***lexer, int fd)
+int	handel_if_file(t_lexer ***lexer, int fd)
 {
 	while (**lexer && (**lexer)->token != mpipe)
 		(**lexer) = (**lexer)->next;
 	return (fd);
 }
 
-int save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
+int	save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
 {
-	int len;
-	char *del;
-	int fd;
+	int		len;
+	char	*del;
+	int		fd;
 
 	len = 0;
 	del = NULL;
 	(*lexer) = (*lexer)->next;
-	while ((*lexer) && ((*lexer)->token == delimiter ||
-						(*lexer)->token == heredoc || (*lexer)->token == file))
+	while ((*lexer) && ((*lexer)->token == delimiter || \
+	(*lexer)->token == heredoc || (*lexer)->token == file))
 	{
 		if ((*lexer)->token == delimiter)
 		{
@@ -89,7 +89,7 @@ int save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
 			if (!(*cmds)->cmd)
 				close(fd);
 			if ((*cmds)->stop_ex == 0)
-				break;
+				break ;
 		}
 		if ((*lexer)->token == file)
 			return (handel_if_file(&lexer, fd));

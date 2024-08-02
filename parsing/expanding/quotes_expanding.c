@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:08:16 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 20:46:09 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 09:40:46 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*handel_double_q(char *result, char *s, t_int *sin_t, t_env **env_list)
 		if (s[sin_t->i] == DOUBLE_QUOTE)
 		{
 			res = ft_substr(s, k, sin_t->j);
-			// printf_str(res);
 			if (!res)
 				return (NULL);
 			if (str_chr(res, '$') != -1)

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:42:57 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 14:45:44 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:03:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	remove_quotes(t_lexer **lexer)
 	tmp = *lexer;
 	while (tmp)
 	{
-		if (has_quotes(tmp->str) == 1 && !tmp->expanded)
+		if (has_q(tmp->str) == 1 && !tmp->expanded)
 			tmp->str = remove_each_one(tmp->str, DOUBLE_QUOTE);
-		else if (has_quotes(tmp->str) == 2 && !tmp->expanded)
+		else if (has_q(tmp->str) == 2 && !tmp->expanded)
 			tmp->str = remove_each_one(tmp->str, SINGLE_QUOTE);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 21:53:59 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 12:11:42 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	open_files_after_check(int token, char *mfile)
 int	open_files(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env)
 {
 	int		len;
-	char	*mfile;
+	t_lexer	tmp2;
 	int		fd;
 	t_lexer	*tmp;
 
@@ -68,15 +68,16 @@ int	open_files(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env)
 	{
 		if ((*lexer)->token == file && ((*lexer)->next == NULL || \
 				(*lexer)->next->token != token))
-			mfile = ft_strdup((*lexer)->str);
+			(1) && (tmp2.str = ft_strdup((*lexer)->str), \
+					tmp2.expanded = (*lexer)->expanded);
 		(*lexer) = (*lexer)->next;
 	}
-	if (mfile && !*mfile)
+	if (tmp2.str && (!*tmp2.str && tmp2.expanded))
 	{
 		(*cmds)->is_ambugious = 1;
 		return (error_msg(AMBIGUOUS_REDIRECT, env), -1);
 	}
-	fd = open_files_after_check(token, mfile);
+	fd = open_files_after_check(token, tmp2.str);
 	if (!check_files_error(cmds))
 		show_file_error(fd, token, tmp->str, cmds);
 	return (fd);
