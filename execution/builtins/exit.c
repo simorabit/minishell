@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:46:38 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 23:46:37 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:13:47 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,10 @@ int	get_exit_code(char *arg, int *error)
 
 int	exit_builtins(t_cmds *cmd, char **args, int len, t_env *list_env)
 {
-	int		exit_num;
-	int		error;
 	int		checker;
 
 	(void)cmd;
-	error = 0;
 	checker = check_to_print_exit(len);
-	
 	if (!checker)
 	{
 		ft_putstr_fd("exit\n", 2);
@@ -97,21 +93,8 @@ int	exit_builtins(t_cmds *cmd, char **args, int len, t_env *list_env)
 		exit (0);
 	else
 	{
-		exit_num = get_exit_code(cmd->args[0], &error);
-		if (error)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(args[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			exit_num = 255;
-		}
-		else if (ft_strlen_1(args) > 2)
-		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			return (1);
-		}
-		exit(exit_num);
+		exit_with_exit_status(cmd, args);
+		return (1);
 	}
-	
 	return (0);
 }

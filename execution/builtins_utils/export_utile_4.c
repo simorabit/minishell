@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:40:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 20:30:11 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:17:15 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,25 @@ int	preparing_var(t_env *list, char *new)
 	char	*join;
 	char	*join_1;
 	char	*ptr;
-	t_env	*list_env;
 
-	list_env = list;
-	while (list_env)
+	while (list)
 	{
 		ptr = get_var_from_beg_to_eq(new);
-		if (!ft_strncmp(list_env->content, ptr, ft_strlen(ptr)))
+		if (!ft_strncmp(list->content, ptr, ft_strlen(ptr)))
 		{
-			if (!ft_strchr(list_env->content, '='))
+			if (!ft_strchr(list->content, '='))
 			{
-				join = ft_strjoin(list_env->content, "=");
-				list_env->content = ft_strjoin(join, get_eq_to_fin(new));
+				join = ft_strjoin(list->content, "=");
+				list->content = ft_strjoin(join, get_eq_to_fin(new));
 			}
 			else
 			{
 				join_1 = get_eq_to_fin(new);
-				list_env->content = ft_strjoin(list_env->content, join_1);
+				list->content = ft_strjoin(list->content, join_1);
 			}
 			return (1);
 		}
-		list_env = list_env->next;
+		list = list->next;
 	}
 	return (0);
 }

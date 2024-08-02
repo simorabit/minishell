@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:28:03 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 00:55:16 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:22:24 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ void	reducing(t_cmds *list, int *hold_fd_in)
 	multiple_cmd_util_4(list);
 }
 
-void	initialize_var(t_var **var)
+int	initialize_var(t_var **var, t_cmds *list)
 {
+	if (!list || !list->cmd)
+		return (0);
 	(*var)->hold_fd_in = 0;
 	(*var)->exit_status = 0;
 	(*var)->i = 0;
 	(*var)->util = NULL;
 	(*var)->pid = 1;
+	return (1);
 }
 
 void	multiple_cmd_util_7(t_var **var, t_cmds **list, int len)

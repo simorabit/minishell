@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 00:03:38 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:32:59 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	check_is_dir(char *cmd)
 	re = stat(cmd, &st);
 	if (!re)
 	{
-		// if (S_ISREG(st.st_mode))
-		// 	return (1);
 		if (S_ISDIR(st.st_mode))
 			return (2);
 		return (0);
@@ -119,25 +117,22 @@ void	ft_exec(char **cmd, char **env)
 	ft_check(cmd[0], env);
 	path = ft_get_path(cmd[0], env);
 	if (path == NULL)
+		exec_if_path_eq_null(cmd, env);
+	else
 	{
-		if (!ft_strchr(cmd[0], '/'))
+		if (execve(path, cmd, env) == -1)
 		{
-			print_error(cmd[0], "no_such_file");
+			if (ft_strchr(cmd[0], '/'))
+			{
+				is_error(cmd[0]);
+				print_error(cmd[0], "Per_denied");
+				exit (126);
+			}
+			print_error(cmd[0], "cmd_not_found");
+			free_double_ptr(cmd);
 			exit (127);
 		}
-	}
-	if (execve(path, cmd, env) == -1)
-	{
-		if (ft_strchr(cmd[0], '/'))
-		{
-			is_error(cmd[0]);
-			print_error(cmd[0], "Per_denied");
-			exit (126);
-		}
-		print_error(cmd[0], "cmd_not_found");
+		free (path);
 		free_double_ptr(cmd);
-		exit (127);
 	}
-	free (path);
-	free_double_ptr(cmd);
 }

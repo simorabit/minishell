@@ -30,11 +30,11 @@
 # define DOUBLE_QUOTE			'\"' 
 # define AMBIGUOUS_REDIRECT "ambiguous redirect"
 
-typedef struct s_c_addresses
+typedef struct s_addresses
 {
-	void					*adr;
-	struct s_c_addresses	*next;
-}					t_c_addresses;
+	void					*content;
+	struct s_addresses	*next;
+}					t_addresses;
 
 typedef struct s_util
 {
@@ -312,7 +312,7 @@ int		check_is_biltus(char *cmd);
 int		run_built(t_env **list_env, char **nood, t_cmds *cmds, int len);
 void	multiple_cmd_util_5(t_cmds *list, int p_in, int p_out);
 void	reducing(t_cmds *list, int *hold_fd_in);
-void	initialize_var(t_var **var);
+int		initialize_var(t_var **var, t_cmds *list);
 void	multiple_cmd_util_7(t_var **var, t_cmds **list, int len);
 int		check_is_dir(char *cmd);
 int		ft_strncmp_file(const char *s1, const char *s2, unsigned int n);
@@ -323,6 +323,7 @@ int		ft_atoi(const char	*str);
 int		check_var(char	*cmd, t_env *list_env);
 int		if_var_exist_return(char *cmd, t_env *list_env);
 void	add_path_to_env(t_tools *tools, t_env *list_env);
+void	exec_if_path_eq_null(char **cmd, char **env);
 
 //builtins
 int		check_to_print_exit(int len);
@@ -337,6 +338,10 @@ int		check_for_arg_cd(char *cmd);
 char	*to_lowercase(char *str);
 char	*extract_exit_status(t_env *env_list);
 void	add_emergency_pwd(t_tools *tools, t_env *list_env);
+void	set_pwd(t_tools *tools, t_env *list_env);
+int		chdir_func(t_cmds *s_cmd, t_tools *tools, t_env *list_env);
+void	exit_with_exit_status(t_cmds *cmd, char **args);
+int		get_exit_code(char *arg, int *error);
 
 #endif
 // #endif

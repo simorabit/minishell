@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:45:26 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 22:52:27 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:24:31 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*to_lowercase(char *str)
 {
-	int	i;
+	int		i;
 	char	*ptr;
 
 	ptr = ft_strncpy(str, ft_strlen(str));

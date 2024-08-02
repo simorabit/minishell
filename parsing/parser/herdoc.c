@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:49:51 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/02 10:07:49 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:20:30 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ int	save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env)
 		{
 			del = ft_strdup((*lexer)->str);
 			fd = handel_heredoc(del, cmds, env);
-			if (!(*cmds)->cmd)
-				close(fd);
+			// if (!(*cmds)->cmd)
+			// {
+			// 	printf("aaaa\n");
+			// 	close(fd);
+			// }
 			if ((*cmds)->stop_ex == 0)
 				break ;
 		}

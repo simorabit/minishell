@@ -6,60 +6,57 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 20:26:41 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:55:18 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:11:53 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	garb_add(t_c_addresses **lst, t_c_addresses *new)
+void	ft_lstadd_back_add_collector(t_addresses **lst, t_addresses *new)
 {
-	t_c_addresses	*lastone;
+	t_addresses	*ptr;
 
-	if (!lst || !new)
-		return ;
-	if (!(*lst))
+	if (!*lst || !lst)
 	{
 		*lst = new;
 		return ;
 	}
-	lastone = *lst;
-	while (lastone->next)
-		lastone = lastone->next;
-	lastone->next = new;
+	if (!new)
+		return ;
+	ptr = *lst;
+	while (ptr->next)
+		ptr = ptr->next;
+	ptr->next = new;
 	new->next = NULL;
 }
 
-static t_c_addresses	*garb_new(void *addrress)
+t_addresses	*ft_lstnew_add_collector(char *line)
 {
-	t_c_addresses	*newnode;
+	t_addresses	*new;
 
-	newnode = malloc(sizeof(t_c_addresses));
-	if (newnode == NULL)
-	{
-		perror("malloc");
+	new = malloc(sizeof(t_addresses));
+	if (!new)
 		return (NULL);
-	}
-	newnode->adr = addrress;
-	newnode->next = NULL;
-	return (newnode);
+	new->content = line;
+	new->next = NULL;
+	return (new);
 }
 
 void	*my_alloc(size_t size)
 {
-	static t_c_addresses	*gooper;
-	t_c_addresses			*node;
-	void					*address;
+	static t_addresses	*gooper;
+	t_addresses			*node;
+	void				*address;
 
 	address = malloc(size);
 	if (!address)
 		(perror("malloc"), exit(1));
 	if (gooper == NULL)
-		gooper = garb_new(address);
+		gooper = ft_lstnew_add_collector(address);
 	else
 	{
-		node = garb_new(address);
-		garb_add(&gooper, node);
+		node = ft_lstnew_add_collector(address);
+		ft_lstadd_back_add_collector(&gooper, node);
 	}
 	return (address);
 }

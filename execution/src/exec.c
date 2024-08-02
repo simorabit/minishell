@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 11:24:58 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:23:18 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,11 @@ void	wait_func(int exit_status, t_env **env_list, int i, t_cmds *list)
 void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 {
 	t_var	*var;
-	t_cmds *cmd;
-	
+	t_cmds	*cmd;
+
 	var = my_alloc(sizeof(t_var));
-	if (!list || !list->cmd)
+	if (!initialize_var(&var, list))
 		return ;
-	initialize_var(&var);
 	while (list)
 	{
 		if (list->next == NULL)

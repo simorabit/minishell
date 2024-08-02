@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 00:51:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 01:06:06 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:32:51 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,19 @@ char	*extract_exit_status(t_env *env_list)
 		env_list = env_list->next;
 	}
 	return (NULL);
+}
+
+void	exec_if_path_eq_null(char **cmd, char **env)
+{
+	if (execve(*cmd, cmd, env) == -1)
+	{
+		if (ft_strchr(cmd[0], '/'))
+		{
+			is_error(cmd[0]);
+			print_error(cmd[0], "Per_denied");
+			exit (126);
+		}
+		print_error(cmd[0], "no_such_file");
+		exit (127);
+	}
 }
