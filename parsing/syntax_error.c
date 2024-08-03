@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:24:15 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/01 17:52:53 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/03 20:28:23 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	syn_err_checker(t_lexer **lexer)
 		if (is_redirs(tmp))
 		{
 			if (!tmp->next || is_redirs(tmp->next))
+				return (0);
+			if (tmp->next->token == mpipe)
 				return (0);
 		}
 		else if (tmp->token == mpipe)

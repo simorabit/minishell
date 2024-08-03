@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/03 01:19:02 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 20:46:09 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void *handel_cmd_sec(t_lexer **tmp, t_cmds **cmds, int *j)
     }
     if (tmp2 && (tmp2)->token == word)
     {
-        if (save_args(&tmp2, *cmds) == NULL)
+		*tmp = tmp2;
+        if (save_args(tmp, *cmds) == NULL)
             return (NULL);
     }
     return (*cmds);

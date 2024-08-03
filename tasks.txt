@@ -35,10 +35,10 @@ TODO - for simo
 while true; do leaks minishell; done;
  << ls cat
 
-----> echo "'$USER'" ❌
----->  cat    <| ls  ❌
+----> echo "'$USER'" ✅
+---->  cat    <| ls  ✅
 ----> grep hi <./test_files/infile ❌
-----> echo hi < salam ❌ | hadii makatsiftch lia -1 f in_file | o makatprintich error
+----> echo hi < salam ✅ | hadii makatsiftch lia -1 f in_file | o makatprintich error
 
 
 
