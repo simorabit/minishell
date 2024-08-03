@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:43:37 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/03 01:01:53 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:55:10 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ int	export_exe(char **cmd, t_env *list_env)
 	int		i;
 	int		x;
 	int		error;
-	int		exit_status;
 
 	i = 1;
-	exit_status = 0;
 	x = 0;
 	if (cmd [0] == NULL || cmd == NULL)
 		return (0);
@@ -86,7 +84,7 @@ int	export_exe(char **cmd, t_env *list_env)
 			return (0);
 		error = check_for_plus_and_eq(cmd[i], 1);
 		if (error == -1)
-			return (1);
+			x++;
 		if (add(list_env, cmd[i], error))
 			x++;
 		i++;

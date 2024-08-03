@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/03 03:43:57 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:47:45 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 		return ;
 	while (list)
 	{
-		
 		if (list->next == NULL)
 			cmd = list;
 		if (ambugious(&list) == 1)

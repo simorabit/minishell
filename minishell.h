@@ -33,7 +33,7 @@
 typedef struct s_addresses
 {
 	void					*content;
-	struct s_addresses	*next;
+	struct s_addresses		*next;
 }					t_addresses;
 
 typedef struct s_util

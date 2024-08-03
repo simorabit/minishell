@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/03 01:58:41 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:48:36 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	int	i;
 	int	exit_status;
-	int	x;
 
 	i = -1;
-	x = 0;
 	exit_status = 0;
 	if (!ft_strcmp("cd", nood[0]))
 		exit_status = cd_exec(cmds, *list_env);
@@ -72,9 +70,9 @@ int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds, int len)
 		while (nood[++i])
 		{
 			if (unset(list_env, nood[i]))
-				x++;
+				exit_status++;
 		}
-		if (x != 0)
+		if (exit_status != 0)
 			exit_status = 1;
 	}
 	else

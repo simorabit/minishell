@@ -1,16 +1,18 @@
 #include "minishell.h"
 
-void printf_int(int d)
+void	printf_int(int d)
 {
 	printf("debug >> %d\n", d);
 	exit(0);
 }
-void printf_str(char *s)
+
+void	printf_str(char *s)
 {
 	printf("debug >> [%s]\n", s);
 	exit(0);
 }
-void print_cmd(t_cmds **cmds)
+
+void	print_cmd(t_cmds **cmds)
 {
 	while (cmds && *cmds)
 	{
