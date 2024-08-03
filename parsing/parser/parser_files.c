@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/03 20:40:55 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/03 22:13:10 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,27 @@ int	open_files(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env)
 	if (!check_files_error(cmds))
 		show_file_error(fd, token, tmp->str, cmds);
 	return (fd);
+}
+
+int	handel_files(t_lexer **tmp, t_cmds *cmds, t_env **env)
+{
+	int	res;
+
+	res = 0;
+	if (*tmp && (*tmp)->token == redirect_in)
+		cmds->in_file = open_files(tmp, redirect_in, &cmds, env);
+	else if (*tmp && (*tmp)->token == redirect_out)
+		cmds->out_file = open_files(tmp, redirect_out, &cmds, env);
+	else if (*tmp && (*tmp)->token == heredoc)
+	{
+		res = save_heredoc(tmp, &cmds, env);
+		if (res == -2)
+			return (-1);
+		cmds->heredoc = res;
+	}
+	else if (*tmp && (*tmp)->token == redirect_app)
+		cmds->aout_file = open_files(tmp, redirect_app, &cmds, env);
+	while (*tmp && (*tmp)->token != mpipe)
+		*tmp = (*tmp)->next;
+	return (res);
 }

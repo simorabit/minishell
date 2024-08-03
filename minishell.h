@@ -194,6 +194,7 @@ int		ft_lstsize_cmd(t_cmds *lst);
 void	ft_lstadd_back_cmd(t_cmds **cmds, t_cmds *new);
 t_cmds	*ft_lstlast_cmd(t_cmds *cmds);
 int		handel_if_file(t_lexer ***lexer, int fd);
+int	handel_files(t_lexer **tmp, t_cmds *cmds, t_env **env);
 int		get_lcmd(t_lexer *lexer);
 int		open_files(t_lexer **lexer, t_token token, t_cmds **cmd, t_env **env);
 int		save_heredoc(t_lexer **lexer, t_cmds **cmds, t_env **env);
