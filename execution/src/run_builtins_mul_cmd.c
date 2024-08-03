@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:45:26 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:24:31 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 00:35:54 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_built_mul_cmd_2(t_env **list_env, char **nood, t_cmds *cmds)
 	else if (!ft_strcmp("pwd", to_lowercase(nood[0])))
 		ft_find_pwd(*list_env);
 	else if (!ft_strcmp("env", to_lowercase(nood[0])))
-		write_env(*list_env, nood);
+		write_env(*list_env);
 	else
 		return (-1);
 	return (exit_status);

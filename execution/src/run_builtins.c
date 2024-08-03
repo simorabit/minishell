@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:31:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 22:52:33 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 01:58:41 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	run_built_2(t_env **list_env, char **nood, t_cmds *cmds)
 	else if (!ft_strcmp("pwd", to_lowercase(nood[0])))
 		ft_find_pwd(*list_env);
 	else if (!ft_strcmp("env", to_lowercase(nood[0])))
-		write_env(*list_env, nood);
+		write_env(*list_env);
 	else
 		return (-1);
 	return (exit_status);
@@ -56,8 +56,10 @@ int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds, int len)
 {
 	int	i;
 	int	exit_status;
+	int	x;
 
 	i = -1;
+	x = 0;
 	exit_status = 0;
 	if (!ft_strcmp("cd", nood[0]))
 		exit_status = cd_exec(cmds, *list_env);
@@ -68,7 +70,12 @@ int	run_built_1(t_env **list_env, char **nood, t_cmds *cmds, int len)
 	else if (!ft_strcmp("unset", nood[0]))
 	{
 		while (nood[++i])
-			exit_status = unset(list_env, nood[i]);
+		{
+			if (unset(list_env, nood[i]))
+				x++;
+		}
+		if (x != 0)
+			exit_status = 1;
 	}
 	else
 		return (-1);

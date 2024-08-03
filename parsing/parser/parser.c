@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/02 18:41:13 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/03 01:19:02 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,49 +62,58 @@ int handel_files(t_lexer **tmp, t_cmds *cmds, t_env **env)
 	return (res);
 }
 
+void *handel_cmd_sec(t_lexer **tmp, t_cmds **cmds, int *j)
+{
+    t_lexer *tmp2;
+
+    if ((*j == 0 && (*tmp)->token == word) ||
+        ((*tmp)->token == word && (*tmp)->prev->token == mpipe))
+    {
+        (*cmds)->cmd = ft_strdup((*tmp)->str);
+        if (!(*cmds)->cmd)
+            return (NULL);
+        (*tmp) = (*tmp)->next;
+    }
+    tmp2 = *tmp;
+    if (tmp2 && tmp2->token != word && tmp2->token != mpipe)
+    {
+        while (tmp2 && tmp2->token != word && tmp2->token != mpipe)
+            tmp2 = tmp2->next;
+    }
+    if (tmp2 && (tmp2)->token == word)
+    {
+        if (save_args(&tmp2, *cmds) == NULL)
+            return (NULL);
+    }
+    return (*cmds);
+}
+
 void *handel_cmd(t_lexer **tmp, t_cmds *cmds, int *j)
 {
-	t_lexer *tmp2;
+    t_lexer *tmp2;
 
-	tmp2 = *tmp;
-	if (tmp2->token != word)
-	{
-		while (tmp2)
-		{
-			if (tmp2 && tmp2->token == word)
-			{
-				cmds->cmd = ft_strdup(tmp2->str);
-				if (!cmds->cmd)
-					return (NULL);
-				tmp2 = tmp2->next;
-				break;
-			}
-			tmp2 = tmp2->next;
-		}
-		if (tmp2 && (tmp2)->token == word)
-		{
-			*tmp = tmp2;
-			if (save_args(tmp, cmds) == NULL)
-				return (NULL);
-		}
-	}
-	else
-	{
-		if ((*j == 0 && (*tmp)->token == word) ||
-			((*tmp)->token == word && (*tmp)->prev->token == mpipe))
-		{
-			cmds->cmd = ft_strdup((*tmp)->str);
-			if (!cmds->cmd)
-				return (NULL);
-			(*tmp) = (*tmp)->next;
-		}
-		if (*tmp && (*tmp)->token == word)
-		{
-			if (save_args(tmp, cmds) == NULL)
-				return (NULL);
-		}
-	}
-	return (cmds);
+    tmp2 = *tmp;
+    if (tmp2->token != word)
+    {
+        while (tmp2)
+        {
+            if (tmp2 && tmp2->token == word)
+            {
+                cmds->cmd = ft_strdup(tmp2->str);
+                if (!cmds->cmd)
+                    return (NULL);
+                tmp2 = tmp2->next;
+                break ;
+            }
+            tmp2 = tmp2->next;
+        }
+        if (tmp2 && (tmp2)->token == word)
+            if (save_args(&tmp2,cmds) == NULL)
+                return (NULL);
+    }
+    else
+        return (handel_cmd_sec(tmp, &cmds, j));
+    return (cmds);
 }
 
 t_cmds *get_node_parse(t_lexer **tmp, t_env **env)

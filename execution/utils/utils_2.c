@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:32:59 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 00:22:00 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,6 @@ void	ft_exec(char **cmd, char **env)
 			exit (127);
 		}
 		free (path);
-		free_double_ptr(cmd);
+		exit (0);
 	}
 }

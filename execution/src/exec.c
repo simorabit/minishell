@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:23:18 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:43:57 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ char	*ft_itoa(int n)
 	return (ptr);
 }
 
-void	wait_func(int exit_status, t_env **env_list, int i, t_cmds *list)
+void	wait_func(int exit_status, t_env **env_list, t_var *var, t_cmds *list)
 {
-	if (i)
+	if (var->i)
 	{
 		modify_exit_status(exit_status, env_list);
 		return ;
 	}
-	while (wait(&exit_status) != -1)
+	while (waitpid(var->pid, &exit_status, 0) != -1)
 		;
 	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
 	{
@@ -92,6 +92,7 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 		return ;
 	while (list)
 	{
+		
 		if (list->next == NULL)
 			cmd = list;
 		if (ambugious(&list) == 1)
@@ -108,5 +109,5 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 		}
 		multiple_cmd_util_7(&var, &list, len);
 	}
-	wait_func(var->exit_status, env_list, var->i, cmd);
+	wait_func(var->exit_status, env_list, var, cmd);
 }

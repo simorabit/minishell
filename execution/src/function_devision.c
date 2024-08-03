@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:25:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 16:17:56 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 01:29:57 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	multiple_cmd_util_0(t_var **v, t_cmds *list, t_env **e_l, int l)
 	if (!list->cmmd || !list->cmmd[0])
 		return ;
 	(*v)->check = check_is_biltus(list->cmmd[0]);
-	if (l > 1 || !(*v)->check)
+	if ((l > 1 || !(*v)->check))
 		(*v)->pid = fork();
 	if (l == 1 && (*v)->check)
 	{

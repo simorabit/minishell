@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 00:51:39 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:32:51 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 00:30:39 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	exec_if_path_eq_null(char **cmd, char **env)
 		{
 			is_error(cmd[0]);
 			print_error(cmd[0], "Per_denied");
+			exit (126);
+		}
+		if (!ft_strcmp(cmd[0], ".."))
+		{
+			print_error(cmd[0], "is_a_direc");
 			exit (126);
 		}
 		print_error(cmd[0], "no_such_file");

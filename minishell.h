@@ -265,7 +265,7 @@ void	ft_find_pwd(t_env *list_env);
 t_env	*get_env(char **env);
 void	get_cd(char *cmd);
 int		export_exe(char **cmd, t_env *list_env);
-void	write_env(t_env *env, char **arg);
+void	write_env(t_env *env);
 char	**change_list_to_env(t_env *list_env);
 int		ft_lstsize_env(t_env *lst);
 void	multiple_cmd(t_env **env_list, t_cmds *list, int len);

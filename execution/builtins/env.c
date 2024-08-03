@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:44:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/01 20:34:48 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/03 00:35:38 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,7 @@ void	add_emergency_env(t_env **env)
 	ft_lstadd_back_env(env, path);
 }
 
-void	env_print_error(char *arg, int i)
-{
-	if (i == 1)
-	{
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
-}
-
-void	write_env(t_env *env, char **arg)
+void	write_env(t_env *env)
 {
 	int		i;
 	int		size;
@@ -50,12 +40,6 @@ void	write_env(t_env *env, char **arg)
 	i = 1;
 	if (size == 5)
 		size--;
-	while (arg[i])
-	{
-		if (!ft_strchr(arg[i], '='))
-			return (env_print_error(arg[i], 1));
-		i++;
-	}
 	while (env && size--)
 	{
 		if (ft_strchr(env->content, '=') && ft_strncmp(env->content, "?", 1))
