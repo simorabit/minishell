@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/04 02:21:43 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 10:09:44 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ void	wait_func(int exit_status, t_env **env_list, t_var *var, t_cmds *list)
 {
 	if (exit_status_for_builtins(var, exit_status, env_list))
 		return ;
-	while (waitpid(-1, &exit_status, 0) != -1)
-		;
-	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+	if (waitpid(var->pid, &exit_status, 0) == -1)
 	{
+		perror("waitpid");
+	}
+	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+	{;
 		printf("\n");
 		modify_exit_status(130, env_list);
 	}
@@ -86,7 +88,12 @@ void	wait_func(int exit_status, t_env **env_list, t_var *var, t_cmds *list)
 		modify_exit_status(exit_status, env_list);
 	}
 	else
+	{
+		printf ("5\n");
 		modify_exit_status(1, env_list);
+	}
+	while (wait(NULL) > 0)
+		;
 }
 
 void	multiple_cmd(t_env **env_list, t_cmds *list, int len)

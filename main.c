@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:42:56 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/04 02:26:42 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 09:19:44 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,19 @@ void	loop(t_env *env_list)
 	}
 }
 
+void	free_env_list(t_env **env)
+{
+	t_env	*temp;
+
+	 while (*env)
+    {
+        temp = *env;
+        *env = (*env)->next;
+        free(temp->content);
+        free(temp);
+    }
+}
+
 void	read_input(char **env)
 {
 	t_env	*env_list;
@@ -78,6 +91,7 @@ void	read_input(char **env)
 		env_list = get_env(env);
 	notify_signals();
 	loop(env_list);
+	free_env_list(&env_list);
 }
 
 int	main(int arc, char *arv[], char **env)

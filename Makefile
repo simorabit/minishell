@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+         #
+#    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/08/04 02:44:15 by mal-mora         ###   ########.fr        #
+#    Updated: 2024/08/04 09:08:19 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= cc
 CC				+=	-Wall -Wextra -Werror 
-CC				+= -fsanitize=address -g
+# CC				+= -fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
