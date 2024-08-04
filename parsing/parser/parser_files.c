@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:36:03 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/03 22:13:10 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 00:18:14 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,30 @@ int	open_files_after_check(int token, char *mfile)
 
 int	open_files(t_lexer **lexer, t_token token, t_cmds **cmds, t_env **env)
 {
-	int		len;
 	t_lexer	tmp2;
 	int		fd;
 	t_lexer	*tmp;
 
-	len = 0;
 	(*lexer) = (*lexer)->next;
 	tmp = *lexer;
-	while ((*lexer) && ((*lexer)->token == file || (*lexer)->token == token))
+	while ((*lexer) && fd != -1 && ((*lexer)->token == file \
+		|| (*lexer)->token == token))
 	{
-		if ((*lexer)->token == file && ((*lexer)->next == NULL || \
-				(*lexer)->next->token != token))
-			(1) && (tmp2.str = ft_strdup((*lexer)->str), \
+		if ((*lexer)->token == file)
+		{
+			(1) && (tmp2.str = ft_strdup((*lexer)->str),
 					tmp2.expanded = (*lexer)->expanded);
+			if (tmp2.str && (!*tmp2.str && tmp2.expanded))
+			{
+				(*cmds)->is_ambugious = 1;
+				return (error_msg(AMBIGUOUS_REDIRECT, env), -1);
+			}
+			fd = open_files_after_check(token, tmp2.str);
+			if (!check_files_error(cmds))
+				show_file_error(fd, token, tmp->str, cmds);
+		}
 		(*lexer) = (*lexer)->next;
 	}
-	if (tmp2.str && (!*tmp2.str && tmp2.expanded))
-	{
-		(*cmds)->is_ambugious = 1;
-		return (error_msg(AMBIGUOUS_REDIRECT, env), -1);
-	}
-	fd = open_files_after_check(token, tmp2.str);
-	if (!check_files_error(cmds))
-		show_file_error(fd, token, tmp->str, cmds);
 	return (fd);
 }
 

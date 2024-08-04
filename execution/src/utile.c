@@ -6,7 +6,7 @@
 /*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:28:03 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:22:24 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 01:30:00 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,15 @@ void	reducing(t_cmds *list, int *hold_fd_in)
 
 int	initialize_var(t_var **var, t_cmds *list)
 {
-	if (!list || !list->cmd)
+	if (!list)
 		return (0);
+	if (list->cmd == NULL)
+	{
+		if (list->in_file > 0)
+			close(list->in_file);
+		if (list->out_file > 1)
+			close(list->out_file);
+	}
 	(*var)->hold_fd_in = 0;
 	(*var)->exit_status = 0;
 	(*var)->i = 0;

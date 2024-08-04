@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/03 21:25:59 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 01:27:46 by souaouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,21 @@ char	*ft_itoa(int n)
 	return (ptr);
 }
 
-void	wait_func(int exit_status, t_env **env_list, t_var *var, t_cmds *list)
+int	exit_status_for_builtins(t_var *var, int exit_status, t_env **env_list)
 {
 	if (var->i)
 	{
 		modify_exit_status(exit_status, env_list);
-		return ;
+		return (1);
 	}
-	while (waitpid(var->pid, &exit_status, 0) != -1)
+	return (0);
+}
+
+void	wait_func(int exit_status, t_env **env_list, t_var *var, t_cmds *list)
+{
+	if (exit_status_for_builtins(var, exit_status, env_list))
+		return ;
+	while (waitpid(-1, &exit_status, 0) != -1)
 		;
 	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
 	{

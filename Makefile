@@ -6,13 +6,13 @@
 #    By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:34:57 by souaouri          #+#    #+#              #
-#    Updated: 2024/08/02 18:12:16 by souaouri         ###   ########.fr        #
+#    Updated: 2024/08/04 01:18:57 by souaouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= cc
 CC				+=	-Wall -Wextra -Werror 
-# CC				+= -fsanitize=address -g
+CC				+= -fsanitize=address -g
 NAME 			=	minishell
 HEADER 			=	minishell.h
 
