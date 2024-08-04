@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:57 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/30 11:59:16 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:00:20 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*remove_plus(char *new)
 
 	i = 0;
 	j = 0;
-	ptr = my_alloc(ft_strlen(new) + 1);
+	ptr = my_alloc(ft_strlen(new) + 1, 0);
 	while (new[i])
 	{
 		if (new[i] != '+')

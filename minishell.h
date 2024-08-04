@@ -298,7 +298,8 @@ int		exit_builtins(t_cmds *cmd, char **args, int len, t_env *list_env);
 int		print_error(char *cmd, char *type);
 int		cd_exec(t_cmds *cmds, t_env *list_env);
 
-void	*my_alloc(size_t size);
+// void	*my_alloc(size_t size);
+void    *my_alloc(size_t size, int free);
 int		builtins_print_error(char *cmd, char *type);
 char	*change_path_cd(t_tools *tools);
 

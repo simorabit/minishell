@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:43 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/24 01:07:32 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:48:12 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_env	*ft_lstnew_env(char *line)
 {
 	t_env	*new;
 
-	new = my_alloc(sizeof(t_env));
+	new = malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	new->content = line;

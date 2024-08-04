@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:20:08 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 16:37:48 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:03:31 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s1)
 	char	*new_value;
 
 	i = 0;
-	new_value = (char *)my_alloc((ft_strlen(s1) + 1) * sizeof(char));
+	new_value = (char *)my_alloc((ft_strlen(s1) + 1) * sizeof(char), 0);
 	if (!new_value)
 		return (NULL);
 	while (s1[i])
@@ -38,7 +38,7 @@ char	*ft_strncpy(char *s, int len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	new_s = my_alloc(len + 1);
+	new_s = my_alloc(len + 1, 0);
 	if (!new_s)
 		return (NULL);
 	while (i < len)

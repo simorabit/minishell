@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:20:48 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/27 04:17:32 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:10:45 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*ft_substr_exe(char *s, unsigned int start, size_t	len)
 		return (ft_strdup(""));
 	if (len >= ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
-	ptr = my_alloc(sizeof(char) * (len + 1));
+	ptr = my_alloc(sizeof(char) * (len + 1), 0);
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -95,7 +95,7 @@ char	**ft_split_exe(char *s, char c)
 	size = count_word(s, c);
 	i = 0;
 	j = 0;
-	ptr = (char **)my_alloc(sizeof(char *) * (size + 1));
+	ptr = (char **)my_alloc(sizeof(char *) * (size + 1), 0);
 	if (!ptr)
 		return (NULL);
 	while (s[j] && size--)
@@ -104,7 +104,7 @@ char	**ft_split_exe(char *s, char c)
 			j++;
 		ptr[i] = ft_substr_exe(s, j, count_len(&s[j], c));
 		if (!ptr[i])
-			return (free_double_ptr(ptr), NULL);
+			return (NULL);
 		j += count_len(&s[j], c);
 		i++;
 	}

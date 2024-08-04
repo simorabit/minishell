@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:42:57 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/02 10:03:20 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:02:04 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*remove_each_one(char *s, char q)
 	j = 0;
 	i = 0;
 	len = get_mlen(s, q);
-	new_s = my_alloc(len + 1);
+	new_s = my_alloc(len + 1, 0);
 	i = 0;
 	while (s[i] && j < len)
 	{

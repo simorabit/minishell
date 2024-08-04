@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 12:16:49 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 14:19:23 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:08:16 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_lexer	*ft_lstnew(int content)
 {
 	t_lexer	*lexer;
 
-	lexer = (t_lexer *)my_alloc(sizeof(t_lexer));
+	lexer = (t_lexer *)my_alloc(sizeof(t_lexer), 0);
 	if (!lexer)
 		return (NULL);
 	lexer->i = content;
@@ -84,7 +84,7 @@ void	ft_lst_remove(t_lexer **lexer, int index)
 			tmp2 = tmp->next;
 			if (tmp->i == 0 && ft_lstsize(*lexer) >= 1)
 				*lexer = tmp->next;
-			free(tmp);
+			// free(tmp);
 			break ;
 		}
 		tmp = tmp->next;

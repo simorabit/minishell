@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:49:23 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:04:35 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:14:27 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,10 @@ int	specific_path(t_env *list_env, char *str)
 
 	tmp = find_path_ret(str, list_env);
 	ret = chdir(tmp);
-	free(tmp);
 	if (ret != 0)
 	{
 		str = ft_substr(str, 0, ft_strlen(str) - 1);
 		ft_putstr_fd(str, 2);
-		free(str);
 		ft_putstr_fd(" not set\n", 2);
 	}
 	return (ret);
@@ -103,13 +101,13 @@ int	cd_exec(t_cmds *cmds, t_env *list_env)
 	char	**env;
 	int		re;
 
-	tools = my_alloc(sizeof(t_tools));
+	tools = my_alloc(sizeof(t_tools), 0);
 	if (tools == NULL)
 		return (0);
 	env = change_list_to_env(list_env);
 	tools->pwd = ft_find_path(env, "PWD=", 4);
 	tools->old_pwd = ft_find_path(env, "OLDPWD=", 7);
 	re = mini_cd(tools, cmds, list_env);
-	free(tools);
+	//free(tools);
 	return (re);
 }

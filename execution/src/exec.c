@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 01:43:35 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/04 01:27:46 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:21:43 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	len = ft_len(n);
-	ptr = (char *)my_alloc(sizeof(char) * (len + 1));
+	ptr = (char *)my_alloc(sizeof(char) * (len + 1), 0);
 	if (!ptr)
 		return (NULL);
 	if (n < 0)
@@ -94,7 +94,7 @@ void	multiple_cmd(t_env **env_list, t_cmds *list, int len)
 	t_var	*var;
 	t_cmds	*cmd;
 
-	var = my_alloc(sizeof(t_var));
+	var = my_alloc(sizeof(t_var), 0);
 	if (!initialize_var(&var, list))
 		return ;
 	while (list)

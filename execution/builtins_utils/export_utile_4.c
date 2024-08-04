@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:40:01 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/02 17:17:15 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:53:22 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	_remove_var(t_env *list, char *new)
 			|| !ft_strcmp(temp->content, get_env_eq(new)))
 		{
 			temp->content = ft_strdup(new);
-			free(ptr);
+			//free(ptr);
 			return (1);
 		}
-		free(ptr);
+		// free(ptr);
 		temp = temp->next;
 	}
 	return (0);

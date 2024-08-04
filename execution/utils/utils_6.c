@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_6.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:24:08 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/30 12:14:46 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:00:54 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**change_list_to_env(t_env *list_env)
 	int		i;
 
 	i = 0;
-	env = my_alloc(1024);
+	env = my_alloc(1024, 0);
 	while (list_env)
 	{
 		env[i] = list_env->content;

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:08:38 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/29 14:31:31 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:01:53 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	*add_spaces(char *line)
 	if (len == 0)
 		return (line);
 	len = ft_strlen(line) + 1 + len;
-	new_value = my_alloc(len * sizeof(char));
+	new_value = my_alloc(len * sizeof(char), 0);
 	while (j < len - 1)
 	{
 		if (is_redir_has_found(line[i]) && found_quotes(line, i))

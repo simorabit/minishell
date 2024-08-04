@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:21:22 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/26 14:40:50 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:17:00 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ static char	*my_word(char *s, char c, char **arr, int ind)
 	int		i;
 	char	*output;
 	int		j;
+	(void)arr;
+	(void)ind;
 
 	i = 0;
 	j = 0;
 	while (s[i] && s[i] != c)
 		i++;
-	output = (char *)my_alloc(sizeof(char) * (i + 1));
+	output = (char *)my_alloc(sizeof(char) * (i + 1), 0);
 	if (!output)
-	{
-		while (j < ind)
-			free(arr[j++]);
+	// {
+	// 	while (j < ind)
+	// 		free(arr[j++]);
 		return (NULL);
-	}
+	// }
 	i = 0;
 	while (s[i] && s[i] != c)
 	{
@@ -68,7 +70,7 @@ char	**my_split(char const *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)my_alloc((count_words((char *)s, c) + 1) * sizeof(char *));
+	array = (char **)my_alloc((count_words((char *)s, c) + 1) * sizeof(char *), 0);
 	if (!array)
 		return (NULL);
 	while (*s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:51 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/31 21:03:04 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:00:10 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_env_eq(char *new)
 	i = 0;
 	while (new && new[i] && new[i] != '=')
 		i++;
-	ptr = my_alloc(i + 1);
+	ptr = my_alloc(i + 1, 0);
 	if (!ptr)
 		return (NULL);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 13:53:57 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/03 20:20:03 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:02:25 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_int	*init_ints(void)
 {
 	t_int	*ints;
 
-	ints = my_alloc(sizeof(t_int) + 1);
+	ints = my_alloc(sizeof(t_int) + 1, 0);
 	ints->i = 0;
 	return (ints);
 }

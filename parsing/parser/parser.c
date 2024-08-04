@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 23:11:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/03 22:12:18 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:02:37 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*save_args(t_lexer **lexer, t_cmds *cmds)
 		len++;
 		tmp = tmp->next;
 	}
-	cmds->args = my_alloc((len + 1) * sizeof(char *));
+	cmds->args = my_alloc((len + 1) * sizeof(char *), 0);
 	if (!cmds->args)
 		return (NULL);
 	while (i < len)

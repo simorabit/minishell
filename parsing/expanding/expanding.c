@@ -6,7 +6,7 @@
 /*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:35:55 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/08/02 10:03:20 by mal-mora         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:06:38 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*expand_str(char *s, t_env **env_list)
 			result = ft_strjoin(befor_dollar, ft_substr(&s[i++], 0, 1));
 		(1) && (result = handel_other_cases(s, &result, &i, env_list), cnt++);
 	}
-	free(befor_dollar);
+	// free(befor_dollar);
 	return (result);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_7.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:00:13 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 19:14:32 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:01:12 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	**change_a_sto_d_ptr(char *cmd)
 	int		len;
 
 	len = ft_strlen(cmd);
-	ptr = (char **)my_alloc(2 * sizeof(char *));
-	ptr[0] = (char *)my_alloc(len + 1);
+	ptr = (char **)my_alloc(2 * sizeof(char *), 0);
+	ptr[0] = (char *)my_alloc(len + 1, 0);
 	ft_strlcpy(ptr[0], cmd, len);
 	ptr[0][len] = '\0';
 	ptr[1] = NULL;
@@ -70,7 +70,7 @@ char	**join_cmd_arg(char *cmd, char **arg)
 		return (arg);
 	else if (arg == NULL)
 		return (change_a_sto_d_ptr(cmd));
-	ptr = my_alloc(sizeof(char *) * (len_of_arg(arg) + 1));
+	ptr = my_alloc(sizeof(char *) * (len_of_arg(arg) + 1), 0);
 	ptr[0] = cmd;
 	i++;
 	while (arg[j])

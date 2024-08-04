@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:40:14 by souaouri          #+#    #+#             */
-/*   Updated: 2024/08/03 00:22:00 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:15:49 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_find_path(char **env, char *var, int j)
 	int		x;
 	char	*ptr;
 
-	ptr = (char *)my_alloc(sizeof(char *) * 1337);
+	ptr = (char *)my_alloc(sizeof(char *) * 1337, 0);
 	i = 0;
 	x = 0;
 	while (env[i] && ft_strncmp(var, env[i], ft_strlen(var)) != 0)
@@ -96,15 +96,10 @@ char	*ft_get_path(char *cmd, char **env)
 		cmd_with_path = ft_strjoin(one_path, cmd);
 		if (access(cmd_with_path, X_OK) == 0)
 		{
-			free_double_ptr(all_path);
-			free(one_path);
 			return (cmd_with_path);
 		}
-		free(cmd_with_path);
-		free(one_path);
 		i++;
 	}
-	free_double_ptr(all_path);
 	return (ft_strdup(cmd));
 }
 
@@ -129,10 +124,9 @@ void	ft_exec(char **cmd, char **env)
 				exit (126);
 			}
 			print_error(cmd[0], "cmd_not_found");
-			free_double_ptr(cmd);
 			exit (127);
 		}
-		free (path);
+		//free (path);
 		exit (0);
 	}
 }

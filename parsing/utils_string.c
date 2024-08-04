@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:25:41 by mal-mora          #+#    #+#             */
-/*   Updated: 2024/07/27 20:21:22 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:02:19 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (s1);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	result = (char *) my_alloc(sizeof(char) * (s1_len + s2_len + 1));
+	result = (char *) my_alloc(sizeof(char) * (s1_len + s2_len + 1), 0);
 	if (result == NULL)
 		return (NULL);
 	ptr = ft_strcpy(result, s1);
@@ -88,7 +88,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (s_len - start <= len)
 		len = s_len - start;
-	substr = (char *)my_alloc((len + 1) * sizeof(char));
+	substr = (char *)my_alloc((len + 1) * sizeof(char), 0);
 	if (!substr)
 		return (NULL);
 	while (s[i])

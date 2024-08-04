@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utile_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaouri <souaouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mal-mora <mal-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 12:39:47 by souaouri          #+#    #+#             */
-/*   Updated: 2024/07/29 01:41:55 by souaouri         ###   ########.fr       */
+/*   Updated: 2024/08/04 02:00:05 by mal-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*print_quotes(char *var, int i, int size)
 
 	j = 0;
 	x = 0;
-	ptr = my_alloc(sizeof(char) * size + 1);
+	ptr = my_alloc(sizeof(char) * size + 1, 0);
 	while (var[i])
 	{
 		if (var[i] == '=' && x == 0)
@@ -55,7 +55,7 @@ char	*add_double_quotes(char *var)
 	x = 0;
 	if (ft_strchr(var, '='))
 		size += 2;
-	ptr = my_alloc(sizeof(char) * size + 1);
+	ptr = my_alloc(sizeof(char) * size + 1, 0);
 	if (var[0] == '\0' || var == NULL)
 		return (NULL);
 	ptr = print_quotes(var, i, size);
@@ -99,7 +99,7 @@ char	*get_var_from_beg_to_eq(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	ptr = (char *)my_alloc(i + 1);
+	ptr = (char *)my_alloc(i + 1, 0);
 	i = 0;
 	if (ft_strchr(var, '+'))
 	{
